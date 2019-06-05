@@ -1,10 +1,13 @@
 package ar.edu.unlam.tallerweb1.dao;
 
+import ar.edu.unlam.tallerweb1.modelo.Productos;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -32,4 +35,14 @@ public class UsuarioDaoImpl implements UsuarioDao {
 				.uniqueResult();
 	}
 
+	@Override
+	public List<Productos> verProductosDisponibles() {
+		final Session session = sessionFactory.getCurrentSession();
+		@SuppressWarnings("unchecked")
+		List<Productos> listaProductos= session.createCriteria(Productos.class)
+		.add(Restrictions.gt("stock",0))
+		.add(Restrictions.eq("estado", true))
+		.list();
+		return listaProductos;
+	}
 }
