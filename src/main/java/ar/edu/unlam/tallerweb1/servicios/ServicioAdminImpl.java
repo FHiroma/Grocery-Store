@@ -31,4 +31,14 @@ public class ServicioAdminImpl implements ServicioAdmin {
 		servicioAdminDao.quitarProducto(id);
 	}
 
+	@Override
+	public List<Productos> verProductosOferta() {
+		return servicioAdminDao.verProductosOferta();
+	}
+
+	@Override
+	public void insertarProducto(Productos producto) {
+		servicioAdminDao.insertarProducto(producto);
+	}
+
 }

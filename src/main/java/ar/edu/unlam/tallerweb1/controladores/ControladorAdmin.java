@@ -2,9 +2,11 @@ package ar.edu.unlam.tallerweb1.controladores;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import ar.edu.unlam.tallerweb1.modelo.Productos;
+import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.servicios.ServicioAdmin;
 import java.util.List;
 import javax.inject.Inject;
@@ -42,5 +44,18 @@ public class ControladorAdmin {
 		modelo.put("lista", listaProductos);
 		return new ModelAndView("listarProductos",modelo);
 	}
-
+	
+	@RequestMapping(path="/insertarProducto")
+	public ModelAndView insertarProducto() {
+		ModelMap modelo= new ModelMap();
+		Productos producto= new Productos();
+		modelo.put("producto", producto);
+		return new ModelAndView("insertarProducto",modelo);
+	}
+	
+	@RequestMapping(path="/guardarProducto")
+	public ModelAndView guardarProducto(@ModelAttribute("producto") Productos producto) {
+		servicioAdmin.insertarProducto(producto);
+		return new ModelAndView("exito");
+	}
 }

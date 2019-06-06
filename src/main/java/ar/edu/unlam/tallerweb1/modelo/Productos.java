@@ -1,10 +1,10 @@
 package ar.edu.unlam.tallerweb1.modelo;
 
+import java.util.Calendar;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 @Entity
 public class Productos {
@@ -14,9 +14,11 @@ public class Productos {
 	private Long id;
 	private String descripcion;
 	private Integer stock;
-	@ManyToOne
-	private Usuario adminUser;
 	private Boolean estado;
+	private Calendar fechaVencimiento;
+	private Boolean oferta;
+	private Integer stockOferta;
+	private Integer diasCaducidad;
 	public String getDescripcion() {
 		return descripcion;
 	}
@@ -29,12 +31,6 @@ public class Productos {
 	public void setStock(Integer stock) {
 		this.stock = stock;
 	}
-	public Usuario getAdminUser() {
-		return adminUser;
-	}
-	public void setAdminUser(Usuario adminUser) {
-		this.adminUser = adminUser;
-	}
 	public Long getId() {
 		return id;
 	}
@@ -46,5 +42,31 @@ public class Productos {
 	}
 	public void setEstado(Boolean estado) {
 		this.estado = estado;
+	}
+	public Calendar getFechaVencimiento() {
+		return fechaVencimiento;
+	}
+	public void setFechaVencimiento() {
+		Calendar fecha= Calendar.getInstance();
+		fecha.add(Calendar.DATE, this.diasCaducidad);
+		this.fechaVencimiento=fecha;
+	}
+	public Boolean getOferta() {
+		return oferta;
+	}
+	public void setOferta(Boolean oferta) {
+		this.oferta = oferta;
+	}
+	public Integer getStockOferta() {
+		return stockOferta;
+	}
+	public void setStockOferta(Integer stockOferta) {
+		this.stockOferta = stockOferta;
+	}
+	public Integer getDiasCaducidad() {
+		return diasCaducidad;
+	}
+	public void setDiasCaducidad(Integer diasCaducidad) {
+		this.diasCaducidad = diasCaducidad;
 	}
 }

@@ -16,6 +16,9 @@
 		<script src="js/bootstrap.min.js" type="text/javascript"></script>
 		<h3>
 			<a href="http://localhost:8080/grocery-store/listarProductos">Listar Productos</a>
+			<br><br>
+			<a href="http://localhost:8080/grocery-store/insertarProducto">Insertar Producto</a>
+			
 		</h3>
 		
 	</body>

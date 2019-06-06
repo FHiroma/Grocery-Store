@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
+import ar.edu.unlam.tallerweb1.servicios.ServicioAdmin;
 import ar.edu.unlam.tallerweb1.servicios.ServicioLogin;
 import ar.edu.unlam.tallerweb1.servicios.ServicioUser;
 import java.util.List;
@@ -26,6 +27,8 @@ public class ControladorLogin {
 	private ServicioLogin servicioLogin;
 	@Inject
 	private ServicioUser servicioUser;
+	@Inject
+	private ServicioAdmin servicioAdmin;
 
 	// Este metodo escucha la URL localhost:8080/NOMBRE_APP/login si la misma es invocada por metodo http GET
 	@RequestMapping("/login")
@@ -61,7 +64,9 @@ public class ControladorLogin {
 			return new ModelAndView("index",model);
 			}
 		if("admin".equals(usuarioBuscado.getRol())){
-			return new ModelAndView("redirect:/homeAdmin");
+			List<Productos> listaProductosOferta=servicioAdmin.verProductosOferta();
+			model.put("listaProductosOferta", listaProductosOferta);
+			return new ModelAndView("homeAdmin",model);
 			}
 		} else {
 			// si el usuario no existe agrega un mensaje de error en el modelo.

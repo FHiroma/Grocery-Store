@@ -43,4 +43,21 @@ public class AdminDaoImpl implements AdminDao{
 		.uniqueResult();
 		producto.setEstado(false);
 	}
+
+	@Override
+	public List<Productos> verProductosOferta() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void insertarProducto(Productos producto) {
+		final Session session = sessionFactory.getCurrentSession();
+		session.createCriteria(Productos.class)
+				.add(Restrictions.eq("descripcion", producto.getDescripcion()))
+				.uniqueResult();
+		producto.setFechaVencimiento();
+		session.save(producto);
+		//System.out.println(producto.getFechaVencimiento());
+	}
 }
