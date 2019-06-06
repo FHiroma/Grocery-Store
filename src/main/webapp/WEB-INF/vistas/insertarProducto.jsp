@@ -14,11 +14,8 @@
 					<label>Descripcion:</label>
 					<form:input path="descripcion" id="descripcion" type="string" class="form-control" />
 					<br><br>
-					<label>Stock:</label>
-					<form:input path="stock" type="integer" id="stock" class="form-control"/>     		  
-					<br><br>
-					<label>Estado:</label>
-					<form:input path="estado" id="estado" type="string" class="form-control" />
+					<label>Precio:</label>
+					<form:input path="precio" id="precio" type="integer" class="form-control" />
 					<br><br>
 					<label>Dias de caducidad:</label>
 					<form:input path="diasCaducidad" id="diasCaducidad" type="Integer" class="form-control" />

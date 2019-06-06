@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ar.edu.unlam.tallerweb1.dao.AdminDao;
 import ar.edu.unlam.tallerweb1.modelo.Productos;
+import ar.edu.unlam.tallerweb1.modelo.Compra;
 
 @Service("servicioAdmin")
 @Transactional
@@ -39,6 +40,16 @@ public class ServicioAdminImpl implements ServicioAdmin {
 	@Override
 	public void insertarProducto(Productos producto) {
 		servicioAdminDao.insertarProducto(producto);
+	}
+
+	@Override
+	public Productos buscarProducto(Long id) {
+		return servicioAdminDao.buscarProducto(id);
+	}
+
+	@Override
+	public void insertarStock(Compra stock, Long id) {
+		servicioAdminDao.insertarStock(stock, id);
 	}
 
 }

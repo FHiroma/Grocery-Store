@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import ar.edu.unlam.tallerweb1.modelo.Productos;
-import ar.edu.unlam.tallerweb1.modelo.Usuario;
+import ar.edu.unlam.tallerweb1.modelo.Compra;
 import ar.edu.unlam.tallerweb1.servicios.ServicioAdmin;
 import java.util.List;
 import javax.inject.Inject;
@@ -56,6 +56,21 @@ public class ControladorAdmin {
 	@RequestMapping(path="/guardarProducto")
 	public ModelAndView guardarProducto(@ModelAttribute("producto") Productos producto) {
 		servicioAdmin.insertarProducto(producto);
+		return new ModelAndView("exito");
+	}
+	
+	@RequestMapping(path="/mostrar-formulario")
+	public ModelAndView mostrarFormulario(@RequestParam ("id") Long id) {
+		ModelMap modelo= new ModelMap();
+		Compra stock = new Compra();
+		modelo.put("stock", stock);
+		modelo.put("producto", id);
+		return new ModelAndView("formularioStock",modelo);
+	}
+	
+	@RequestMapping(path="/guardarStock")
+	public ModelAndView guardarSock(@ModelAttribute("stock") Compra stock, @ModelAttribute("id") Long id) {
+		servicioAdmin.insertarStock(stock,id);
 		return new ModelAndView("exito");
 	}
 }
