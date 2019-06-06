@@ -43,7 +43,6 @@ public class Compra {
 	}
 	public void setFechaVencimiento() {
 		Integer dias=this.producto.getDiasCaducidad();
-		System.out.println(dias);
 		Calendar fecha= Calendar.getInstance();
 		fecha.add(Calendar.DATE, dias);
 		fecha.set(Calendar.HOUR_OF_DAY, 0);
