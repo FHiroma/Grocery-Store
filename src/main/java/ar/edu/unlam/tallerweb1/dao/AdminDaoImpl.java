@@ -58,6 +58,5 @@ public class AdminDaoImpl implements AdminDao{
 				.uniqueResult();
 		producto.setFechaVencimiento();
 		session.save(producto);
-		//System.out.println(producto.getFechaVencimiento());
 	}
 }
