@@ -27,7 +27,6 @@ public class Productos {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
-
 	public Long getId() {
 		return id;
 	}

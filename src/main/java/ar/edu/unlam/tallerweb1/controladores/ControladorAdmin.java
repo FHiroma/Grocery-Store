@@ -73,4 +73,5 @@ public class ControladorAdmin {
 		servicioAdmin.insertarStock(stock,id);
 		return new ModelAndView("exito");
 	}
+	
 }

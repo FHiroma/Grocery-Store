@@ -1,5 +1,7 @@
 package ar.edu.unlam.tallerweb1.servicios;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.unlam.tallerweb1.dao.PromocionesDao;
+import ar.edu.unlam.tallerweb1.modelo.Compra;
 
 @Service("ServicioAutomatizado")
 @EnableScheduling
@@ -19,5 +22,10 @@ public class ServicioAutomatizadoImpl implements ServicioAutomatizado{
 	@Scheduled(fixedDelay = 10800000)
 	public void autoPromocionar(){
 		promoDao.autoPromocionar();
+	}
+
+	@Scheduled(fixedDelay = 60000)
+	public void productosPocoStock() {
+		promoDao.productosPocoStock();
 	}
 }
