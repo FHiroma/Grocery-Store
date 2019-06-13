@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ar.edu.unlam.tallerweb1.dao.AdminDao;
 import ar.edu.unlam.tallerweb1.modelo.Productos;
 import ar.edu.unlam.tallerweb1.modelo.Compra;
+import ar.edu.unlam.tallerweb1.modelo.Notificacion;
 
 @Service("servicioAdmin")
 @Transactional
@@ -50,6 +51,16 @@ public class ServicioAdminImpl implements ServicioAdmin {
 	@Override
 	public void insertarStock(Compra stock, Long id) {
 		servicioAdminDao.insertarStock(stock, id);
+	}
+
+	@Override
+	public void aumentarStockProducto(Integer cantidad, Long id) {
+		servicioAdminDao.aumentarStockProducto(cantidad, id);
+	}
+
+	@Override
+	public List<Notificacion> buscarNotificaciones() {
+		return servicioAdminDao.buscarNotificaciones();
 	}
 
 }

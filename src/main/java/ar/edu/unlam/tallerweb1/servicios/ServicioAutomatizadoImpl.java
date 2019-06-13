@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.unlam.tallerweb1.dao.PromocionesDao;
 import ar.edu.unlam.tallerweb1.modelo.Compra;
+import ar.edu.unlam.tallerweb1.modelo.Notificacion;
 
 @Service("ServicioAutomatizado")
 @EnableScheduling
@@ -24,7 +25,7 @@ public class ServicioAutomatizadoImpl implements ServicioAutomatizado{
 		promoDao.autoPromocionar();
 	}
 
-	@Scheduled(fixedDelay = 60000)
+	@Scheduled(fixedDelay = 240000)
 	public void productosPocoStock() {
 		promoDao.productosPocoStock();
 	}

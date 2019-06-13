@@ -10,6 +10,8 @@
 <body>
 	<h3> Bienvenido Mail: ${user.email}</h3>
 	<a href="http://localhost:8080/grocery-store/homeUser"><button>Home User</button></a>
+	<a href="http://localhost:8080/proyecto-limpio-spring/logout"> 
+				<button>Log out</button> </a>
 	
 	<h1>Lista de productos a la venta:</h1>
 	<br>

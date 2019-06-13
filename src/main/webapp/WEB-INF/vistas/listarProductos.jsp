@@ -8,6 +8,8 @@
 <title>Insert title here</title>
 </head>
 <body>
+<!-- <a href="http://localhost:8080/proyecto-limpio-spring/logout"> 
+				<button>Log out</button> </a> -->
 
 	<c:forEach items="${lista}" var="productos">
 		<h3>Descripcion: ${productos.descripcion}</h3>

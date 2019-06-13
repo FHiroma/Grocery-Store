@@ -2,6 +2,7 @@ package ar.edu.unlam.tallerweb1.controladores;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -15,6 +16,8 @@ import ar.edu.unlam.tallerweb1.servicios.ServicioAdmin;
 import ar.edu.unlam.tallerweb1.servicios.ServicioLogin;
 import ar.edu.unlam.tallerweb1.servicios.ServicioUser;
 import java.util.List;
+
+import ar.edu.unlam.tallerweb1.modelo.Notificacion;
 import ar.edu.unlam.tallerweb1.modelo.Productos;
 
 @Controller
@@ -59,12 +62,16 @@ public class ControladorLogin {
 //			return new ModelAndView("redirect:/home");
 //		String rol=usuarioBuscado.getRol();
 		if("user".equals(usuarioBuscado.getRol())){
+			request.getSession().setAttribute("ROL", usuarioBuscado.getRol());
 			List<Productos> listaProductos=servicioUser.verProductosDisponibles();
 			model.put("listaProductos", listaProductos);
 			return new ModelAndView("index",model);
 			}
 		if("admin".equals(usuarioBuscado.getRol())){
+			request.getSession().setAttribute("ROL", usuarioBuscado.getRol());
 			List<Productos> listaProductosOferta=servicioAdmin.verProductosOferta();
+			List<Notificacion> listaNotificaciones=servicioAdmin.buscarNotificaciones();
+			model.put("listaNotificaciones", listaNotificaciones);
 			model.put("listaProductosOferta", listaProductosOferta);
 			return new ModelAndView("homeAdmin",model);
 			}
@@ -91,5 +98,17 @@ public class ControladorLogin {
 	public ModelAndView inicio() {
 		return new ModelAndView("redirect:/login");
 	}
+	
+	@RequestMapping("/logout")
+	public ModelAndView logout(HttpServletRequest request){
+		HttpSession session = request.getSession();
+		if( session != null){
+		request.removeAttribute("id");
+		request.removeAttribute("rol");
+		session.invalidate();
+		}	
+		return new ModelAndView("redirect:/login");
+	}
+
 	
 }

@@ -1,9 +1,12 @@
 package ar.edu.unlam.tallerweb1.modelo;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Productos {
@@ -15,6 +18,13 @@ public class Productos {
 	private Boolean estado;
 	private Integer diasCaducidad;
 	private Integer precio;
+	private Integer stock;
+	public Integer getStock() {
+		return stock;
+	}
+	public void setStock(Integer stock) {
+		this.stock =stock;
+	}
 	public Integer getPrecio() {
 		return precio;
 	}

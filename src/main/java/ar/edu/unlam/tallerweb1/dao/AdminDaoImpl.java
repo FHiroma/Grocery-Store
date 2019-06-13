@@ -9,6 +9,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import ar.edu.unlam.tallerweb1.modelo.Productos;
 import ar.edu.unlam.tallerweb1.modelo.Compra;
+import ar.edu.unlam.tallerweb1.modelo.Notificacion;
 
 @Repository("adminDao")
 public class AdminDaoImpl implements AdminDao{
@@ -56,6 +57,7 @@ public class AdminDaoImpl implements AdminDao{
 				.add(Restrictions.eq("descripcion", producto.getDescripcion()))
 				.uniqueResult();
 		producto.setEstado(true);
+		producto.setStock(0);
 		session.save(producto);
 	}
 
@@ -79,5 +81,26 @@ public class AdminDaoImpl implements AdminDao{
 		stock.setOferta(false);
 		stock.setFechaIngreso();
 		session.save(stock);
+	}
+
+	@Override
+	public void aumentarStockProducto(Integer cantidad, Long id) {
+		final Session session = sessionFactory.getCurrentSession();
+		Productos producto=(Productos) session.createCriteria(Productos.class)
+				.add(Restrictions.eq("id", id))
+				.uniqueResult();
+		producto.setStock(producto.getStock()+cantidad);
+		final Session session1 = sessionFactory.getCurrentSession();
+		session1.update(producto);
+	}
+
+	@Override
+	public List<Notificacion> buscarNotificaciones() {
+		final Session session = sessionFactory.getCurrentSession();
+		@SuppressWarnings("unchecked")
+		List<Notificacion> listaNotificaciones=session.createCriteria(Notificacion.class)
+				.add(Restrictions.eq("estado", false))
+				.list();
+		return listaNotificaciones;
 	}
 }

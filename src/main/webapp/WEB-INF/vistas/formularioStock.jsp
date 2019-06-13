@@ -8,7 +8,11 @@
 <title>Insert title here</title>
 </head>
 <body>
+<a href="#" onclick="history.go(-1)">
+<button>Atras</button> </a>
 <h3>Complete el formulario para el Producto:</h3>
+<!-- <a href="http://localhost:8080/proyecto-limpio-spring/logout"> 
+				<button>Log out</button> </a> -->
 
 		<form:form action="guardarStock" method="POST" modelAttribute="stock">
 			<label>Stock:</label>

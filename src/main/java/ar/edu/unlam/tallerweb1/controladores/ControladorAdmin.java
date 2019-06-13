@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import ar.edu.unlam.tallerweb1.modelo.Productos;
 import ar.edu.unlam.tallerweb1.modelo.Compra;
+import ar.edu.unlam.tallerweb1.modelo.Notificacion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioAdmin;
 import java.util.List;
 import javax.inject.Inject;
@@ -71,7 +72,17 @@ public class ControladorAdmin {
 	@RequestMapping(path="/guardarStock")
 	public ModelAndView guardarSock(@ModelAttribute("stock") Compra stock, @ModelAttribute("id") Long id) {
 		servicioAdmin.insertarStock(stock,id);
+		servicioAdmin.aumentarStockProducto(stock.getStock(),id);
 		return new ModelAndView("exito");
+	}
+	
+	@RequestMapping(path="/listarProductosStockMinimo")
+	public ModelAndView listarProductosStockMinimo() {
+		List<Notificacion> lista= servicioAdmin.buscarNotificaciones();
+//		servicioAdmin.cambiarEstadoNotificaciones();
+		ModelMap modelo= new ModelMap();
+		modelo.put("lista", lista);
+		return new ModelAndView("listarProductosStockMinimo", modelo);
 	}
 	
 }

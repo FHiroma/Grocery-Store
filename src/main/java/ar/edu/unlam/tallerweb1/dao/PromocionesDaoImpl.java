@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import ar.edu.unlam.tallerweb1.modelo.Compra;
 import ar.edu.unlam.tallerweb1.modelo.Notificacion;
+import ar.edu.unlam.tallerweb1.modelo.Productos;
 
 @Repository("promoDao")
 public class PromocionesDaoImpl implements PromocionesDao{
@@ -40,16 +41,18 @@ public class PromocionesDaoImpl implements PromocionesDao{
 	public void productosPocoStock() {
 		Session sesion = sessionFactory.getCurrentSession();
 		@SuppressWarnings("unchecked")
-		List<Compra> lista= sesion.createCriteria(Compra.class)
-				.list();
-		for(Compra compra: lista) {
-			if(compra.getStock()<=5) {
+		List<Productos> listaProductos= sesion.createCriteria(Productos.class)
+			.list();
+		for(Productos producto: listaProductos) {
+			if(producto.getStock()<=5) {
 				Notificacion n= new Notificacion();
-				n.setNotificacionCompra(compra);
+				n.setProducto(producto);
+				n.setEstado(false);
+				n.setDescripcion("Stock Minimo");
 				Session sesion1 = sessionFactory.getCurrentSession();
 				@SuppressWarnings("unchecked")
 				List<Notificacion> listaNotificacion= sesion1.createCriteria(Notificacion.class)
-				.add(Restrictions.eq("notificacionCompra", compra))
+				.add(Restrictions.eq("producto", producto))
 				.list();
 				if(listaNotificacion.size()==0) {
 					Session sesion2 = sessionFactory.getCurrentSession();

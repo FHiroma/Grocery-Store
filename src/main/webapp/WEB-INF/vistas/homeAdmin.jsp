@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -15,6 +16,15 @@
 		<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
 		<script src="js/bootstrap.min.js" type="text/javascript"></script>
 		<h3>
+			<!-- <a href="http://localhost:8080/proyecto-limpio-spring/logout"> 
+				<button>Log out</button> </a> -->
+				
+			<c:if test="${listaNotificaciones.size() > 0}">
+				<h4>Notificaciones: ${listaNotificaciones.size()}</h4>
+				<a href="http://localhost:8080/grocery-store/listarProductosStockMinimo">notificaciones</a>
+			<br><br>
+			</c:if>
+			
 			<a href="http://localhost:8080/grocery-store/listarProductos">Listar Productos</a>
 			<br><br>
 			<a href="http://localhost:8080/grocery-store/insertarProducto">Insertar Producto</a>
