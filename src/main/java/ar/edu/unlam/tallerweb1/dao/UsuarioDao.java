@@ -2,6 +2,7 @@ package ar.edu.unlam.tallerweb1.dao;
 
 import java.util.List;
 
+import ar.edu.unlam.tallerweb1.modelo.Compra;
 import ar.edu.unlam.tallerweb1.modelo.Productos;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 
@@ -10,4 +11,5 @@ public interface UsuarioDao {
 	
 	Usuario consultarUsuario (Usuario usuario);
 	List<Productos> verProductosDisponibles();
+	List<Compra> verProductosEnOferta();
 }

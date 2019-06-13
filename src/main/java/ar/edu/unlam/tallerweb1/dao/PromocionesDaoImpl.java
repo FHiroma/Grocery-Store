@@ -32,9 +32,22 @@ public class PromocionesDaoImpl implements PromocionesDao{
 				.add(Restrictions.le("fechaVencimiento", fechaLimite))
 				.list();
 		for(Compra compra: lista){
-			compra.setOferta(true);
-			sesion.update(compra);
-		}
+			@SuppressWarnings("unchecked")
+			List<Notificacion> listaNotificacion= sesion.createCriteria(Notificacion.class)
+			.add(Restrictions.eq("producto", compra.getProducto()))
+			.add(Restrictions.eq("descripcion", "Producto en oferta"))
+			.list();
+			if(listaNotificacion.size()==0) {
+				compra.setOferta(true);
+				sesion.update(compra);
+				Notificacion notificacion = new Notificacion();
+				notificacion.setDescripcion("Producto en oferta");
+				notificacion.setEstado(false);
+				notificacion.setProducto(compra.getProducto());
+				sesion.save(notificacion);
+			
+				}
+			}
 	}
 
 	@Override
@@ -53,6 +66,7 @@ public class PromocionesDaoImpl implements PromocionesDao{
 				@SuppressWarnings("unchecked")
 				List<Notificacion> listaNotificacion= sesion1.createCriteria(Notificacion.class)
 				.add(Restrictions.eq("producto", producto))
+				.add(Restrictions.eq("descripcion", "Stock Minimo"))
 				.list();
 				if(listaNotificacion.size()==0) {
 					Session sesion2 = sessionFactory.getCurrentSession();

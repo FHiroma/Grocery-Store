@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.dao;
 
+import ar.edu.unlam.tallerweb1.modelo.Compra;
 import ar.edu.unlam.tallerweb1.modelo.Productos;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import org.hibernate.Session;
@@ -44,5 +45,15 @@ public class UsuarioDaoImpl implements UsuarioDao {
 		.add(Restrictions.eq("estado", true))
 		.list();
 		return listaProductos;
+	}
+
+	@Override
+	public List<Compra> verProductosEnOferta() {
+		final Session session = sessionFactory.getCurrentSession();
+		@SuppressWarnings("unchecked")
+		List<Compra> listaDeOfertas= session.createCriteria(Compra.class)
+				.add(Restrictions.eq("oferta", true))
+				.list();
+		return listaDeOfertas;
 	}
 }

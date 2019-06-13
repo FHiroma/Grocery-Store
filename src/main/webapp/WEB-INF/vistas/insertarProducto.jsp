@@ -10,8 +10,7 @@
 <body>
 <a href="#" onclick="history.go(-1)">
 <button>Atras</button> </a>
-<a href="http://localhost:8080/proyecto-limpio-spring/logout"> 
-				<button>Log out</button> </a>
+<br>
 	<form:form action="guardarProducto" method="POST" modelAttribute="producto">
 
 					<label>Descripcion:</label>

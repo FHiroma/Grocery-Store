@@ -17,6 +17,7 @@ import ar.edu.unlam.tallerweb1.servicios.ServicioLogin;
 import ar.edu.unlam.tallerweb1.servicios.ServicioUser;
 import java.util.List;
 
+import ar.edu.unlam.tallerweb1.modelo.Compra;
 import ar.edu.unlam.tallerweb1.modelo.Notificacion;
 import ar.edu.unlam.tallerweb1.modelo.Productos;
 
@@ -69,10 +70,8 @@ public class ControladorLogin {
 			}
 		if("admin".equals(usuarioBuscado.getRol())){
 			request.getSession().setAttribute("ROL", usuarioBuscado.getRol());
-			List<Productos> listaProductosOferta=servicioAdmin.verProductosOferta();
 			List<Notificacion> listaNotificaciones=servicioAdmin.buscarNotificaciones();
 			model.put("listaNotificaciones", listaNotificaciones);
-			model.put("listaProductosOferta", listaProductosOferta);
 			return new ModelAndView("homeAdmin",model);
 			}
 		} else {

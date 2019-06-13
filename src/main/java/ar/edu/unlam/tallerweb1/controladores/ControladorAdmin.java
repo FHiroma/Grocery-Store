@@ -76,13 +76,13 @@ public class ControladorAdmin {
 		return new ModelAndView("exito");
 	}
 	
-	@RequestMapping(path="/listarProductosStockMinimo")
+	@RequestMapping(path="/consultarNotificaciones")
 	public ModelAndView listarProductosStockMinimo() {
 		List<Notificacion> lista= servicioAdmin.buscarNotificaciones();
 //		servicioAdmin.cambiarEstadoNotificaciones();
 		ModelMap modelo= new ModelMap();
 		modelo.put("lista", lista);
-		return new ModelAndView("listarProductosStockMinimo", modelo);
+		return new ModelAndView("vistaNotificacionOfertasAdmin", modelo);
 	}
 	
 }

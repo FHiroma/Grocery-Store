@@ -15,4 +15,5 @@ public interface AdminDao {
 	void insertarStock(Compra stock, Long id);
 	void aumentarStockProducto(Integer cantidad, Long id);
 	List<Notificacion> buscarNotificaciones();
+	List<Compra> productoOferta();
 }

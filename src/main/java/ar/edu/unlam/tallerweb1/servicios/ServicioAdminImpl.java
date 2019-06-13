@@ -63,4 +63,8 @@ public class ServicioAdminImpl implements ServicioAdmin {
 		return servicioAdminDao.buscarNotificaciones();
 	}
 
+	@Override
+	public List<Compra> productoOferta() {
+		return servicioAdminDao.productoOferta();
+	}
 }

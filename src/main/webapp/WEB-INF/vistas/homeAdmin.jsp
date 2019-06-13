@@ -21,9 +21,10 @@
 				
 			<c:if test="${listaNotificaciones.size() > 0}">
 				<h4>Notificaciones: ${listaNotificaciones.size()}</h4>
-				<a href="http://localhost:8080/grocery-store/listarProductosStockMinimo">notificaciones</a>
+				<a href="http://localhost:8080/grocery-store/consultarNotificaciones">notificaciones</a>
 			<br><br>
 			</c:if>
+			
 			
 			<a href="http://localhost:8080/grocery-store/listarProductos">Listar Productos</a>
 			<br><br>

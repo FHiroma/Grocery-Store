@@ -103,4 +103,14 @@ public class AdminDaoImpl implements AdminDao{
 				.list();
 		return listaNotificaciones;
 	}
+
+	@Override
+	public List<Compra> productoOferta() {
+		final Session session = sessionFactory.getCurrentSession();
+		@SuppressWarnings("unchecked")
+		List<Compra> listaOfertas= session.createCriteria(Compra.class)
+				.add(Restrictions.eq("oferta", true))
+				.list();
+		return listaOfertas;
+	}
 }
