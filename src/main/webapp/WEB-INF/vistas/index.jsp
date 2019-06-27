@@ -24,7 +24,7 @@
 	</form>
   </div>
 	<h1>Lista de productos a la venta:</h1>
-		<c:forEach items="${listaProductos}" var="productos">
+	<c:forEach items="${listaProductos}" var="productos">
 		<h3>Descripcion: ${productos.descripcion}</h3>
 		<h3>Stock: ${productos.stock}</h3>
 		<h3><a href="http://localhost:8080/grocery-store/agregar-carrito?id=${productos.id}"><button>agregar al carrito</button></a></h3>

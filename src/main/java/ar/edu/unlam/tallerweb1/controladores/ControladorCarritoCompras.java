@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -63,5 +64,16 @@ public class ControladorCarritoCompras {
 			}
 		}
 			return new ModelAndView("vista-carrito", model);
+	}
+	
+	@RequestMapping(value = "eliminar-producto-carrito", method = RequestMethod.GET)
+	public ModelAndView remove(@RequestParam("id") Long id, HttpServletRequest request) {
+		ModelMap modelo= new ModelMap();
+		Productos producto= servicioAdmin.buscarProducto(id);
+		CarritoCompras carrito=(CarritoCompras) request.getSession().getAttribute("carrito");
+		servicioDetalleVenta.eliminarDetalleVenta(producto, carrito);
+		List<DetalleVenta> lista= servicioDetalleVenta.traerCarritoCompras(carrito);
+		modelo.put("carrito", lista);
+		return new ModelAndView("vista-carrito", modelo);
 	}
 }
