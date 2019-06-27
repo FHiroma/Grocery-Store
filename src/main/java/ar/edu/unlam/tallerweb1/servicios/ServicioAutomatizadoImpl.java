@@ -16,13 +16,13 @@ public class ServicioAutomatizadoImpl implements ServicioAutomatizado{
 	@Inject
 	private PromocionesDao promoDao;
 	
-	@Scheduled(fixedDelay = 600000)
+	@Scheduled(fixedDelay = 60000)
 	public void autoPromocionar(){
 		promoDao.autoPromocionar();
 		System.out.println("Promociones");
 	}
 
-	@Scheduled(fixedDelay = 600000)
+	@Scheduled(fixedDelay = 60000)
 	public void productosPocoStock() {
 		promoDao.productosPocoStock();
 		System.out.println("Busca Notificaciones");

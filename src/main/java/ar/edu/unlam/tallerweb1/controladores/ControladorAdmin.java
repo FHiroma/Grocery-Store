@@ -4,8 +4,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import ar.edu.unlam.tallerweb1.modelo.Productos;
+import ar.edu.unlam.tallerweb1.modelo.Categoria;
 import ar.edu.unlam.tallerweb1.modelo.Compra;
 import ar.edu.unlam.tallerweb1.modelo.Notificacion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioAdmin;
@@ -51,12 +53,14 @@ public class ControladorAdmin {
 		ModelMap modelo= new ModelMap();
 		Productos producto= new Productos();
 		modelo.put("producto", producto);
+		List<Categoria> listaCategorias= servicioAdmin.listarCategorias();
+		modelo.put("categorias", listaCategorias);
 		return new ModelAndView("insertarProducto",modelo);
 	}
 	
-	@RequestMapping(path="/guardarProducto")
-	public ModelAndView guardarProducto(@ModelAttribute("producto") Productos producto) {
-		servicioAdmin.insertarProducto(producto);
+	@RequestMapping(path="/guardarProducto", method = RequestMethod.POST)
+	public ModelAndView guardarProducto(@ModelAttribute("producto") Productos producto, @ModelAttribute ("id") Long id) {
+		servicioAdmin.insertarProducto(producto, id);
 		return new ModelAndView("exito");
 	}
 	
