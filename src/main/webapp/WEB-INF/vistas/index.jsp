@@ -13,9 +13,8 @@
 </head>
 <body>
 	<h3> Bienvenido Mail: ${user.email}</h3>
-	<a href="http://localhost:8080/grocery-store/homeUser"><button>Home User</button></a>
-	<a href="http://localhost:8080/proyecto-limpio-spring/logout"> 
-				<button>Log out</button> </a><br><br>
+	<a href="http://localhost:8080/grocery-store/login"><button>Login</button></a>
+
 	  <div>
 	  <form action="busqueda" method="GET">
 	<input type="text"  id="w-input-search" name="busqueda">
@@ -28,6 +27,7 @@
 		<c:forEach items="${listaProductos}" var="productos">
 		<h3>Descripcion: ${productos.descripcion}</h3>
 		<h3>Stock: ${productos.stock}</h3>
+		<h3><a href="http://localhost:8080/grocery-store/agregar-carrito?id=${productos.id}"><button>agregar al carrito</button></a></h3>
 		<br>
 	</c:forEach>
 	 <script>

@@ -15,9 +15,11 @@ import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.servicios.ServicioAdmin;
 import ar.edu.unlam.tallerweb1.servicios.ServicioLogin;
 import ar.edu.unlam.tallerweb1.servicios.ServicioUser;
-import ar.edu.unlam.tallerweb1.servicios.ServicioProducto;
 import java.util.List;
 
+import ar.edu.unlam.tallerweb1.modelo.CarritoCompras;
+import ar.edu.unlam.tallerweb1.modelo.Compra;
+import ar.edu.unlam.tallerweb1.modelo.DetalleVenta;
 import ar.edu.unlam.tallerweb1.modelo.Notificacion;
 import ar.edu.unlam.tallerweb1.modelo.Productos;
 
@@ -33,8 +35,6 @@ public class ControladorLogin {
 	private ServicioUser servicioUser;
 	@Inject
 	private ServicioAdmin servicioAdmin;
-	@Inject 
-	private ServicioProducto servicioProducto;
 
 	// Este metodo escucha la URL localhost:8080/NOMBRE_APP/login si la misma es invocada por metodo http GET
 	@RequestMapping("/login")
@@ -61,7 +61,8 @@ public class ControladorLogin {
 		// hace una llamada a otro action a través de la URL correspondiente a ésta
 		Usuario usuarioBuscado = servicioLogin.consultarUsuario(usuario);
 		if (usuarioBuscado != null) {
-//			request.getSession().setAttribute("ROL", usuarioBuscado.getRol());
+			request.getSession().setAttribute("id", usuarioBuscado.getId());
+			model.put("id", request);
 //			return new ModelAndView("redirect:/home");
 //		String rol=usuarioBuscado.getRol();
 		if("user".equals(usuarioBuscado.getRol())){
@@ -97,7 +98,7 @@ public class ControladorLogin {
 	// Escucha la url /, y redirige a la URL /login, es lo mismo que si se invoca la url /login directamente.
 	@RequestMapping(path = "/", method = RequestMethod.GET)
 	public ModelAndView inicio() {
-		return new ModelAndView("redirect:/Bienvenidos");
+		return new ModelAndView("redirect:/login");
 	}
 	
 	@RequestMapping("/logout")
@@ -113,10 +114,10 @@ public class ControladorLogin {
 	
 	@RequestMapping("/Bienvenidos")
 	public ModelAndView index() {
-		List<Productos> lista= servicioProducto.buscarProductosParaPublicar();
+		List<Compra> lista= servicioUser.verProductosEnOferta();
 		ModelMap modelo= new ModelMap();
 		modelo.put("productos", lista);
-		return new ModelAndView("vista-home", modelo);
+		return new ModelAndView();
 	}
 
 	

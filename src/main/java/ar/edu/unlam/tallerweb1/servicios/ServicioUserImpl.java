@@ -5,6 +5,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ar.edu.unlam.tallerweb1.dao.UsuarioDao;
+import ar.edu.unlam.tallerweb1.modelo.CarritoCompras;
 import ar.edu.unlam.tallerweb1.modelo.Compra;
 import ar.edu.unlam.tallerweb1.modelo.Productos;
 
@@ -23,5 +24,10 @@ public class ServicioUserImpl implements ServicioUser {
 	@Override
 	public List<Compra> verProductosEnOferta() {
 		return servicioUsuarioDao.verProductosEnOferta();
+	}
+
+	@Override
+	public void guardarCarritoVacio(CarritoCompras carrito) {
+		servicioUsuarioDao.guardarCarritoVacio(carrito);
 	}
 }
