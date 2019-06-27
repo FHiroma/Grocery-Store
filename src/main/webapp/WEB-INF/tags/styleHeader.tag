@@ -1,5 +1,9 @@
 <%@ tag language="java" pageEncoding="ISO-8859-1"%>
 
+		<script src="js/jquery-1.11.3.min.js" /></script>
+		<script src="js/jquery.autocomplete.js" /></script>
+		<link href="css/main.css" rel="stylesheet"/>
+
  		<!-- Google font -->
  		<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
 

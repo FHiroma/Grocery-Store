@@ -14,16 +14,7 @@
 		</t:header>
 		<t:nav>
 		</t:nav>
-		<c:forEach items="${lista}" var="productos">
-		<a href="producto?producto=${productos.descripcion}">
-		<h3>Descripcion: ${productos.descripcion}</h3>
-		<h3>Precio: ${productos.precio}</h3>
-		<h3>Stock: ${productos.stock}</h3>
-        </a>
-		<br>
-	</c:forEach>
-		
-		<t:listContainer>
+		<t:listContainer list="${lista}">
 		</t:listContainer>
 		<t:footer>
 	</t:footer>

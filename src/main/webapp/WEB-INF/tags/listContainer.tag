@@ -1,5 +1,8 @@
 <%@ tag language="java" pageEncoding="ISO-8859-1"%>
-<%@attribute name="lista" fragment="true" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@tag import="ar.edu.unlam.tallerweb1.modelo.Productos" %>
+<%@tag import="java.util.List"%>
+<%@attribute name="list" required="true" type="java.util.List"%>
 		<!-- SECTION -->
 		<div class="section">
 			<!-- container -->
@@ -159,17 +162,17 @@
 									<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
 								</div>
 							</div>
-
-							<div class="product-widget">
-								<div class="product-img">
+										<div class="product-widget">
+									<div class="product-img">
 									<img src="./img/product02.png" alt="">
-								</div>
-								<div class="product-body">
-									<p class="product-category">Category</p>
-									<h3 class="product-name"><a href="#">product name goes here</a></h3>
-									<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-								</div>
-							</div>
+									</div>
+										<div class="product-body">
+											<p class="product-category">Category</p>
+											<h3 class="product-name"><a href="#">
+											${productos.descripcion}</a></h3>
+											<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
+										</div>
+									</div>
 
 							<div class="product-widget">
 								<div class="product-img">
@@ -217,10 +220,11 @@
 						<!-- store products -->
 						<div class="row">
 							<!-- product -->
-							<div class="col-md-10 col-xs-12">
+							<c:forEach items="${list}" var="productos">
+							<div class="col-md-6 col-xs-3">
 								<div class="product">
 									<div class="product-img">
-										<img src="./img/product01.png" alt="">
+										<img src="images/product02.png" alt="">
 										<div class="product-label">
 											<span class="sale">-30%</span>
 											<span class="new">NEW</span>
@@ -228,18 +232,10 @@
 									</div>
 									<div class="product-body">
 										<p class="product-category">Category</p>
-										<h3 class="product-name"><a href="#">product name goes here</a></h3>
-										<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-										<div class="product-rating">
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-										</div>
+										<h3 class="product-name"><a href="producto?producto=${productos.descripcion}">${productos.descripcion}</a></h3>
+										<h4 class="product-price">$${productos.precio}</h4>
 										<div class="product-btns">
 											<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-											<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
 											<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
 										</div>
 									</div>
@@ -248,6 +244,7 @@
 									</div>
 								</div>
 							</div>
+							</c:forEach>
 							<!-- /product -->
 						</div>
 						<!-- /store products -->
