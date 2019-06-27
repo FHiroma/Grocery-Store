@@ -17,6 +17,9 @@ import ar.edu.unlam.tallerweb1.servicios.ServicioLogin;
 import ar.edu.unlam.tallerweb1.servicios.ServicioUser;
 import java.util.List;
 
+import ar.edu.unlam.tallerweb1.modelo.CarritoCompras;
+import ar.edu.unlam.tallerweb1.modelo.Compra;
+import ar.edu.unlam.tallerweb1.modelo.DetalleVenta;
 import ar.edu.unlam.tallerweb1.modelo.Notificacion;
 import ar.edu.unlam.tallerweb1.modelo.Productos;
 
@@ -58,7 +61,8 @@ public class ControladorLogin {
 		// hace una llamada a otro action a través de la URL correspondiente a ésta
 		Usuario usuarioBuscado = servicioLogin.consultarUsuario(usuario);
 		if (usuarioBuscado != null) {
-//			request.getSession().setAttribute("ROL", usuarioBuscado.getRol());
+			request.getSession().setAttribute("id", usuarioBuscado.getId());
+			model.put("id", request);
 //			return new ModelAndView("redirect:/home");
 //		String rol=usuarioBuscado.getRol();
 		if("user".equals(usuarioBuscado.getRol())){
@@ -94,7 +98,7 @@ public class ControladorLogin {
 	// Escucha la url /, y redirige a la URL /login, es lo mismo que si se invoca la url /login directamente.
 	@RequestMapping(path = "/", method = RequestMethod.GET)
 	public ModelAndView inicio() {
-		return new ModelAndView("redirect:/Bienvenidos");
+		return new ModelAndView("redirect:/login");
 	}
 	
 	@RequestMapping("/logout")
@@ -107,14 +111,14 @@ public class ControladorLogin {
 		}	
 		return new ModelAndView("redirect:/login");
 	}
-//	
-//	@RequestMapping("/Bienvenidos")
-//	public ModelAndView index() {
-//		List<Productos> lista= servicioProducto.buscarProductosParaPublicar();
-//		ModelMap modelo= new ModelMap();
-//		modelo.put("productos", lista);
-//		return new ModelAndView("vista-home", modelo);
-//	}
+	
+	@RequestMapping("/Bienvenidos")
+	public ModelAndView index() {
+		List<Compra> lista= servicioUser.verProductosEnOferta();
+		ModelMap modelo= new ModelMap();
+		modelo.put("productos", lista);
+		return new ModelAndView();
+	}
 
 	
 }

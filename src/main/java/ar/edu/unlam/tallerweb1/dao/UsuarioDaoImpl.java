@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.dao;
 
+import ar.edu.unlam.tallerweb1.modelo.CarritoCompras;
 import ar.edu.unlam.tallerweb1.modelo.Compra;
 import ar.edu.unlam.tallerweb1.modelo.Productos;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
@@ -55,5 +56,10 @@ public class UsuarioDaoImpl implements UsuarioDao {
 				.add(Restrictions.eq("oferta", true))
 				.list();
 		return listaDeOfertas;
+	}
+
+	@Override
+	public void guardarCarritoVacio(CarritoCompras carrito) {
+		sessionFactory.getCurrentSession().save(carrito);
 	}
 }
