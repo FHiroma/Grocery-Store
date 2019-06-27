@@ -71,9 +71,7 @@ public class ControladorLogin {
 			}
 		if("admin".equals(usuarioBuscado.getRol())){
 			request.getSession().setAttribute("ROL", usuarioBuscado.getRol());
-			List<Notificacion> listaNotificaciones=servicioAdmin.buscarNotificaciones();
-			model.put("listaNotificaciones", listaNotificaciones);
-			return new ModelAndView("homeAdmin",model);
+			return new ModelAndView("redirect:/homeAdmin",model);
 			}
 		} else {
 			// si el usuario no existe agrega un mensaje de error en el modelo.
@@ -90,7 +88,10 @@ public class ControladorLogin {
 	
 	@RequestMapping(path = "/homeAdmin", method = RequestMethod.GET)
 	public ModelAndView irAHomeAdmin() {
-		return new ModelAndView("homeAdmin");
+		ModelMap model= new ModelMap();
+		List<Notificacion> listaNotificaciones=servicioAdmin.buscarNotificaciones();
+		model.put("listaNotificaciones", listaNotificaciones);
+		return new ModelAndView("homeAdmin", model);
 	}
 
 	// Escucha la url /, y redirige a la URL /login, es lo mismo que si se invoca la url /login directamente.
