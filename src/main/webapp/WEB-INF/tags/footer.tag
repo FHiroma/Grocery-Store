@@ -94,7 +94,7 @@
 			<!-- /bottom footer -->
 		</footer>
 		<!-- /FOOTER -->
-	 <script>
+<script>
 	 
   $(document).ready(function() {
 
@@ -119,4 +119,13 @@
 				
   });
   
-  </script>
+</script>
+  			<!-- jQuery Plugins -->
+		<script src="js/template/jquery.min.js"></script>
+		<script src="js/template/bootstrap.min.js"></script>
+		<script src="js/template/slick.min.js"></script>
+		<script src="js/template/nouislider.min.js"></script>
+		<script src="js/template/jquery.zoom.min.js"></script>
+		<script src="js/template/main.js"></script>
+		
+  

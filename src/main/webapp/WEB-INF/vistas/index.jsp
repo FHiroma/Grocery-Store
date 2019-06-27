@@ -7,11 +7,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-
-<script src="js/jquery-1.11.3.min.js" /></script>
-<script src="js/jquery.autocomplete.js" /></script>
-<link href="css/main.css" rel="stylesheet"/>
-
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
 <t:styleHeader></t:styleHeader>
@@ -28,13 +23,6 @@
 	</c:forEach>
 	<t:footer>
 	</t:footer>
-			<!-- jQuery Plugins -->
-		<script src="../js/template/jquery.min.js"></script>
-		<script src="../js/template/bootstrap.min.js"></script>
-		<script src="../js/template/slick.min.js"></script>
-		<script src="../js/template/nouislider.min.js"></script>
-		<script src="../js/template/jquery.zoom.min.js"></script>
-		<script src="../js/template/main.js"></script>
-  
+	
 </body>
 </html>
