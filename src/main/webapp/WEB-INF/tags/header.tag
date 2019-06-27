@@ -26,8 +26,8 @@
 						<!-- LOGO -->
 						<div class="col-md-3">
 							<div class="header-logo">
-								<a href="#" class="logo">
-									<img src="../images/logo.PNG" alt="">
+								<a href="/grocery-store/" class="logo">
+									<img src="images/logo.PNG" alt="">
 								</a>
 							</div>
 						</div>
@@ -36,14 +36,14 @@
 						<!-- SEARCH BAR -->
 						<div class="col-md-6">
 							<div class="header-search">
-								<form>
+								<form action="busqueda" method="GET">
 									<select class="input-select">
 										<option value="0">All Categories</option>
 										<option value="1">Category 01</option>
 										<option value="1">Category 02</option>
 									</select>
-									<input class="input" placeholder="Search here">
-									<button class="search-btn">Search</button>
+									<input class="input" type="text" id="w-input-search" name="busqueda" placeholder="Busque por acá">
+									<button class="search-btn" id="button-id" type="submit">Search</button>
 								</form>
 							</div>
 						</div>
