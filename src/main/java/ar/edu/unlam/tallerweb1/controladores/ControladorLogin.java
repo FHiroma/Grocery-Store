@@ -15,7 +15,6 @@ import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.servicios.ServicioAdmin;
 import ar.edu.unlam.tallerweb1.servicios.ServicioLogin;
 import ar.edu.unlam.tallerweb1.servicios.ServicioUser;
-import ar.edu.unlam.tallerweb1.servicios.ServicioProducto;
 import java.util.List;
 
 import ar.edu.unlam.tallerweb1.modelo.Notificacion;
@@ -33,8 +32,6 @@ public class ControladorLogin {
 	private ServicioUser servicioUser;
 	@Inject
 	private ServicioAdmin servicioAdmin;
-	@Inject 
-	private ServicioProducto servicioProducto;
 
 	// Este metodo escucha la URL localhost:8080/NOMBRE_APP/login si la misma es invocada por metodo http GET
 	@RequestMapping("/login")
@@ -110,14 +107,14 @@ public class ControladorLogin {
 		}	
 		return new ModelAndView("redirect:/login");
 	}
-	
-	@RequestMapping("/Bienvenidos")
-	public ModelAndView index() {
-		List<Productos> lista= servicioProducto.buscarProductosParaPublicar();
-		ModelMap modelo= new ModelMap();
-		modelo.put("productos", lista);
-		return new ModelAndView("vista-home", modelo);
-	}
+//	
+//	@RequestMapping("/Bienvenidos")
+//	public ModelAndView index() {
+//		List<Productos> lista= servicioProducto.buscarProductosParaPublicar();
+//		ModelMap modelo= new ModelMap();
+//		modelo.put("productos", lista);
+//		return new ModelAndView("vista-home", modelo);
+//	}
 
 	
 }
