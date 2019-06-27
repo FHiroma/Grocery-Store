@@ -44,4 +44,9 @@ public class ServicioDetalleVentaImpl implements ServicioDetalleVenta {
 		return servicioDetalleVentaDao.traerCarritoCompras(carrito);
 	}
 
+	@Override
+	public void eliminarDetalleVenta(Productos producto, CarritoCompras carrito) {
+		servicioDetalleVentaDao.eliminarDetalleVenta(producto, carrito);
+	}
+
 }
