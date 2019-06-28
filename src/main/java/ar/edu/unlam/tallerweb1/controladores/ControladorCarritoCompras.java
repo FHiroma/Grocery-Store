@@ -30,7 +30,7 @@ public class ControladorCarritoCompras {
 	private ServicioUser servicioUsuario;
 	
 	@RequestMapping("/agregar-carrito")
-	public ModelAndView agregarAlCarrito(HttpServletRequest request, @RequestParam ("id") Long id, @RequestParam ("cantidad") Integer cantidad) {
+	public ModelAndView agregarAlCarrito(HttpServletRequest request, @RequestParam ("id") Long id) {
 		ModelMap model= new ModelMap();
 		Productos producto= servicioAdmin.buscarProducto(id);
 		if (request.getSession().getAttribute("carrito") == null) {
@@ -39,7 +39,7 @@ public class ControladorCarritoCompras {
 			DetalleVenta detalle = new DetalleVenta();
 			detalle.setCarritoCompras(carrito);
 			detalle.setProducto(producto);
-			detalle.setCantidad(cantidad);
+			detalle.setCantidad(1);
 			servicioDetalleVenta.registrarDetalle(detalle);
 			List<DetalleVenta> lista= servicioDetalleVenta.traerCarritoCompras(carrito);
 			model.put("carrito", lista);
@@ -51,13 +51,13 @@ public class ControladorCarritoCompras {
 				DetalleVenta detalle = new DetalleVenta();
 				detalle.setCarritoCompras(carrito);
 				detalle.setProducto(producto);
-				detalle.setCantidad(cantidad);
+				detalle.setCantidad(1);
 				servicioDetalleVenta.registrarDetalle(detalle);
 				List<DetalleVenta> lista= servicioDetalleVenta.traerCarritoCompras(carrito);
 				model.put("carrito", lista);
 			} else {
 				DetalleVenta detalle= servicioDetalleVenta.buscarDetalleVentaConCarritoProducto(carrito, producto);
-				detalle.setCantidad(detalle.getCantidad() + cantidad);
+				detalle.setCantidad(1);
 				servicioDetalleVenta.actualizarDetalleVenta(detalle);	
 				List<DetalleVenta> lista= servicioDetalleVenta.traerCarritoCompras(carrito);
 				model.put("carrito", lista);

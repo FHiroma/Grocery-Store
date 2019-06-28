@@ -27,4 +27,9 @@ public class ServicioAutomatizadoImpl implements ServicioAutomatizado{
 		promoDao.productosPocoStock();
 		System.out.println("Busca Notificaciones");
 	}
+
+	@Scheduled(fixedDelay = 60000)
+	public void productosVencidos() {
+		promoDao.productosVencidos();
+	}
 }

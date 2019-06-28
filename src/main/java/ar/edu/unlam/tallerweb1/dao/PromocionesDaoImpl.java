@@ -76,4 +76,28 @@ public class PromocionesDaoImpl implements PromocionesDao{
 		}
 	}
 
+	@Override
+	public void productosVencidos() {
+		Session sesion = sessionFactory.getCurrentSession();
+		Calendar fecha= Calendar.getInstance();
+		fecha.set(Calendar.HOUR_OF_DAY, 0);
+		fecha.set(Calendar.MINUTE, 0);
+		fecha.set(Calendar.SECOND, 0);
+		fecha.set(Calendar.MILLISECOND, 0);
+		@SuppressWarnings("unchecked")
+		List<Compra> listaCompras= sesion.createCriteria(Compra.class)
+				.list();
+		for(Compra i:listaCompras) {
+			if(i.getFechaVencimiento().equals(fecha)) {
+				Long idCompra=i.getId();
+				Compra compra=(Compra) sesion.createCriteria(Compra.class)
+						.add(Restrictions.eq("id", idCompra))
+						.uniqueResult();
+				Productos producto=compra.getProducto();
+				producto.setStock(producto.getStock()-compra.getStock());
+				sesion.update(producto);
+				sesion.delete(compra);
+			}
+		}	
+	}
 }

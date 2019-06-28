@@ -8,10 +8,27 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<c:forEach items="${carrito}" var="detalle">
-		<h3>${detalle.producto.descripcion}</h3>
-		<h3>${detalle.producto.stock}</h3>
-		<h3>${detalle.cantidad}</h3>
-	</c:forEach>
+				<h2>Carrito de compras</h2>
+				
+			    		
+		<table border="1">
+                <thead>
+                <th>Descripcion</th>
+                <th>Precio</th>
+                <th>Cantidad</th>  
+                </thead>
+                <c:forEach items="${carrito}" var="detalle">
+                <tbody>               
+                <tr>
+                   <td>${detalle.producto.descripcion}</td>
+                   <td>${detalle.producto.precio}</td>
+                   <td>${detalle.cantidad}</td>
+                   <td></td>
+                </tr>                
+                </tbody>  
+                </c:forEach>         
+            </table>
+					
+	
 </body>
 </html>
