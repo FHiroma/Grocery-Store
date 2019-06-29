@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import ar.edu.unlam.tallerweb1.modelo.Compra;
 import ar.edu.unlam.tallerweb1.modelo.Notificacion;
 import ar.edu.unlam.tallerweb1.modelo.Productos;
+import ar.edu.unlam.tallerweb1.modelo.ProductosVencidos;
 
 @Repository("promoDao")
 public class PromocionesDaoImpl implements PromocionesDao{
@@ -89,14 +90,32 @@ public class PromocionesDaoImpl implements PromocionesDao{
 				.list();
 		for(Compra i:listaCompras) {
 			if(i.getFechaVencimiento().equals(fecha)) {
-				Long idCompra=i.getId();
-				Compra compra=(Compra) sesion.createCriteria(Compra.class)
-						.add(Restrictions.eq("id", idCompra))
+				Compra compra= (Compra) sesion.createCriteria(Compra.class)
+						.add(Restrictions.eq("id", i.getId()))
 						.uniqueResult();
-				Productos producto=compra.getProducto();
+				Productos producto= compra.getProducto();
 				producto.setStock(producto.getStock()-compra.getStock());
-				sesion.update(producto);
-				sesion.delete(compra);
+				sessionFactory.getCurrentSession().update(producto);
+				@SuppressWarnings("unchecked")
+				List<Notificacion> lista=(List<Notificacion>) sessionFactory.getCurrentSession()
+						.createCriteria(Notificacion.class)
+						.add(Restrictions.eq("producto", producto))
+						.add(Restrictions.eq("descripcion", "Producto Vencido"))
+						.list();
+				if(lista.size()==0) {
+					Notificacion n= new Notificacion();
+					n.setDescripcion("Producto vencido");
+					n.setEstado(false);
+					n.setProducto(producto);
+					sessionFactory.getCurrentSession().save(n);
+				}
+				ProductosVencidos productoVencido=  new ProductosVencidos();
+				productoVencido.setProducto(compra.getProducto());
+				productoVencido.setCantidad(compra.getStock());
+				productoVencido.setFechaCompra(compra.getFechaIngreso());
+				sessionFactory.getCurrentSession().save(productoVencido);
+				compra.setVencido(true);
+				sessionFactory.getCurrentSession().delete(compra);
 			}
 		}	
 	}

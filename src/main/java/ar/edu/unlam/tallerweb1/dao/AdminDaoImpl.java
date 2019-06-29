@@ -85,6 +85,7 @@ public class AdminDaoImpl implements AdminDao{
 		stock.setFechaVencimiento();
 		stock.setOferta(false);
 		stock.setFechaIngreso();
+		stock.setVencido(false);
 		session.save(stock);
 	}
 

@@ -20,6 +20,13 @@ public class Compra {
 	private Calendar fechaVencimiento;
 	private Boolean oferta;
 	private Calendar fechaIngreso;
+	private Boolean vencido;
+	public Boolean getVencido() {
+		return vencido;
+	}
+	public void setVencido(Boolean vencido) {
+		this.vencido = vencido;
+	}
 	public Long getId() {
 		return id;
 	}

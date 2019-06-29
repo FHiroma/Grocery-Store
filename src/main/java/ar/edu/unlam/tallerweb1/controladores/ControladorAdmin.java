@@ -88,5 +88,4 @@ public class ControladorAdmin {
 		modelo.put("lista", lista);
 		return new ModelAndView("vistaNotificacionOfertasAdmin", modelo);
 	}
-	
 }

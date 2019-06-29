@@ -31,5 +31,6 @@ public class ServicioAutomatizadoImpl implements ServicioAutomatizado{
 	@Scheduled(fixedDelay = 60000)
 	public void productosVencidos() {
 		promoDao.productosVencidos();
+		System.out.println("Productos vencidos");
 	}
 }
