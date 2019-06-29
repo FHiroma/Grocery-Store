@@ -24,9 +24,14 @@
 					<form:input path="diasCaducidad" id="diasCaducidad" type="Integer" class="form-control" />
 					<br><br>
 					Seleccione:
-					<select name="id" required>
+					<select name="idCategoria" required>
 						<c:forEach items="${categorias}" var="categoria">
 		        			<option value="${categoria.id}" selected>${categoria.descripcion}</option>
+  						</c:forEach>
+					</select>
+					<select name="idProveedor" required>
+						<c:forEach items="${proveedores}" var="proveedor">
+		        			<option value="${proveedor.id}" selected>${proveedor.descripcion}</option>
   						</c:forEach>
 					</select>
 					<br><br>

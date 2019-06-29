@@ -19,7 +19,15 @@ public class Productos {
 	private Integer stock;
 	@ManyToOne
 	private Categoria categoria;
+	@ManyToOne
+	private Proveedor proveedor;
 	
+	public Proveedor getProveedor() {
+		return proveedor;
+	}
+	public void setProveedor(Proveedor proveedor) {
+		this.proveedor = proveedor;
+	}
 	public Categoria getCategoria() {
 		return categoria;
 	}

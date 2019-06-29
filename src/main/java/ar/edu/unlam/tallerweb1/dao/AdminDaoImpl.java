@@ -8,6 +8,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import ar.edu.unlam.tallerweb1.modelo.Productos;
+import ar.edu.unlam.tallerweb1.modelo.Proveedor;
 import ar.edu.unlam.tallerweb1.modelo.Categoria;
 import ar.edu.unlam.tallerweb1.modelo.Compra;
 import ar.edu.unlam.tallerweb1.modelo.Notificacion;
@@ -52,15 +53,19 @@ public class AdminDaoImpl implements AdminDao{
 	}
 
 	@Override
-	public void insertarProducto(Productos producto, Long id) {
+	public void insertarProducto(Productos producto, Long idCategoria, Long idProveedor) {
 		final Session session = sessionFactory.getCurrentSession();
 		Categoria categoria= (Categoria) session.createCriteria(Categoria.class)
-				.add(Restrictions.eq("id", id))
+				.add(Restrictions.eq("id", idCategoria))
+				.uniqueResult();
+		Proveedor proveedor=(Proveedor) session.createCriteria(Proveedor.class)
+				.add(Restrictions.eq("id", idProveedor))
 				.uniqueResult();
 		session.createCriteria(Productos.class)
 				.add(Restrictions.eq("descripcion", producto.getDescripcion()))
 				.uniqueResult();
 		producto.setCategoria(categoria);
+		producto.setProveedor(proveedor);
 		producto.setEstado(true);
 		producto.setStock(0);
 		session.save(producto);
@@ -127,5 +132,14 @@ public class AdminDaoImpl implements AdminDao{
 				.createCriteria(Categoria.class)
 				.list();
 		return listaCategorias;
+	}
+
+	@Override
+	public List<Proveedor> listarProveedores() {
+		@SuppressWarnings("unchecked")
+		List<Proveedor> listaProveedores= sessionFactory.getCurrentSession()
+				.createCriteria(Proveedor.class)
+				.list();
+		return listaProveedores;
 	}
 }

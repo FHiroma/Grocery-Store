@@ -18,6 +18,7 @@ public class ProductosVencidos {
 	private Productos producto;
 	private Integer cantidad;
 	private Calendar fechaCompra;
+
 	public Long getId() {
 		return id;
 	}

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import ar.edu.unlam.tallerweb1.modelo.Productos;
+import ar.edu.unlam.tallerweb1.modelo.Proveedor;
 import ar.edu.unlam.tallerweb1.modelo.Categoria;
 import ar.edu.unlam.tallerweb1.modelo.Compra;
 import ar.edu.unlam.tallerweb1.modelo.Notificacion;
@@ -55,12 +56,16 @@ public class ControladorAdmin {
 		modelo.put("producto", producto);
 		List<Categoria> listaCategorias= servicioAdmin.listarCategorias();
 		modelo.put("categorias", listaCategorias);
+		List<Proveedor> listaProveedores= servicioAdmin.listarProveedores();
+		modelo.put("proveedores", listaProveedores);
 		return new ModelAndView("insertarProducto",modelo);
 	}
 	
 	@RequestMapping(path="/guardarProducto", method = RequestMethod.POST)
-	public ModelAndView guardarProducto(@ModelAttribute("producto") Productos producto, @ModelAttribute ("id") Long id) {
-		servicioAdmin.insertarProducto(producto, id);
+	public ModelAndView guardarProducto(@ModelAttribute("producto") Productos producto
+										, @ModelAttribute ("idCategoria") Long idCategoria
+										, @ModelAttribute ("idProveedor") Long idProveedor) {
+		servicioAdmin.insertarProducto(producto, idCategoria, idProveedor);
 		return new ModelAndView("exito");
 	}
 	
