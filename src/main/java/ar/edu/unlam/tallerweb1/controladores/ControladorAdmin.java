@@ -1,6 +1,7 @@
 package ar.edu.unlam.tallerweb1.controladores;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -56,16 +57,13 @@ public class ControladorAdmin {
 		modelo.put("producto", producto);
 		List<Categoria> listaCategorias= servicioAdmin.listarCategorias();
 		modelo.put("categorias", listaCategorias);
-		List<Proveedor> listaProveedores= servicioAdmin.listarProveedores();
-		modelo.put("proveedores", listaProveedores);
 		return new ModelAndView("insertarProducto",modelo);
 	}
 	
 	@RequestMapping(path="/guardarProducto", method = RequestMethod.POST)
 	public ModelAndView guardarProducto(@ModelAttribute("producto") Productos producto
-										, @ModelAttribute ("idCategoria") Long idCategoria
-										, @ModelAttribute ("idProveedor") Long idProveedor) {
-		servicioAdmin.insertarProducto(producto, idCategoria, idProveedor);
+										, @ModelAttribute ("idCategoria") Long idCategoria) {
+		servicioAdmin.insertarProducto(producto, idCategoria);
 		return new ModelAndView("exito");
 	}
 	
@@ -75,12 +73,16 @@ public class ControladorAdmin {
 		Compra stock = new Compra();
 		modelo.put("stock", stock);
 		modelo.put("producto", id);
+		List<Proveedor> lista = servicioAdmin.listarProveedores();
+		modelo.put("proveedores", lista);
 		return new ModelAndView("formularioStock",modelo);
 	}
 	
 	@RequestMapping(path="/guardarStock")
-	public ModelAndView guardarSock(@ModelAttribute("stock") Compra stock, @ModelAttribute("id") Long id) {
-		servicioAdmin.insertarStock(stock,id);
+	public ModelAndView guardarSock(@ModelAttribute("stock") Compra stock
+									, @ModelAttribute("id") Long id
+									, @ModelAttribute("idProveedor") Long idProveedor) {
+		servicioAdmin.insertarStock(stock, id, idProveedor);
 		servicioAdmin.aumentarStockProducto(stock.getStock(),id);
 		return new ModelAndView("exito");
 	}

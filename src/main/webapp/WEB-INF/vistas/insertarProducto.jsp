@@ -29,11 +29,6 @@
 		        			<option value="${categoria.id}" selected>${categoria.descripcion}</option>
   						</c:forEach>
 					</select>
-					<select name="idProveedor" required>
-						<c:forEach items="${proveedores}" var="proveedor">
-		        			<option value="${proveedor.id}" selected>${proveedor.descripcion}</option>
-  						</c:forEach>
-					</select>
 					<br><br>
 					<button class="btn btn-lg btn-primary btn-block" Type="Submit"/>Insertar</button>
 				</form:form>

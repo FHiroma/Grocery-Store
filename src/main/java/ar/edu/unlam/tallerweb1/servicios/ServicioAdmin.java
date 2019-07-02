@@ -12,9 +12,9 @@ public interface ServicioAdmin {
 	void publicarProducto(Long id);
 	void quitarProducto(Long id);
 	List<Productos> verProductosOferta();
-	void insertarProducto(Productos producto, Long idCategoria, Long idProveedor);
+	void insertarProducto(Productos producto, Long idCategoria);
 	Productos buscarProducto(Long id);
-	void insertarStock(Compra stock, Long id);
+	void insertarStock(Compra stock, Long id, Long idProveedor);
 	void aumentarStockProducto(Integer cantidad, Long id);
 	List<Notificacion> buscarNotificaciones();
 	List<Compra> productoOferta();

@@ -46,8 +46,8 @@ public class ServicioAdminImpl implements ServicioAdmin {
 	}
 
 	@Override
-	public void insertarStock(Compra stock, Long id) {
-		servicioAdminDao.insertarStock(stock, id);
+	public void insertarStock(Compra stock, Long id, Long idProveedor) {
+		servicioAdminDao.insertarStock(stock, id, idProveedor);
 	}
 
 	@Override
@@ -76,7 +76,7 @@ public class ServicioAdminImpl implements ServicioAdmin {
 	}
 
 	@Override
-	public void insertarProducto(Productos producto, Long idCategoria, Long idProveedor) {
-		servicioAdminDao.insertarProducto(producto, idCategoria, idProveedor);
+	public void insertarProducto(Productos producto, Long idCategoria) {
+		servicioAdminDao.insertarProducto(producto, idCategoria);
 	}
 }
