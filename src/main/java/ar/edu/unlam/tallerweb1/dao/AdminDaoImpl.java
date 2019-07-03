@@ -72,7 +72,7 @@ public class AdminDaoImpl implements AdminDao {
 	}
 
 	@Override
-	public void insertarStock(Compra stock, Long id, Long idProveedor) {
+	public void insertarStock(Compra stock, Long id) {
 		final Session session = sessionFactory.getCurrentSession();
 		Productos producto= (Productos)session.createCriteria(Productos.class)
 		.add(Restrictions.eq("id", id))
@@ -85,16 +85,6 @@ public class AdminDaoImpl implements AdminDao {
 				stock.setVencido(false);
 				session.save(stock);
 			}
-		Proveedor proveedor = (Proveedor) session
-				.createCriteria(Proveedor.class)
-				.add(Restrictions.eq("id", idProveedor))
-				.uniqueResult();
-		if(proveedor != null) {
-		OrdenCompra OrdenCompra = new OrdenCompra();
-		OrdenCompra.setCompra(stock);
-		OrdenCompra.setProveedor(proveedor);
-		session.save(OrdenCompra);
-		}
 	}
 
 	@Override
@@ -137,5 +127,29 @@ public class AdminDaoImpl implements AdminDao {
 		List<Proveedor> listaProveedores = sessionFactory.getCurrentSession().createCriteria(Proveedor.class).list();
 		listaProveedores.size();
 		return listaProveedores;
+	}
+
+	@Override
+	public List<Notificacion> buscarProductosStockMinimo() {
+		@SuppressWarnings("unchecked")
+		List<Notificacion> productosStockMinimo= sessionFactory.getCurrentSession().createCriteria(Notificacion.class)
+				.add(Restrictions.eq("descripcion", "Stock Minimo")).list();
+		return productosStockMinimo;
+	}
+
+	@Override
+	public List<Notificacion> buscarProductosVencidos() {
+		@SuppressWarnings("unchecked")
+		List<Notificacion> productosVencidos= sessionFactory.getCurrentSession().createCriteria(Notificacion.class)
+				.add(Restrictions.eq("descripcion", "Producto Vencido")).list();
+		return productosVencidos;
+	}
+
+	@Override
+	public List<Notificacion> buscarProductosEnOferta() {
+		@SuppressWarnings("unchecked")
+		List<Notificacion> productosEnOferta= sessionFactory.getCurrentSession().createCriteria(Notificacion.class)
+				.add(Restrictions.eq("descripcion", "Producto en oferta")).list();
+		return productosEnOferta;
 	}
 }

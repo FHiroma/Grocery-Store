@@ -13,22 +13,48 @@
 	<button>Atras</button> </a>
 	<br>
 
-	<c:if test="${not empty listaOfertas}">
-		<h4>Ofertas Disponibles:</h4>
-		<br>
-	</c:if>	
-	
+	<c:if test="${not empty NotificacionStockMinimo}">
+		<h4>Productos Con Stock Minimo</h4>
 	<table>
-  		<c:forEach items="${lista}" var="notificacion">
+  		<c:forEach items="${NotificacionStockMinimo}" var="notificacion">
     		<tr>
       			<td><c:out value="${notificacion.descripcion}" /></td>
-      			<br>
       			<td><c:out value="${notificacion.producto.descripcion}" /></td>
-      			<br>
       			<td><c:out value="${notificacion.producto.stock}" /></td>
+      			<td>
+      				<select name="idProveedor" required>
+						<c:forEach items="${proveedores}" var="proveedor">
+		        			<option value="${proveedor.id}" selected>${proveedor.descripcion}</option>
+  						</c:forEach>
+					</select>
+      			</td>
     		</tr>
   		</c:forEach>
 	</table>
-
+	</c:if>	
+	
+		<c:if test="${not empty NotificacionProductosVencidos}">
+		<h4>Productos Vencido</h4>
+	<table>
+  		<c:forEach items="${NotificacionProductosVencidos}" var="notificacion">
+    		<tr>
+      			<td><c:out value="${notificacion.descripcion}" /></td>
+      			<td><c:out value="${notificacion.producto.descripcion}" /></td>
+    		</tr>
+  		</c:forEach>
+	</table>
+	</c:if>	
+	
+		<c:if test="${not empty NotificacionProductoEnOferta}">
+		<h4>Productos En Oferta</h4>
+	<table>
+  		<c:forEach items="${NotificacionProductoEnOferta}" var="notificacion">
+    		<tr>
+      			<td><c:out value="${notificacion.descripcion}" /></td>
+      			<td><c:out value="${notificacion.producto.descripcion}" /></td>
+    		</tr>
+  		</c:forEach>
+	</table>
+	</c:if>	
 </body>
 </html>

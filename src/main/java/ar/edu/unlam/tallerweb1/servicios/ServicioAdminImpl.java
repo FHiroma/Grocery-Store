@@ -46,8 +46,8 @@ public class ServicioAdminImpl implements ServicioAdmin {
 	}
 
 	@Override
-	public void insertarStock(Compra stock, Long id, Long idProveedor) {
-		servicioAdminDao.insertarStock(stock, id, idProveedor);
+	public void insertarStock(Compra stock, Long id) {
+		servicioAdminDao.insertarStock(stock, id);
 	}
 
 	@Override
@@ -78,5 +78,20 @@ public class ServicioAdminImpl implements ServicioAdmin {
 	@Override
 	public void insertarProducto(Productos producto, Long idCategoria) {
 		servicioAdminDao.insertarProducto(producto, idCategoria);
+	}
+
+	@Override
+	public List<Notificacion> buscarProductosStockMinimo() {
+		return servicioAdminDao.buscarProductosStockMinimo();
+	}
+
+	@Override
+	public List<Notificacion> buscarProductosVencidos() {
+		return servicioAdminDao.buscarProductosVencidos();
+	}
+
+	@Override
+	public List<Notificacion> buscarProductosEnOferta() {
+		return servicioAdminDao.buscarProductosEnOferta();
 	}
 }

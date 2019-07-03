@@ -20,15 +20,7 @@
 			<form:input path="stock" id="stock" type="number" class="form-control" />
 			<br><br>
 			<input name="id" id="id" type="hidden" value="${producto}"/>
-			Seleccione Proveedor:
-			<br><br>
-					<select name="idProveedor" required>
-						<c:forEach items="${proveedores}" var="proveedor">
-		        			<option value="${proveedor.id}">${proveedor.descripcion}</option>
-  						</c:forEach>
-					</select>
-					<br><br>
-			<button class="btn btn-lg btn-primary btn-block" Type="Submit"/>Insertar Stock</button>
+			<button class="btn btn-lg btn-primary btn-block" Type="Submit">Insertar Stock</button>
 		</form:form>
 
 </body>

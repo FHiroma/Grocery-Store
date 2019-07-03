@@ -73,26 +73,29 @@ public class ControladorAdmin {
 		Compra stock = new Compra();
 		modelo.put("stock", stock);
 		modelo.put("producto", id);
-		List<Proveedor> lista = servicioAdmin.listarProveedores();
-		modelo.put("proveedores", lista);
 		return new ModelAndView("formularioStock",modelo);
 	}
 	
 	@RequestMapping(path="/guardarStock")
 	public ModelAndView guardarSock(@ModelAttribute("stock") Compra stock
-									, @ModelAttribute("id") Long id
-									, @ModelAttribute("idProveedor") Long idProveedor) {
-		servicioAdmin.insertarStock(stock, id, idProveedor);
+									, @ModelAttribute("id") Long id) {
+		servicioAdmin.insertarStock(stock, id);
 		servicioAdmin.aumentarStockProducto(stock.getStock(),id);
 		return new ModelAndView("exito");
 	}
 	
 	@RequestMapping(path="/consultarNotificaciones")
 	public ModelAndView listarProductosStockMinimo() {
-		List<Notificacion> lista= servicioAdmin.buscarNotificaciones();
+		List<Notificacion> listaProductosPocoStock= servicioAdmin.buscarProductosStockMinimo();
+		List<Notificacion> listaProductosVencidos= servicioAdmin.buscarProductosVencidos();
+		List<Notificacion> listaProductosEnOferta= servicioAdmin.buscarProductosEnOferta();
+		List<Proveedor> listaProveedores= servicioAdmin.listarProveedores();
 //		servicioAdmin.cambiarEstadoNotificaciones();
 		ModelMap modelo= new ModelMap();
-		modelo.put("lista", lista);
+		modelo.put("NotificacionStockMinimo", listaProductosPocoStock);
+		modelo.put("NotificacionProductosVencidos", listaProductosVencidos);
+		modelo.put("NotificacionProductoEnOferta", listaProductosEnOferta);
+		modelo.put("proveedores", listaProveedores);
 		return new ModelAndView("vistaNotificacionOfertasAdmin", modelo);
 	}
 }

@@ -92,21 +92,25 @@ public class PromocionesDaoImpl implements PromocionesDao{
 			if(i.getFechaVencimiento().equals(fecha)) {
 				Compra compra= (Compra) sesion.createCriteria(Compra.class)
 						.add(Restrictions.eq("id", i.getId()))
+						.add(Restrictions.eq("vencido", false))
 						.uniqueResult();
+				if(compra != null) {
+				compra.setVencido(true);
 				Productos producto= compra.getProducto();
 				producto.setStock(producto.getStock()-compra.getStock());
 				sessionFactory.getCurrentSession().update(producto);
+				sessionFactory.getCurrentSession().update(compra);
 				@SuppressWarnings("unchecked")
 				List<Notificacion> lista=(List<Notificacion>) sessionFactory.getCurrentSession()
 						.createCriteria(Notificacion.class)
-						.add(Restrictions.eq("producto", producto))
+						.add(Restrictions.eq("producto", compra.getProducto()))
 						.add(Restrictions.eq("descripcion", "Producto Vencido"))
 						.list();
 				if(lista.size()==0) {
 					Notificacion n= new Notificacion();
 					n.setDescripcion("Producto vencido");
 					n.setEstado(false);
-					n.setProducto(producto);
+					n.setProducto(compra.getProducto());
 					sessionFactory.getCurrentSession().save(n);
 				}
 				ProductosVencidos productoVencido=  new ProductosVencidos();
@@ -114,9 +118,8 @@ public class PromocionesDaoImpl implements PromocionesDao{
 				productoVencido.setCantidad(compra.getStock());
 				productoVencido.setFechaCompra(compra.getFechaIngreso());
 				sessionFactory.getCurrentSession().save(productoVencido);
-				compra.setVencido(true);
-				sessionFactory.getCurrentSession().delete(compra);
-			}
-		}	
+				}
+			}	
+		}
 	}
 }

@@ -13,20 +13,12 @@ public class OrdenCompra{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@ManyToOne
-	private Compra compra;
-	@ManyToOne
 	private Proveedor proveedor;
 	public Long getId() {
 		return id;
 	}
 	public void setId(Long id) {
 		this.id = id;
-	}
-	public Compra getCompra() {
-		return compra;
-	}
-	public void setCompra(Compra compra) {
-		this.compra = compra;
 	}
 	public Proveedor getProveedor() {
 		return proveedor;
