@@ -99,16 +99,18 @@
   $(document).ready(function() {
 
 	$('#w-input-search').autocomplete({
+		
 		serviceUrl: '${pageContext.request.contextPath}/autocompletado',
 		paramName: "nombreProducto",
 		delimiter: ",",
+		groupBy: 'categorias',
 	   transformResult: function(response) {
 		    	
 		return {      	
 		  //must convert json to javascript object before process
 		  suggestions: $.map($.parseJSON(response), function(item) {
 		            	
-		      return { value: item.descripcion, data: item.descripcion };
+		      return { value: item.descripcion, data:{descripcion: item.descripcion, categorias: item.categoria.descripcion}};
 		   })
 		            
 		 };
@@ -121,7 +123,6 @@
   
 </script>
   			<!-- jQuery Plugins -->
-		<script src="js/template/jquery.min.js"></script>
 		<script src="js/template/bootstrap.min.js"></script>
 		<script src="js/template/slick.min.js"></script>
 		<script src="js/template/nouislider.min.js"></script>

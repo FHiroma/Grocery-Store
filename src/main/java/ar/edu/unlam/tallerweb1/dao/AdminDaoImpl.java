@@ -12,7 +12,6 @@ import ar.edu.unlam.tallerweb1.modelo.Proveedor;
 import ar.edu.unlam.tallerweb1.modelo.Categoria;
 import ar.edu.unlam.tallerweb1.modelo.Compra;
 import ar.edu.unlam.tallerweb1.modelo.Notificacion;
-import ar.edu.unlam.tallerweb1.modelo.OrdenCompra;
 
 @Repository("adminDao")
 public class AdminDaoImpl implements AdminDao {

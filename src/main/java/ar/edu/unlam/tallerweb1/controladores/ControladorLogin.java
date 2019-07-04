@@ -45,7 +45,7 @@ public class ControladorLogin {
 		modelo.put("usuario", usuario);
 		// Se va a la vista login (el nombre completo de la lista se resuelve utilizando el view resolver definido en el archivo spring-servlet.xml)
 		// y se envian los datos a la misma  dentro del modelo
-		return new ModelAndView("login", modelo);
+		return new ModelAndView("login2", modelo);
 	}
 
 	// Este metodo escucha la URL validar-login siempre y cuando se invoque con metodo http POST
@@ -67,6 +67,8 @@ public class ControladorLogin {
 			request.getSession().setAttribute("ROL", usuarioBuscado.getRol());
 			List<Productos> listaProductos=servicioUser.verProductosDisponibles();
 			model.put("listaProductos", listaProductos);
+			model.put("usuario", usuarioBuscado);
+			return new ModelAndView("index",model);
 			}
 		if("admin".equals(usuarioBuscado.getRol())){
 			request.getSession().setAttribute("ROL", usuarioBuscado.getRol());
@@ -110,7 +112,7 @@ public class ControladorLogin {
 		request.removeAttribute("rol");
 		session.invalidate();
 		}	
-		return new ModelAndView("redirect:/login");
+		return new ModelAndView("redirect:/");
 	}
 	
 	@RequestMapping("/Bienvenidos")
@@ -122,4 +124,5 @@ public class ControladorLogin {
 	}
 
 	
+
 }

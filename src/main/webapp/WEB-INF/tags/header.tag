@@ -1,4 +1,8 @@
 <%@ tag language="java" pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@tag import="ar.edu.unlam.tallerweb1.modelo.Usuario" %>
+<%@attribute name="user" required="false" type="ar.edu.unlam.tallerweb1.modelo.Usuario"%>
+
 		<!-- HEADER -->
 		<header>
 			<!-- TOP HEADER -->
@@ -9,10 +13,19 @@
 						<li><a href="#"><i class="fa fa-envelope-o"></i> email@email.com</a></li>
 						<li><a href="#"><i class="fa fa-map-marker"></i> 1734 Stonecoal Road</a></li>
 					</ul>
+					<c:if test="${not empty user}">
 					<ul class="header-links pull-right">
 						<li><a href="#"><i class="fa fa-dollar"></i> USD</a></li>
-						<li><a href="#"><i class="fa fa-user-o"></i> My Account</a></li>
+						<li><a href="login"><i class="fa fa-user-o"></i> ${user.nombre}</a></li>
+						<li><a href="logout"><i class="fa fa-sign-out"></i> Salir</a></li>
 					</ul>
+					</c:if> 
+					<c:if test="${empty user}">
+					<ul class="header-links pull-right">
+						<li><a href="#"><i class="fa fa-dollar"></i> USD</a></li>
+						<li><a href="login"><i class="fa fa-user-o"></i> Ingresá</a></li>
+					</ul>
+					</c:if> 
 				</div>
 			</div>
 			<!-- /TOP HEADER -->
@@ -37,12 +50,7 @@
 						<div class="col-md-6">
 							<div class="header-search">
 								<form action="busqueda" method="GET">
-									<select class="input-select">
-										<option value="0">All Categories</option>
-										<option value="1">Category 01</option>
-										<option value="1">Category 02</option>
-									</select>
-									<input class="input" type="text" id="w-input-search" name="busqueda" placeholder="Busque por acá">
+									<input class="input-select" type="text" id="w-input-search" name="busqueda" placeholder="Busque por acá">
 									<button class="search-btn" id="button-id" type="submit">Search</button>
 								</form>
 							</div>
