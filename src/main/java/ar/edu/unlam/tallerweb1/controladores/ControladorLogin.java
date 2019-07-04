@@ -67,7 +67,6 @@ public class ControladorLogin {
 			request.getSession().setAttribute("ROL", usuarioBuscado.getRol());
 			List<Productos> listaProductos=servicioUser.verProductosDisponibles();
 			model.put("listaProductos", listaProductos);
-			return new ModelAndView("index",model);
 			}
 		if("admin".equals(usuarioBuscado.getRol())){
 			request.getSession().setAttribute("ROL", usuarioBuscado.getRol());
