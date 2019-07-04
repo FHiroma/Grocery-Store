@@ -9,26 +9,28 @@
 </head>
 <body>
 				<h2>Carrito de compras</h2>
+	<table>	
+		<c:if test="${empty carrito}">
+			        <h4>
+			    		<a href="http://localhost:8080/grocery-store/"><button>Seguir Comprando</button></a>
+    				</h4>
+		</c:if>
+  		<c:forEach items="${carrito}" var="detalle">
+    		<tr>
+      			<td><c:out value="${detalle.producto.descripcion}" /></td>
+      			<td><a href="http://localhost:8080/grocery-store/disminuir-producto?id=${detalle.producto.id}">
+    			<button>-</button></a></td>
+      			<td><c:out value="${detalle.cantidad}" /></td>
+      			<td><a href="http://localhost:8080/grocery-store/agregar-carrito?id=${detalle.producto.id}">
+    			<button>+</button></a></td>
+      			<td><c:out value="${detalle.subtotal}" /></td>
+    			<td><a href="http://localhost:8080/grocery-store/eliminar-producto-carrito?id=${detalle.producto.id}">
+    			<button>EliminarProducto</button></a></td>    			
+    			<td><a href="http://localhost:8080/grocery-store/">
+    			<button>SeguirComprando</button></a></td>
+    		</tr>
+  		</c:forEach>
+	</table>       
 				
-			    		
-		<table border="1">
-                <thead>
-                <th>Descripcion</th>
-                <th>Precio</th>
-                <th>Cantidad</th>  
-                </thead>
-                <c:forEach items="${carrito}" var="detalle">
-                <tbody>               
-                <tr>
-                   <td>${detalle.producto.descripcion}</td>
-                   <td>${detalle.producto.precio}</td>
-                   <td>${detalle.cantidad}</td>
-                   <td></td>
-                </tr>                
-                </tbody>  
-                </c:forEach>         
-            </table>
-					
-	
 </body>
 </html>

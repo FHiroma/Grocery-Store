@@ -49,4 +49,9 @@ public class ServicioDetalleVentaImpl implements ServicioDetalleVenta {
 		servicioDetalleVentaDao.eliminarDetalleVenta(producto, carrito);
 	}
 
+	@Override
+	public DetalleVenta disminuirProductoCarrito(Productos producto, CarritoCompras carrito) {
+		return servicioDetalleVentaDao.disminuirProductoCarrito(producto, carrito);
+	}
+
 }

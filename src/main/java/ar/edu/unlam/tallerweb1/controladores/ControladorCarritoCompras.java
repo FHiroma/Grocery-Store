@@ -39,6 +39,7 @@ public class ControladorCarritoCompras {
 			DetalleVenta detalle = new DetalleVenta();
 			detalle.setCarritoCompras(carrito);
 			detalle.setProducto(producto);
+			detalle.setSubtotal(producto.getPrecio());
 			detalle.setCantidad(1);
 			servicioDetalleVenta.registrarDetalle(detalle);
 			List<DetalleVenta> lista= servicioDetalleVenta.traerCarritoCompras(carrito);
@@ -51,13 +52,15 @@ public class ControladorCarritoCompras {
 				DetalleVenta detalle = new DetalleVenta();
 				detalle.setCarritoCompras(carrito);
 				detalle.setProducto(producto);
+				detalle.setSubtotal(producto.getPrecio());
 				detalle.setCantidad(1);
 				servicioDetalleVenta.registrarDetalle(detalle);
 				List<DetalleVenta> lista= servicioDetalleVenta.traerCarritoCompras(carrito);
 				model.put("carrito", lista);
 			} else {
 				DetalleVenta detalle= servicioDetalleVenta.buscarDetalleVentaConCarritoProducto(carrito, producto);
-				detalle.setCantidad(1);
+				detalle.setCantidad(detalle.getCantidad()+1);
+				detalle.setSubtotal(detalle.getSubtotal()+producto.getPrecio());
 				servicioDetalleVenta.actualizarDetalleVenta(detalle);	
 				List<DetalleVenta> lista= servicioDetalleVenta.traerCarritoCompras(carrito);
 				model.put("carrito", lista);
@@ -72,6 +75,17 @@ public class ControladorCarritoCompras {
 		Productos producto= servicioAdmin.buscarProducto(id);
 		CarritoCompras carrito=(CarritoCompras) request.getSession().getAttribute("carrito");
 		servicioDetalleVenta.eliminarDetalleVenta(producto, carrito);
+		List<DetalleVenta> lista= servicioDetalleVenta.traerCarritoCompras(carrito);
+		modelo.put("carrito", lista);
+		return new ModelAndView("vista-carrito", modelo);
+	}
+	
+	@RequestMapping(value = "disminuir-producto", method = RequestMethod.GET)
+	public ModelAndView disminuir(@RequestParam("id") Long id, HttpServletRequest request) {
+		ModelMap modelo= new ModelMap();
+		Productos producto= servicioAdmin.buscarProducto(id);
+		CarritoCompras carrito=(CarritoCompras) request.getSession().getAttribute("carrito");
+		servicioDetalleVenta.disminuirProductoCarrito(producto, carrito);
 		List<DetalleVenta> lista= servicioDetalleVenta.traerCarritoCompras(carrito);
 		modelo.put("carrito", lista);
 		return new ModelAndView("vista-carrito", modelo);

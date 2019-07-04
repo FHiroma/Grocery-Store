@@ -17,12 +17,13 @@ public class DetalleVenta {
 	@ManyToOne
 	private Productos producto;
 	private Integer cantidad;
-	private Integer subTotal;
-	public Integer getSubTotal() {
-		return subTotal;
+	private Integer subtotal;
+	
+	public Integer getSubtotal() {
+		return subtotal;
 	}
-	public void setSubTotal(Integer subTotal) {
-		this.subTotal = subTotal;
+	public void setSubtotal(Integer subtotal) {
+		this.subtotal = subtotal;
 	}
 	public Integer getCantidad() {
 		return cantidad;
