@@ -8,11 +8,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Grocery-Store</title>
 <t:styleHeader></t:styleHeader>
 </head>
 <body>
-	<t:header></t:header>
+	<t:header user="${usuario}"></t:header>
 	<t:nav></t:nav>
 <!-- Products tab & slick -->
 	

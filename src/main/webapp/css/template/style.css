@@ -184,6 +184,7 @@ textarea.input {
 
 .input-select {
   padding: 0px 15px;
+  width: 75%;
   background: #FFF;
   border: 1px solid #E4E7ED;
   height: 40px;
