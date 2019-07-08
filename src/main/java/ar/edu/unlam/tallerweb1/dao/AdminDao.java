@@ -3,8 +3,12 @@ package ar.edu.unlam.tallerweb1.dao;
 import java.util.List;
 import ar.edu.unlam.tallerweb1.modelo.Productos;
 import ar.edu.unlam.tallerweb1.modelo.Proveedor;
+import ar.edu.unlam.tallerweb1.modelo.Usuario;
+import ar.edu.unlam.tallerweb1.modelo.CarritoCompras;
 import ar.edu.unlam.tallerweb1.modelo.Categoria;
 import ar.edu.unlam.tallerweb1.modelo.Compra;
+import ar.edu.unlam.tallerweb1.modelo.Direccion;
+import ar.edu.unlam.tallerweb1.modelo.Localidades;
 import ar.edu.unlam.tallerweb1.modelo.Notificacion;
 
 public interface AdminDao {
@@ -23,4 +27,8 @@ public interface AdminDao {
 	List<Notificacion> buscarProductosStockMinimo();
 	List<Notificacion> buscarProductosVencidos();
 	List<Notificacion> buscarProductosEnOferta();
+	void insertarUsuarioAlCarrito(CarritoCompras carrito, Usuario usuario);
+	List<Localidades> listarLocalidades();
+	Direccion guardarDireccionDeCompra(Direccion direccion, Long idLocalidad);
+	void agregarDireccionAlCarrito(CarritoCompras carrito, Direccion direccionTabla);
 }

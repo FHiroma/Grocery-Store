@@ -75,19 +75,17 @@ public class DetalleVentaDaoImpl implements DetalleVentaDao {
 	}
 
 	@Override
-	public DetalleVenta disminuirProductoCarrito(Productos producto, CarritoCompras carrito) {
+	public void modificarCantidadDeUnProductoDelCarrito(Productos producto, CarritoCompras carrito, Integer cantidad) {
 		DetalleVenta detalle=(DetalleVenta) sessionFactory.getCurrentSession()
 				.createCriteria(DetalleVenta.class)
 				.add(Restrictions.eq("carritoCompras", carrito))
 				.add(Restrictions.eq("producto", producto))
 				.uniqueResult();
 		if(detalle != null) {
-			detalle.setCantidad(detalle.getCantidad() - 1);
-			detalle.setSubtotal(detalle.getSubtotal() - producto.getPrecio());
+			detalle.setCantidad(cantidad);
+			detalle.setSubtotal(detalle.getCantidad() * detalle.getProducto().getPrecio());
 			sessionFactory.getCurrentSession().update(detalle);
-			return detalle;
 		}
-		return null;
 	}
 
 }

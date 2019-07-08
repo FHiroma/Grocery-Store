@@ -3,32 +3,31 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Login</title>
+<title>Insert title here</title>
 <t:styleHeader></t:styleHeader>
 </head>
 <body>
-	<t:header></t:header>
-	<t:nav></t:nav>
-	
-	<!-- Order Details -->
-					<div class="col-md-5 order-details">
+<t:header></t:header>
+
+<!-- Order Details -->
+					<div class="section-title text-center">
+					<div class="col-md-12 order-details">
 						<div class="section-title text-center">
 							<h3 class="title">Your Order</h3>
 						</div>
 
 						<c:forEach items="${carrito}" var="detalle">
 						<div class="order-summary">
-							<div class="order-col">
+							<div class="order-col-md-6">
 								<div><strong>PRODUCT</strong></div>
 								<div><strong>TOTAL</strong></div>
 							</div>
-							<div class="col-md-5 order-products">
-								<div class="order-col">
+							<div class="order-products">
+								<div class="col-md-5 order-col">
 
 									<div><c:out value="${detalle.producto.descripcion}" /></div>
 									<div><c:out value="${detalle.subtotal}" /></div>
@@ -100,11 +99,12 @@
 			       						<a href="http://localhost:8080/grocery-store/" class="primary-btn order-submit">Seguir Comprando</a>
     								</h4>
 								</c:if>
-						<a href="#" class="primary-btn order-submit">Place order</a>
+						<a href="http://localhost:8080/grocery-store/entrega" class="primary-btn order-submit">Continuar</a>
 					</div>
+				</div>
 					<!-- /Order Details -->
-	
 	<t:footer>
 	</t:footer>
+
 </body>
 </html>

@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,7 +15,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unlam.tallerweb1.modelo.CarritoCompras;
 import ar.edu.unlam.tallerweb1.modelo.DetalleVenta;
+import ar.edu.unlam.tallerweb1.modelo.Direccion;
+import ar.edu.unlam.tallerweb1.modelo.Localidades;
 import ar.edu.unlam.tallerweb1.modelo.Productos;
+import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.servicios.ServicioAdmin;
 import ar.edu.unlam.tallerweb1.servicios.ServicioDetalleVenta;
 import ar.edu.unlam.tallerweb1.servicios.ServicioUser;
@@ -66,7 +70,7 @@ public class ControladorCarritoCompras {
 				model.put("carrito", lista);
 			}
 		}
-			return new ModelAndView("vista-carrito", model);
+			return new ModelAndView("lala", model);
 	}
 	
 	@RequestMapping(value = "eliminar-producto-carrito", method = RequestMethod.GET)
@@ -77,17 +81,54 @@ public class ControladorCarritoCompras {
 		servicioDetalleVenta.eliminarDetalleVenta(producto, carrito);
 		List<DetalleVenta> lista= servicioDetalleVenta.traerCarritoCompras(carrito);
 		modelo.put("carrito", lista);
-		return new ModelAndView("vista-carrito", modelo);
+		return new ModelAndView("lala", modelo);
 	}
 	
-	@RequestMapping(value = "disminuir-producto", method = RequestMethod.GET)
-	public ModelAndView disminuir(@RequestParam("id") Long id, HttpServletRequest request) {
+	@RequestMapping(value = "modificar-cantidad-producto", method = RequestMethod.GET)
+	public ModelAndView disminuir(@RequestParam("id") Long id,@RequestParam("cantidad") Integer cantidad, HttpServletRequest request) {
 		ModelMap modelo= new ModelMap();
 		Productos producto= servicioAdmin.buscarProducto(id);
 		CarritoCompras carrito=(CarritoCompras) request.getSession().getAttribute("carrito");
-		servicioDetalleVenta.disminuirProductoCarrito(producto, carrito);
+		servicioDetalleVenta.modificarCantidadDeUnProductoDelCarrito(producto, carrito, cantidad);
 		List<DetalleVenta> lista= servicioDetalleVenta.traerCarritoCompras(carrito);
 		modelo.put("carrito", lista);
-		return new ModelAndView("vista-carrito", modelo);
+		return new ModelAndView("lala", modelo);
+	}
+	
+	@RequestMapping(value = "entrega", method = RequestMethod.GET)
+	public ModelAndView verificarSesion(HttpServletRequest request) {
+		Long id= (Long) request.getSession().getAttribute("id");
+		ModelMap modelo= new ModelMap();
+		if(id != null) {
+			Usuario usuario=servicioUsuario.buscarUsuarioPorId(id);
+			CarritoCompras carrito=(CarritoCompras) request.getSession().getAttribute("carrito");
+			servicioAdmin.insertarUsuarioAlCarrito(carrito, usuario);
+			Direccion direccion= new Direccion();
+			modelo.put("direccion", direccion);
+			List<Localidades> localidades= servicioAdmin.listarLocalidades();
+			modelo.put("localidades", localidades);
+		} else {
+			Direccion direccion= new Direccion();
+			modelo.put("direccion", direccion);
+			List<Localidades> localidades= servicioAdmin.listarLocalidades();
+			modelo.put("localidades", localidades);
+		}
+		return new ModelAndView("entrega", modelo);
+	}
+	
+	@RequestMapping(value = "verificar-direccion", method = RequestMethod.POST)
+	public ModelAndView verificarDireccion(@ModelAttribute ("direccion") Direccion direccion
+											, @ModelAttribute ("idLocalidad") Long idLocalidad
+											, HttpServletRequest request) {
+		Direccion direccionTabla=servicioAdmin.guardarDireccionDeCompra(direccion, idLocalidad);
+		
+		/*LOGICA CON API GOOGLE MAPS */
+		
+		CarritoCompras carrito=(CarritoCompras) request.getSession().getAttribute("carrito");
+		servicioAdmin.agregarDireccionAlCarrito(carrito, direccionTabla);
+		
+		/* MOSTRAR UNA PANTALLA QUE SOLICITE UN METODO DE PAGO */
+		
+		return new ModelAndView("exito");
 	}
 }

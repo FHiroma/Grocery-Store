@@ -9,8 +9,12 @@ import org.springframework.transaction.annotation.Transactional;
 import ar.edu.unlam.tallerweb1.dao.AdminDao;
 import ar.edu.unlam.tallerweb1.modelo.Productos;
 import ar.edu.unlam.tallerweb1.modelo.Proveedor;
+import ar.edu.unlam.tallerweb1.modelo.Usuario;
+import ar.edu.unlam.tallerweb1.modelo.CarritoCompras;
 import ar.edu.unlam.tallerweb1.modelo.Categoria;
 import ar.edu.unlam.tallerweb1.modelo.Compra;
+import ar.edu.unlam.tallerweb1.modelo.Direccion;
+import ar.edu.unlam.tallerweb1.modelo.Localidades;
 import ar.edu.unlam.tallerweb1.modelo.Notificacion;
 
 @Service("servicioAdmin")
@@ -93,5 +97,25 @@ public class ServicioAdminImpl implements ServicioAdmin {
 	@Override
 	public List<Notificacion> buscarProductosEnOferta() {
 		return servicioAdminDao.buscarProductosEnOferta();
+	}
+
+	@Override
+	public void insertarUsuarioAlCarrito(CarritoCompras carrito, Usuario usuario) {
+		servicioAdminDao.insertarUsuarioAlCarrito(carrito, usuario);
+	}
+
+	@Override
+	public List<Localidades> listarLocalidades() {
+		return servicioAdminDao.listarLocalidades();
+	}
+
+	@Override
+	public Direccion guardarDireccionDeCompra(Direccion direccion, Long idLocalidad) {
+		return servicioAdminDao.guardarDireccionDeCompra(direccion, idLocalidad);
+	}
+
+	@Override
+	public void agregarDireccionAlCarrito(CarritoCompras carrito, Direccion direccionTabla) {
+		servicioAdminDao.agregarDireccionAlCarrito(carrito, direccionTabla);
 	}
 }

@@ -50,8 +50,8 @@ public class ServicioDetalleVentaImpl implements ServicioDetalleVenta {
 	}
 
 	@Override
-	public DetalleVenta disminuirProductoCarrito(Productos producto, CarritoCompras carrito) {
-		return servicioDetalleVentaDao.disminuirProductoCarrito(producto, carrito);
+	public void modificarCantidadDeUnProductoDelCarrito(Productos producto, CarritoCompras carrito, Integer cantidad) {
+		servicioDetalleVentaDao.modificarCantidadDeUnProductoDelCarrito(producto, carrito, cantidad);
 	}
 
 }

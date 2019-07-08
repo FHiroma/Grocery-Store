@@ -14,6 +14,15 @@ public class CarritoCompras {
 	private Long id;
 	@ManyToOne
 	private Usuario usuario;
+	@ManyToOne
+	private Direccion direccion;
+	
+	public Direccion getDireccion() {
+		return direccion;
+	}
+	public void setDireccion(Direccion direccion) {
+		this.direccion = direccion;
+	}
 	public Long getId() {
 		return id;
 	}

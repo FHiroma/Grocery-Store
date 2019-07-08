@@ -62,4 +62,13 @@ public class UsuarioDaoImpl implements UsuarioDao {
 	public void guardarCarritoVacio(CarritoCompras carrito) {
 		sessionFactory.getCurrentSession().save(carrito);
 	}
+
+	@Override
+	public Usuario buscarUsuarioPorId(Long id) {
+		Usuario u= (Usuario) sessionFactory.getCurrentSession()
+				.createCriteria(Usuario.class)
+				.add(Restrictions.eq("id", id))
+				.uniqueResult();
+		return u;
+	}
 }

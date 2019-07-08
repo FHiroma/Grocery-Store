@@ -14,6 +14,6 @@ public interface ServicioDetalleVenta {
 	void actualizarDetalleVenta(DetalleVenta detalle);
 	List<DetalleVenta> traerCarritoCompras(CarritoCompras carrito);
 	void eliminarDetalleVenta(Productos producto, CarritoCompras carrito);
-	DetalleVenta disminuirProductoCarrito(Productos producto, CarritoCompras carrito);
+	void modificarCantidadDeUnProductoDelCarrito(Productos producto, CarritoCompras carrito, Integer cantidad);
 
 }

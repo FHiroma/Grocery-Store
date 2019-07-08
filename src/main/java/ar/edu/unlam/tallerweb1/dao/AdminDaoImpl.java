@@ -9,8 +9,12 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import ar.edu.unlam.tallerweb1.modelo.Productos;
 import ar.edu.unlam.tallerweb1.modelo.Proveedor;
+import ar.edu.unlam.tallerweb1.modelo.Usuario;
+import ar.edu.unlam.tallerweb1.modelo.CarritoCompras;
 import ar.edu.unlam.tallerweb1.modelo.Categoria;
 import ar.edu.unlam.tallerweb1.modelo.Compra;
+import ar.edu.unlam.tallerweb1.modelo.Direccion;
+import ar.edu.unlam.tallerweb1.modelo.Localidades;
 import ar.edu.unlam.tallerweb1.modelo.Notificacion;
 
 @Repository("adminDao")
@@ -150,5 +154,39 @@ public class AdminDaoImpl implements AdminDao {
 		List<Notificacion> productosEnOferta= sessionFactory.getCurrentSession().createCriteria(Notificacion.class)
 				.add(Restrictions.eq("descripcion", "Producto en oferta")).list();
 		return productosEnOferta;
+	}
+
+	@Override
+	public void insertarUsuarioAlCarrito(CarritoCompras carrito, Usuario usuario) {
+		carrito.setUsuario(usuario);
+		sessionFactory.getCurrentSession().update(carrito);
+	}
+
+	@Override
+	public List<Localidades> listarLocalidades() {
+		@SuppressWarnings("unchecked")
+		List<Localidades> localidades = sessionFactory.getCurrentSession().createCriteria(Localidades.class).list();
+		return localidades;
+	}
+
+	@Override
+	public void agregarDireccionAlCarrito(CarritoCompras carrito, Direccion direccionTabla) {
+		carrito.setDireccion(direccionTabla);
+		sessionFactory.getCurrentSession().update(carrito);
+	}
+
+	@Override
+	public Direccion guardarDireccionDeCompra(Direccion direccion, Long idLocalidad) {
+		Localidades localidad= (Localidades) sessionFactory.getCurrentSession()
+				.createCriteria(Localidades.class)
+				.add(Restrictions.eq("id", idLocalidad))
+				.uniqueResult();
+		if (localidad != null) {
+			direccion.setLocalidad(localidad);
+			sessionFactory.getCurrentSession().save(direccion);
+			return direccion;
+		} else {
+			return null;
+		}
 	}
 }

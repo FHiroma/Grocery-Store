@@ -8,6 +8,7 @@ import ar.edu.unlam.tallerweb1.dao.UsuarioDao;
 import ar.edu.unlam.tallerweb1.modelo.CarritoCompras;
 import ar.edu.unlam.tallerweb1.modelo.Compra;
 import ar.edu.unlam.tallerweb1.modelo.Productos;
+import ar.edu.unlam.tallerweb1.modelo.Usuario;
 
 @Service("servicioUser")
 @Transactional
@@ -29,5 +30,10 @@ public class ServicioUserImpl implements ServicioUser {
 	@Override
 	public void guardarCarritoVacio(CarritoCompras carrito) {
 		servicioUsuarioDao.guardarCarritoVacio(carrito);
+	}
+
+	@Override
+	public Usuario buscarUsuarioPorId(Long id) {
+		return servicioUsuarioDao.buscarUsuarioPorId(id);
 	}
 }

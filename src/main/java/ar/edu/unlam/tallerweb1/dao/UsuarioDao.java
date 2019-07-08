@@ -14,4 +14,5 @@ public interface UsuarioDao {
 	List<Productos> verProductosDisponibles();
 	List<Compra> verProductosEnOferta();
 	void guardarCarritoVacio(CarritoCompras carrito);
+	Usuario buscarUsuarioPorId(Long id);
 }
