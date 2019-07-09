@@ -50,8 +50,8 @@ public class ServicioDetalleVentaImpl implements ServicioDetalleVenta {
 	}
 
 	@Override
-	public void modificarCantidadDeUnProductoDelCarrito(Productos producto, CarritoCompras carrito, Integer cantidad) {
-		servicioDetalleVentaDao.modificarCantidadDeUnProductoDelCarrito(producto, carrito, cantidad);
+	public Boolean modificarCantidadDeUnProductoDelCarrito(Productos producto, CarritoCompras carrito, Integer cantidad) {
+		 return servicioDetalleVentaDao.modificarCantidadDeUnProductoDelCarrito(producto, carrito, cantidad);
 	}
 
 }

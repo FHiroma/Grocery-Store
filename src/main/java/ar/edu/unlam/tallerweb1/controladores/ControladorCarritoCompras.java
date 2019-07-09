@@ -89,9 +89,15 @@ public class ControladorCarritoCompras {
 		ModelMap modelo= new ModelMap();
 		Productos producto= servicioAdmin.buscarProducto(id);
 		CarritoCompras carrito=(CarritoCompras) request.getSession().getAttribute("carrito");
-		servicioDetalleVenta.modificarCantidadDeUnProductoDelCarrito(producto, carrito, cantidad);
-		List<DetalleVenta> lista= servicioDetalleVenta.traerCarritoCompras(carrito);
-		modelo.put("carrito", lista);
+		Boolean valor= servicioDetalleVenta.modificarCantidadDeUnProductoDelCarrito(producto, carrito, cantidad);
+		if(valor == true) {
+			List<DetalleVenta> lista= servicioDetalleVenta.traerCarritoCompras(carrito);
+			modelo.put("carrito", lista);
+		} else {
+			List<DetalleVenta> lista= servicioDetalleVenta.traerCarritoCompras(carrito);
+			modelo.put("carrito", lista);
+			modelo.put("error", "Stock insuficiente");
+		}
 		return new ModelAndView("lala", modelo);
 	}
 	

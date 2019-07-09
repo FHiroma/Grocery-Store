@@ -26,7 +26,17 @@
 	<context:component-scan base-package="ar.edu.unlam.tallerweb1.controladores" />
 	<context:component-scan base-package="ar.edu.unlam.tallerweb1.dao" />
 	<context:component-scan base-package="ar.edu.unlam.tallerweb1.servicios" />
-	
-
+	<!--  
+	<context:component-scan base-package="ar.edu.unlam.tallerweb1.files" ></context:component-scan>
+ 
+   <mvc:annotation-driven ></mvc:annotation-driven>
+ 
+   <bean
+      class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+      <property name="prefix" value="/WEB-INF/vistas/" />
+      <property name="suffix" value=".jsp"></property>
+   </bean>
+   
+   <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"></bean>
+   -->
 </beans>
-

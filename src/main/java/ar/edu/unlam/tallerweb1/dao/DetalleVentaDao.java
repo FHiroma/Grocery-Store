@@ -14,6 +14,6 @@ public interface DetalleVentaDao {
 	void actualizarDetalleVenta(DetalleVenta detalle);
 	List<DetalleVenta> traerCarritoCompras(CarritoCompras carrito);
 	void eliminarDetalleVenta(Productos producto, CarritoCompras carrito);
-	void modificarCantidadDeUnProductoDelCarrito(Productos producto, CarritoCompras carrito, Integer cantidad);
+	Boolean modificarCantidadDeUnProductoDelCarrito(Productos producto, CarritoCompras carrito, Integer cantidad);
 
 }

@@ -34,13 +34,19 @@
 									<div>
 										<form  action="modificar-cantidad-producto" method="GET">
 											<input type="hidden" name="id" value="${detalle.producto.id}" required="required"> 
-											<input type="number" name="cantidad" value="${detalle.cantidad}" required="required">
+											<input type="number" name="cantidad" value="${detalle.cantidad}" required="required" min="1" pattern="^[0-9]+">
 											<input type="submit" value="cantidad">
 										</form>
 									</div>
 									<div> 
     								<a href="http://localhost:8080/grocery-store/eliminar-producto-carrito?id=${detalle.producto.id}" class="primary-btn order-submit">EliminarProductos</a>
     								</div>
+    								<dir>
+    									<c:if test="${not empty error}">
+			        						<h4><span>${error}</span></h4>
+			        						<br>
+		        						</c:if>	
+    								</dir>
 
 								</div>
 							</div>
@@ -103,8 +109,7 @@
 					</div>
 				</div>
 					<!-- /Order Details -->
-	<t:footer>
-	</t:footer>
+	
 
 </body>
 </html>
