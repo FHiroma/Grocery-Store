@@ -40,8 +40,12 @@
 											<div class="product-body">
 												<p class="product-category">Category</p>
 												<h3 class="product-name">  ${compra.producto.descripcion} </h3>
-												<h3 class="product-stock">  ${compraproductos.stock} </h3>
+												<h3 class="product-stock">  ${compra.producto.stock} </h3>
 												<h4 class="product-price">  <del class="product-old-price">${compra.producto.precio}</del> </h4>
+												<c:if test="${compra.oferta == true}">
+												<h3 class="product-sale">Oferta!!</h3>
+												<br>
+												</c:if>
 												<div class="product-rating">
 													<i class="fa fa-star"></i>
 													<i class="fa fa-star"></i>
