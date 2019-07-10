@@ -13,6 +13,7 @@ import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.modelo.CarritoCompras;
 import ar.edu.unlam.tallerweb1.modelo.Categoria;
 import ar.edu.unlam.tallerweb1.modelo.Compra;
+import ar.edu.unlam.tallerweb1.modelo.DetalleVenta;
 import ar.edu.unlam.tallerweb1.modelo.Direccion;
 import ar.edu.unlam.tallerweb1.modelo.Localidades;
 import ar.edu.unlam.tallerweb1.modelo.Notificacion;
@@ -118,4 +119,20 @@ public class ServicioAdminImpl implements ServicioAdmin {
 	public void agregarDireccionAlCarrito(CarritoCompras carrito, Direccion direccionTabla) {
 		servicioAdminDao.agregarDireccionAlCarrito(carrito, direccionTabla);
 	}
+
+	@Override
+	public List<CarritoCompras> buscarCarritosCompra() {
+		return servicioAdminDao.buscarCarritosCompra();
+	}
+
+	@Override
+	public List<DetalleVenta> listarDetallesDeVentaConIdCarrito(Long id) {
+		return servicioAdminDao.listarDetallesDeVentaConIdCarrito(id);
+	}
+
+	@Override
+	public CarritoCompras buscarCarritoComprasConId(Long id) {
+		return servicioAdminDao.buscarCarritoComprasConId(id);
+	}
+
 }

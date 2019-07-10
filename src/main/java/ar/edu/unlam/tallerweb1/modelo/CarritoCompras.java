@@ -16,7 +16,14 @@ public class CarritoCompras {
 	private Usuario usuario;
 	@ManyToOne
 	private Direccion direccion;
+	private Boolean estado;
 	
+	public Boolean getEstado() {
+		return estado;
+	}
+	public void setEstado(Boolean estado) {
+		this.estado = estado;
+	}
 	public Direccion getDireccion() {
 		return direccion;
 	}

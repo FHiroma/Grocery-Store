@@ -46,7 +46,6 @@ public class PromocionesDaoImpl implements PromocionesDao{
 				notificacion.setEstado(false);
 				notificacion.setProducto(compra.getProducto());
 				sesion.save(notificacion);
-			
 				}
 			}
 	}

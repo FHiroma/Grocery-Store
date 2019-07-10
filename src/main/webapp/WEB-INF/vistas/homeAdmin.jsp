@@ -29,6 +29,8 @@
 			<a href="http://localhost:8080/grocery-store/listarProductos">Listar Productos</a>
 			<br><br>
 			<a href="http://localhost:8080/grocery-store/insertarProducto">Insertar Producto</a>
+			<br><br>
+			<a href="http://localhost:8080/grocery-store/listarCarritosCompraClientes">Carritos Compra</a>
 			
 		</h3>
 		

@@ -12,10 +12,8 @@
 <a href="#" onclick="history.go(-1)">
 <button>Atras</button> </a>
 <br>
-	<form:form action="guardarProducto" method="POST" modelAttribute="producto" enctype="multipart/form-data">
+	<form:form action="guardarProducto" method="POST" modelAttribute="producto">
 
-					<label>Selecciona una imagen:</label>
-           			<form:input type="file" path="fichero" />
 					<label>Descripcion:</label>
 					<form:input path="descripcion" id="descripcion" type="string" class="form-control" />
 					<br><br>
