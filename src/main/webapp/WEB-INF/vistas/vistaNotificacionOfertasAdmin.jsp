@@ -17,20 +17,22 @@
 	<c:if test="${not empty NotificacionStockMinimo}">
 		<h4>Productos Con Stock Minimo</h4>
 	<table>
-		<form:form action="organizarPedidos" method="POST" modelAttribute="NotificacionStockMinimo">
+		<form:form action="organizarPedidos" method="POST" modelAttribute="pedido">
   		<c:forEach items="${NotificacionStockMinimo}" var="notificacion" varStatus="status">
+  		<input type="hidden" name="pedido[${status.index}].producto" value="${notificacion.notificacion.producto.id}">
     		<tr>
       			<td><c:out value="${notificacion.notificacion.descripcion}" /></td>
       			<td><c:out value="${notificacion.notificacion.producto.descripcion}" /></td>
       			<td><c:out value="${notificacion.notificacion.producto.stock}" /></td>
       			<td>
-      				<form:select path="{NotificacionStockMinimo[${status.index}].proveedor}">
+      				<select  name="pedido[${status.index}].proveedor">
 						<c:forEach items="${proveedores}" var="proveedor">
 		        			<option value="${proveedor.id}" selected>${proveedor.descripcion}</option>
   						</c:forEach>
-   					 </form:select>
+   					 </select>
     		</tr>
   		</c:forEach>
+  			<button class="btn btn-lg btn-primary btn-block" Type="Submit"/>Login</button>
   		</form:form>
 	</table>
 	</c:if>	

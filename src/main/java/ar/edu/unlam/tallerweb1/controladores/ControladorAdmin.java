@@ -15,6 +15,8 @@ import ar.edu.unlam.tallerweb1.modelo.DetalleVenta;
 import ar.edu.unlam.tallerweb1.modelo.Notificacion;
 import ar.edu.unlam.tallerweb1.modelo.PedidoProducto;
 import ar.edu.unlam.tallerweb1.servicios.ServicioAdmin;
+
+import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -103,6 +105,12 @@ public class ControladorAdmin {
 		modelo.put("proveedores", listaProveedores);
 		return new ModelAndView("vistaNotificacionOfertasAdmin", modelo);
 	}
+	@RequestMapping(path="/organizarPedidos" , method = RequestMethod.POST)
+	public ModelAndView confeccionarPedidos(@ModelAttribute ("pedido") ArrayList<PedidoProducto> proveedor){
+		ModelMap modelo= new ModelMap();
+		return new ModelAndView("exito", modelo);
+	}
+	
 	
 	@RequestMapping(path="/listarCarritosCompraClientes")
 	public ModelAndView listarCarritosCompraClientes() {
