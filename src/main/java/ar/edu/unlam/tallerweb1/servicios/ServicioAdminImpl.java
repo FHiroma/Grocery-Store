@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
@@ -15,6 +16,7 @@ import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.modelo.CarritoCompras;
 import ar.edu.unlam.tallerweb1.modelo.Categoria;
 import ar.edu.unlam.tallerweb1.modelo.Compra;
+import ar.edu.unlam.tallerweb1.modelo.DetalleVenta;
 import ar.edu.unlam.tallerweb1.modelo.Direccion;
 import ar.edu.unlam.tallerweb1.modelo.Localidades;
 import ar.edu.unlam.tallerweb1.modelo.Notificacion;
@@ -84,7 +86,7 @@ public class ServicioAdminImpl implements ServicioAdmin {
 
 	@Override
 	public void insertarProducto(Productos producto, Long idCategoria, CommonsMultipartFile file) {
-		servicioAdminDao.insertarProducto(producto, idCategoria, file);
+		servicioAdminDao.insertarProducto(producto, idCategoria,file);
 	}
 
 	@Override
@@ -122,6 +124,20 @@ public class ServicioAdminImpl implements ServicioAdmin {
 		servicioAdminDao.agregarDireccionAlCarrito(carrito, direccionTabla);
 	}
 
+	@Override
+	public List<CarritoCompras> buscarCarritosCompra() {
+		return servicioAdminDao.buscarCarritosCompra();
+	}
+
+	@Override
+	public List<DetalleVenta> listarDetallesDeVentaConIdCarrito(Long id) {
+		return servicioAdminDao.listarDetallesDeVentaConIdCarrito(id);
+	}
+
+	@Override
+	public CarritoCompras buscarCarritoComprasConId(Long id) {
+		return servicioAdminDao.buscarCarritoComprasConId(id);
+	}
 	@Override
 	public List<PedidoProducto> devolverNotificacionesDePocoStockComoPedidos(List<Notificacion> lista) {
 		List<PedidoProducto> listadoPedidoProductos = new ArrayList<>();

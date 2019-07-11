@@ -2,7 +2,6 @@ package ar.edu.unlam.tallerweb1.servicios;
 
 import java.util.List;
 
-
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import ar.edu.unlam.tallerweb1.modelo.Productos;
@@ -11,6 +10,7 @@ import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.modelo.CarritoCompras;
 import ar.edu.unlam.tallerweb1.modelo.Categoria;
 import ar.edu.unlam.tallerweb1.modelo.Compra;
+import ar.edu.unlam.tallerweb1.modelo.DetalleVenta;
 import ar.edu.unlam.tallerweb1.modelo.Direccion;
 import ar.edu.unlam.tallerweb1.modelo.Localidades;
 import ar.edu.unlam.tallerweb1.modelo.Notificacion;
@@ -36,5 +36,9 @@ public interface ServicioAdmin {
 	List<Localidades> listarLocalidades();
 	Direccion guardarDireccionDeCompra(Direccion direccion, Long idLocalidad);
 	void agregarDireccionAlCarrito(CarritoCompras carrito, Direccion direccionTabla);
+	List<CarritoCompras> buscarCarritosCompra();
+	List<DetalleVenta> listarDetallesDeVentaConIdCarrito(Long id);
+	CarritoCompras buscarCarritoComprasConId(Long id);
 	List<PedidoProducto> devolverNotificacionesDePocoStockComoPedidos(List<Notificacion> lista);
+	
 }
