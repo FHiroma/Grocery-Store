@@ -13,14 +13,14 @@
 						<li><a href="#"><i class="fa fa-envelope-o"></i> email@email.com</a></li>
 						<li><a href="#"><i class="fa fa-map-marker"></i> 1734 Stonecoal Road</a></li>
 					</ul>
-					<c:if test="${not empty user}">
+					<c:if test="${not empty usuario}">
 					<ul class="header-links pull-right">
 						<li><a href="#"><i class="fa fa-dollar"></i> USD</a></li>
-						<li><a href="login"><i class="fa fa-user-o"></i> ${user.nombre}</a></li>
+						<li><a href="login"><i class="fa fa-user-o"></i> ${usuario.nombre}</a></li>
 						<li><a href="logout"><i class="fa fa-sign-out"></i> Salir</a></li>
 					</ul>
 					</c:if> 
-					<c:if test="${empty user}">
+					<c:if test="${empty usuario}">
 					<ul class="header-links pull-right">
 						<li><a href="#"><i class="fa fa-dollar"></i> USD</a></li>
 						<li><a href="login"><i class="fa fa-user-o"></i> Ingresá</a></li>
@@ -72,11 +72,13 @@
 
 								<!-- Cart -->
 								<div class="dropdown">
+									<c:if test="${cantidad > 0}">
 									<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
 										<i class="fa fa-shopping-cart"></i>
-										<span>Your Cart</span>
-										<div class="qty">3</div>
+										<span>Carrito</span>
+										<div class="qty">${cantidad}</div>
 									</a>
+									</c:if>
 									<div class="cart-dropdown">
 										<div class="cart-list">
 											<div class="product-widget">

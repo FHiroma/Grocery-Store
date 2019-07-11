@@ -17,7 +17,9 @@ import ar.edu.unlam.tallerweb1.servicios.ServicioLogin;
 import ar.edu.unlam.tallerweb1.servicios.ServicioUser;
 import java.util.List;
 
-import ar.edu.unlam.tallerweb1.modelo.Compra;
+import ar.edu.unlam.tallerweb1.modelo.CarritoCompras;
+import ar.edu.unlam.tallerweb1.modelo.Categoria;
+import ar.edu.unlam.tallerweb1.modelo.DetalleVenta;
 import ar.edu.unlam.tallerweb1.modelo.Notificacion;
 import ar.edu.unlam.tallerweb1.modelo.Productos;
 
@@ -60,45 +62,89 @@ public class ControladorLogin {
 		Usuario usuarioBuscado = servicioLogin.consultarUsuario(usuario);
 		if (usuarioBuscado != null) {
 			request.getSession().setAttribute("id", usuarioBuscado.getId());
-			model.put("id", request);
-//			return new ModelAndView("redirect:/home");
-//		String rol=usuarioBuscado.getRol();
-		if("user".equals(usuarioBuscado.getRol())){
-			request.getSession().setAttribute("ROL", usuarioBuscado.getRol());
+			request.getSession().setAttribute("rol", usuarioBuscado.getRol());
+			model.put("sesion", request);
+			if("user".equals(usuarioBuscado.getRol())){
+				return new ModelAndView("redirect:/homeUser",model);
+				}
+			if("admin".equals(usuarioBuscado.getRol())){
+				return new ModelAndView("redirect:/homeAdmin", model);
+				}
+			} else {
+				// si el usuario no existe agrega un mensaje de error en el modelo.
+				model.put("error", "Usuario o clave incorrecta");
+			}
+			return new ModelAndView("login", model);
+		}
+	
+	@RequestMapping(path = "/homeUser", method = RequestMethod.GET)
+	public ModelAndView irAHomeUser(HttpServletRequest request) {
+		ModelMap model= new ModelMap();
+		Long id= (Long) request.getSession().getAttribute("id");
+		Usuario u= servicioUser.buscarUsuarioPorId(id);
+		if(u != null) {
+			model.put("usuario", u);
+			HttpSession session = request.getSession();
+			String rol = (String) request.getSession().getAttribute("rol");
+			if (rol == null) {
+				session.invalidate();
+				return new ModelAndView("redirect:/login");
+			}
+			if (!"user".equals(rol)) {
+				return new ModelAndView("redirect:/homeAdmin");
+			}
+			List<Categoria> listaCategorias=servicioAdmin.listarCategorias();
 			List<Productos> listaProductos=servicioUser.verProductosDisponibles();
+			model.put("listaCategorias", listaCategorias);
 			model.put("listaProductos", listaProductos);
-			model.put("usuario", usuarioBuscado);
 			return new ModelAndView("index",model);
-			}
-		if("admin".equals(usuarioBuscado.getRol())){
-			request.getSession().setAttribute("ROL", usuarioBuscado.getRol());
-			return new ModelAndView("redirect:/homeAdmin",model);
-			}
 		} else {
-			// si el usuario no existe agrega un mensaje de error en el modelo.
 			model.put("error", "Usuario o clave incorrecta");
 		}
 		return new ModelAndView("login", model);
 	}
 
-	// Escucha la URL /home por GET, y redirige a una vista.
-	@RequestMapping(path = "/homeUser", method = RequestMethod.GET)
-	public ModelAndView irAHomeUser() {
-		return new ModelAndView("homeUser");
-	}
-	
 	@RequestMapping(path = "/homeAdmin", method = RequestMethod.GET)
-	public ModelAndView irAHomeAdmin() {
+	public ModelAndView irAHomeAdmin(HttpServletRequest request) {
 		ModelMap model= new ModelMap();
-		List<Notificacion> listaNotificaciones=servicioAdmin.buscarNotificaciones();
-		model.put("listaNotificaciones", listaNotificaciones);
-		return new ModelAndView("homeAdmin", model);
+		Long id= (Long) request.getSession().getAttribute("id");
+		Usuario u= servicioUser.buscarUsuarioPorId(id);
+		if(u != null) {
+			model.put("usuario", u);
+			String rol = (String) request.getSession().getAttribute("rol");
+			HttpSession session = request.getSession();
+			if (rol == null) {
+				session.invalidate();
+				return new ModelAndView("redirect:/login");
+			}
+			if (!"admin".equals(rol)) {
+				return new ModelAndView("redirect:/homeUser");
+			}
+			List<Notificacion> listaNotificaciones=servicioAdmin.buscarNotificaciones();
+			model.put("listaNotificaciones", listaNotificaciones);
+			return new ModelAndView("homeAdmin", model);
+		} else {
+			model.put("error", "Usuario o clave incorrecta");
+		}
+		return new ModelAndView("login", model);
 	}
 
 	// Escucha la url /, y redirige a la URL /login, es lo mismo que si se invoca la url /login directamente.
 	@RequestMapping(path = "/", method = RequestMethod.GET)
-	public ModelAndView inicio() {
-		ModelMap model = new ModelMap();
+	public ModelAndView inicio(HttpServletRequest request) {
+		ModelMap model= new ModelMap();
+		Long idU= (Long) request.getSession().getAttribute("id");
+		Usuario u= servicioUser.buscarUsuarioPorId(idU);
+		if(u != null) {
+			model.put("usuario", u);
+		}
+		CarritoCompras carrito = (CarritoCompras) request.getSession().getAttribute("carrito");
+		if(carrito != null) {
+			List<DetalleVenta> lista= servicioAdmin.listarDetallesDeVentaConIdCarrito(carrito.getId());
+			Integer cantidad= lista.size();
+			model.put("cantidad", cantidad);
+			model.put("carrito", carrito);
+		}
 		List<Productos> listaProductos=servicioUser.verProductosDisponibles();
 		model.put("listaProductos", listaProductos);
 		return new ModelAndView("index",model);
@@ -114,15 +160,4 @@ public class ControladorLogin {
 		}	
 		return new ModelAndView("redirect:/");
 	}
-	
-	@RequestMapping("/Bienvenidos")
-	public ModelAndView index() {
-		List<Compra> lista= servicioUser.verProductosEnOferta();
-		ModelMap modelo= new ModelMap();
-		modelo.put("productos", lista);
-		return new ModelAndView();
-	}
-
-	
-
 }

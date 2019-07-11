@@ -15,11 +15,6 @@
 	<t:header user="${usuario}"></t:header>
 	<t:nav></t:nav>
 <!-- Products tab & slick -->
-
-					<c:if test="${not empty listaOfertas}">
-						<h4>Ofertas Disponibles:</h4>
-						<br>
-					</c:if>
 	
 					<div class="col-md-12">
 						<div class="row">
@@ -27,7 +22,7 @@
 								<!-- tab -->
 								<div id="tab1" class="tab-pane active">
 									<div class="products-slick" data-nav="#slick-nav-1">
-										<c:forEach items="${listaOfertas}" var="compra">
+										<c:forEach items="${listaProductos}" var="productos">
 										<!-- product -->
 										<div class="product">
 											<div class="product-img">
@@ -39,13 +34,9 @@
 											</div>
 											<div class="product-body">
 												<p class="product-category">Category</p>
-												<h3 class="product-name">  ${compra.producto.descripcion} </h3>
-												<h3 class="product-stock">  ${compra.producto.stock} </h3>
-												<h4 class="product-price">  <del class="product-old-price">${compra.producto.precio}</del> </h4>
-												<c:if test="${compra.oferta == true}">
-												<h3 class="product-sale">Oferta!!</h3>
-												<br>
-												</c:if>
+												<h3 class="product-name">  ${productos.descripcion} </h3>
+												<h3 class="product-stock">  ${productos.stock} </h3>
+												<h4 class="product-price"> ${productos.precio} <del class="product-old-price">$990.00 si es una oferta!!!</del> </h4>
 												<div class="product-rating">
 													<i class="fa fa-star"></i>
 													<i class="fa fa-star"></i>
@@ -60,7 +51,7 @@
 												</div>
 											</div>
 											<div class="add-to-cart">
-												<button class="add-to-cart-btn"><a href="http://localhost:8080/grocery-store/agregar-carrito?id=${compra.producto.id}"><i class="fa fa-shopping-cart"></i>agregar al carrito</a></button>
+												<button class="add-to-cart-btn"><a href="http://localhost:8080/grocery-store/agregar-carrito?id=${productos.id}"><i class="fa fa-shopping-cart"></i>agregar al carrito</a></button>
 											</div>
 										</div>
 										<!-- /product -->

@@ -1,6 +1,7 @@
 package ar.edu.unlam.tallerweb1.dao;
 
 import ar.edu.unlam.tallerweb1.modelo.CarritoCompras;
+import ar.edu.unlam.tallerweb1.modelo.Categoria;
 import ar.edu.unlam.tallerweb1.modelo.Compra;
 import ar.edu.unlam.tallerweb1.modelo.Productos;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
@@ -70,5 +71,23 @@ public class UsuarioDaoImpl implements UsuarioDao {
 				.add(Restrictions.eq("id", id))
 				.uniqueResult();
 		return u;
+	}
+
+	@Override
+	public List<Productos> listarProductosDeLaCategoriaDeId(Long id) {
+		Categoria categoria= (Categoria) sessionFactory.getCurrentSession()
+				.createCriteria(Categoria.class)
+				.add(Restrictions.eq("id", id))
+				.uniqueResult();
+		if(categoria != null) {
+			@SuppressWarnings("unchecked")
+			List<Productos> lista= sessionFactory.getCurrentSession()
+					.createCriteria(Productos.class)
+					.add(Restrictions.eq("categoria", categoria))
+					.list();
+			return lista;
+		} else {
+			return null;
+		}
 	}
 }

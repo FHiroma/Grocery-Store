@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import ar.edu.unlam.tallerweb1.modelo.Productos;
 import ar.edu.unlam.tallerweb1.modelo.Proveedor;
+import ar.edu.unlam.tallerweb1.modelo.CarritoCompras;
 import ar.edu.unlam.tallerweb1.modelo.Categoria;
 import ar.edu.unlam.tallerweb1.modelo.Compra;
+import ar.edu.unlam.tallerweb1.modelo.DetalleVenta;
 import ar.edu.unlam.tallerweb1.modelo.Notificacion;
 import ar.edu.unlam.tallerweb1.modelo.PedidoProducto;
 import ar.edu.unlam.tallerweb1.servicios.ServicioAdmin;
@@ -100,5 +102,23 @@ public class ControladorAdmin {
 		modelo.put("NotificacionProductoEnOferta", listaProductosEnOferta);
 		modelo.put("proveedores", listaProveedores);
 		return new ModelAndView("vistaNotificacionOfertasAdmin", modelo);
+	}
+	
+	@RequestMapping(path="/listarCarritosCompraClientes")
+	public ModelAndView listarCarritosCompraClientes() {
+		List<CarritoCompras> carritos=servicioAdmin.buscarCarritosCompra();
+		ModelMap modelo= new ModelMap();
+		modelo.put("carritos", carritos);
+		return new ModelAndView("vista-carritos-compra-clientes", modelo);
+	}
+	
+	@RequestMapping(path="/detalle-carrito")
+	public ModelAndView detalleCarrito(@RequestParam ("id") Long id) {
+		List<DetalleVenta> lista= servicioAdmin.listarDetallesDeVentaConIdCarrito(id);
+		CarritoCompras carrito= servicioAdmin.buscarCarritoComprasConId(id);
+		ModelMap modelo= new ModelMap();
+		modelo.put("listaDetalleVenta", lista);
+		modelo.put("carrito", carrito);
+		return new ModelAndView("vista-detalle-carrito", modelo);
 	}
 }

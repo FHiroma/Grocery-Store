@@ -24,6 +24,7 @@ import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.modelo.CarritoCompras;
 import ar.edu.unlam.tallerweb1.modelo.Categoria;
 import ar.edu.unlam.tallerweb1.modelo.Compra;
+import ar.edu.unlam.tallerweb1.modelo.DetalleVenta;
 import ar.edu.unlam.tallerweb1.modelo.Direccion;
 import ar.edu.unlam.tallerweb1.modelo.Localidades;
 import ar.edu.unlam.tallerweb1.modelo.Notificacion;
@@ -224,4 +225,41 @@ public class AdminDaoImpl implements AdminDao {
 			return null;
 		}
 	}
+
+	@Override
+	public List<CarritoCompras> buscarCarritosCompra() {
+		@SuppressWarnings("unchecked")
+		List<CarritoCompras> listaCarritos= sessionFactory.getCurrentSession()
+				.createCriteria(CarritoCompras.class)
+				.list();
+		return listaCarritos;
+	}
+
+	@Override
+	public List<DetalleVenta> listarDetallesDeVentaConIdCarrito(Long id) {
+		CarritoCompras carrito=(CarritoCompras) sessionFactory.getCurrentSession()
+				.createCriteria(CarritoCompras.class)
+				.add(Restrictions.eqOrIsNull("id", id))
+				.uniqueResult();
+		if (carrito != null) {
+			@SuppressWarnings("unchecked")
+			List<DetalleVenta> listaDetallesVenta= sessionFactory.getCurrentSession()
+					.createCriteria(DetalleVenta.class)
+					.add(Restrictions.eqOrIsNull("carritoCompras", carrito))
+					.list();
+			return listaDetallesVenta;
+		} else {
+			return null;
+		}
+	}
+
+	@Override
+	public CarritoCompras buscarCarritoComprasConId(Long id) {
+		CarritoCompras carrito= (CarritoCompras) sessionFactory.getCurrentSession()
+				.createCriteria(CarritoCompras.class)
+				.add(Restrictions.eq("id", id))
+				.uniqueResult();
+		return carrito;
+	}
+
 }

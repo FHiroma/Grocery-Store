@@ -12,4 +12,5 @@ public interface ServicioUser {
 	List<Compra> verProductosEnOferta();
 	void guardarCarritoVacio(CarritoCompras carrito);
 	Usuario buscarUsuarioPorId(Long id);
+	List<Productos> listarProductosDeLaCategoriaDeId( Long id);
 }
