@@ -36,4 +36,9 @@ public class ServicioUserImpl implements ServicioUser {
 	public Usuario buscarUsuarioPorId(Long id) {
 		return servicioUsuarioDao.buscarUsuarioPorId(id);
 	}
+
+	@Override
+	public List<Productos> listarProductosDeLaCategoriaDeId(Long id) {
+		return servicioUsuarioDao.listarProductosDeLaCategoriaDeId(id);
+	}
 }

@@ -17,6 +17,7 @@ import ar.edu.unlam.tallerweb1.servicios.ServicioLogin;
 import ar.edu.unlam.tallerweb1.servicios.ServicioUser;
 import java.util.List;
 
+import ar.edu.unlam.tallerweb1.modelo.Categoria;
 import ar.edu.unlam.tallerweb1.modelo.Notificacion;
 import ar.edu.unlam.tallerweb1.modelo.Productos;
 
@@ -90,7 +91,9 @@ public class ControladorLogin {
 			if (!"user".equals(rol)) {
 				return new ModelAndView("redirect:/homeAdmin");
 			}
+			List<Categoria> listaCategorias=servicioAdmin.listarCategorias();
 			List<Productos> listaProductos=servicioUser.verProductosDisponibles();
+			model.put("listaCategorias", listaCategorias);
 			model.put("listaProductos", listaProductos);
 			return new ModelAndView("index",model);
 		} else {
@@ -105,6 +108,7 @@ public class ControladorLogin {
 		Long id= (Long) request.getSession().getAttribute("id");
 		Usuario u= servicioUser.buscarUsuarioPorId(id);
 		if(u != null) {
+			model.put("usuario", u);
 			String rol = (String) request.getSession().getAttribute("rol");
 			HttpSession session = request.getSession();
 			if (rol == null) {
@@ -127,6 +131,11 @@ public class ControladorLogin {
 	@RequestMapping(path = "/", method = RequestMethod.GET)
 	public ModelAndView inicio(HttpServletRequest request) {
 		ModelMap model= new ModelMap();
+		Long idU= (Long) request.getSession().getAttribute("id");
+		Usuario u= servicioUser.buscarUsuarioPorId(idU);
+		if(u != null) {
+			model.put("usuario", u);
+		}
 		List<Productos> listaProductos=servicioUser.verProductosDisponibles();
 		model.put("listaProductos", listaProductos);
 		return new ModelAndView("index",model);
