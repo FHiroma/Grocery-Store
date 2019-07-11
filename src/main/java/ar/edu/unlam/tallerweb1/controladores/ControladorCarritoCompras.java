@@ -38,6 +38,11 @@ public class ControladorCarritoCompras {
 		ModelMap model= new ModelMap();
 		Productos producto= servicioAdmin.buscarProducto(id);
 		if (request.getSession().getAttribute("carrito") == null) {
+			Long idU= (Long) request.getSession().getAttribute("id");
+			Usuario u= servicioUsuario.buscarUsuarioPorId(idU);
+			if(u != null) {
+				model.put("usuario", u);
+			}
 			CarritoCompras carrito = new CarritoCompras();
 			servicioUsuario.guardarCarritoVacio(carrito);
 			DetalleVenta detalle = new DetalleVenta();
@@ -48,11 +53,18 @@ public class ControladorCarritoCompras {
 			servicioDetalleVenta.registrarDetalle(detalle);
 			List<DetalleVenta> lista= servicioDetalleVenta.traerCarritoCompras(carrito);
 			model.put("carrito", lista);
+			Integer cantidad= lista.size();
+			model.put("cantidad", cantidad);
 			request.getSession().setAttribute("carrito", carrito);
 		}else {
 			CarritoCompras carrito = (CarritoCompras) request.getSession().getAttribute("carrito");
 			Boolean estado=servicioDetalleVenta.existe(carrito, producto);
 			if(estado == false) {
+				Long idU= (Long) request.getSession().getAttribute("id");
+				Usuario u= servicioUsuario.buscarUsuarioPorId(idU);
+				if(u != null) {
+					model.put("usuario", u);
+				}
 				DetalleVenta detalle = new DetalleVenta();
 				detalle.setCarritoCompras(carrito);
 				detalle.setProducto(producto);
@@ -60,13 +72,22 @@ public class ControladorCarritoCompras {
 				detalle.setCantidad(1);
 				servicioDetalleVenta.registrarDetalle(detalle);
 				List<DetalleVenta> lista= servicioDetalleVenta.traerCarritoCompras(carrito);
+				Integer cantidad= lista.size();
+				model.put("cantidad", cantidad);
 				model.put("carrito", lista);
 			} else {
+				Long idU= (Long) request.getSession().getAttribute("id");
+				Usuario u= servicioUsuario.buscarUsuarioPorId(idU);
+				if(u != null) {
+					model.put("usuario", u);
+				}
 				DetalleVenta detalle= servicioDetalleVenta.buscarDetalleVentaConCarritoProducto(carrito, producto);
 				detalle.setCantidad(detalle.getCantidad()+1);
 				detalle.setSubtotal(detalle.getSubtotal()+producto.getPrecio());
 				servicioDetalleVenta.actualizarDetalleVenta(detalle);	
 				List<DetalleVenta> lista= servicioDetalleVenta.traerCarritoCompras(carrito);
+				Integer cantidad= lista.size();
+				model.put("cantidad", cantidad);
 				model.put("carrito", lista);
 			}
 		}
@@ -81,6 +102,8 @@ public class ControladorCarritoCompras {
 		servicioDetalleVenta.eliminarDetalleVenta(producto, carrito);
 		List<DetalleVenta> lista= servicioDetalleVenta.traerCarritoCompras(carrito);
 		modelo.put("carrito", lista);
+		Integer cantidad= lista.size();
+		modelo.put("cantidad", cantidad);
 		return new ModelAndView("lala", modelo);
 	}
 	
@@ -92,10 +115,14 @@ public class ControladorCarritoCompras {
 		Boolean valor= servicioDetalleVenta.modificarCantidadDeUnProductoDelCarrito(producto, carrito, cantidad);
 		if(valor == true) {
 			List<DetalleVenta> lista= servicioDetalleVenta.traerCarritoCompras(carrito);
+			Integer cantidadP= lista.size();
+			modelo.put("cantidad", cantidadP);
 			modelo.put("carrito", lista);
 		} else {
 			List<DetalleVenta> lista= servicioDetalleVenta.traerCarritoCompras(carrito);
 			modelo.put("carrito", lista);
+			Integer cantidadP= lista.size();
+			modelo.put("cantidad", cantidadP);
 			modelo.put("error", "Stock insuficiente");
 		}
 		return new ModelAndView("lala", modelo);

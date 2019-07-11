@@ -17,7 +17,9 @@ import ar.edu.unlam.tallerweb1.servicios.ServicioLogin;
 import ar.edu.unlam.tallerweb1.servicios.ServicioUser;
 import java.util.List;
 
+import ar.edu.unlam.tallerweb1.modelo.CarritoCompras;
 import ar.edu.unlam.tallerweb1.modelo.Categoria;
+import ar.edu.unlam.tallerweb1.modelo.DetalleVenta;
 import ar.edu.unlam.tallerweb1.modelo.Notificacion;
 import ar.edu.unlam.tallerweb1.modelo.Productos;
 
@@ -135,6 +137,13 @@ public class ControladorLogin {
 		Usuario u= servicioUser.buscarUsuarioPorId(idU);
 		if(u != null) {
 			model.put("usuario", u);
+		}
+		CarritoCompras carrito = (CarritoCompras) request.getSession().getAttribute("carrito");
+		if(carrito != null) {
+			List<DetalleVenta> lista= servicioAdmin.listarDetallesDeVentaConIdCarrito(carrito.getId());
+			Integer cantidad= lista.size();
+			model.put("cantidad", cantidad);
+			model.put("carrito", carrito);
 		}
 		List<Productos> listaProductos=servicioUser.verProductosDisponibles();
 		model.put("listaProductos", listaProductos);

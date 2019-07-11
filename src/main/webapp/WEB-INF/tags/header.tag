@@ -72,11 +72,13 @@
 
 								<!-- Cart -->
 								<div class="dropdown">
+									<c:if test="${cantidad > 0}">
 									<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
 										<i class="fa fa-shopping-cart"></i>
-										<span>Your Cart</span>
-										<div class="qty">3</div>
+										<span>Carrito</span>
+										<div class="qty">${cantidad}</div>
 									</a>
+									</c:if>
 									<div class="cart-dropdown">
 										<div class="cart-list">
 											<div class="product-widget">
