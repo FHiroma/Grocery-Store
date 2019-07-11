@@ -1,11 +1,13 @@
 package ar.edu.unlam.tallerweb1.servicios;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
 import ar.edu.unlam.tallerweb1.dao.AdminDao;
 import ar.edu.unlam.tallerweb1.modelo.Productos;
 import ar.edu.unlam.tallerweb1.modelo.Proveedor;
@@ -16,6 +18,7 @@ import ar.edu.unlam.tallerweb1.modelo.Compra;
 import ar.edu.unlam.tallerweb1.modelo.Direccion;
 import ar.edu.unlam.tallerweb1.modelo.Localidades;
 import ar.edu.unlam.tallerweb1.modelo.Notificacion;
+import ar.edu.unlam.tallerweb1.modelo.PedidoProducto;
 
 @Service("servicioAdmin")
 @Transactional
@@ -80,8 +83,8 @@ public class ServicioAdminImpl implements ServicioAdmin {
 	}
 
 	@Override
-	public void insertarProducto(Productos producto, Long idCategoria) {
-		servicioAdminDao.insertarProducto(producto, idCategoria);
+	public void insertarProducto(Productos producto, Long idCategoria, CommonsMultipartFile file) {
+		servicioAdminDao.insertarProducto(producto, idCategoria, file);
 	}
 
 	@Override
@@ -117,5 +120,15 @@ public class ServicioAdminImpl implements ServicioAdmin {
 	@Override
 	public void agregarDireccionAlCarrito(CarritoCompras carrito, Direccion direccionTabla) {
 		servicioAdminDao.agregarDireccionAlCarrito(carrito, direccionTabla);
+	}
+
+	@Override
+	public List<PedidoProducto> devolverNotificacionesDePocoStockComoPedidos(List<Notificacion> lista) {
+		List<PedidoProducto> listadoPedidoProductos = new ArrayList<>();
+		for(Notificacion notificacion: lista){
+			PedidoProducto pp = new PedidoProducto(notificacion.getProducto().getId(),notificacion);
+			listadoPedidoProductos.add(pp);
+		}
+		return listadoPedidoProductos;
 	}
 }

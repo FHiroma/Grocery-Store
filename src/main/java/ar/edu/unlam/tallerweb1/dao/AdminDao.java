@@ -1,6 +1,9 @@
 package ar.edu.unlam.tallerweb1.dao;
 
 import java.util.List;
+
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
 import ar.edu.unlam.tallerweb1.modelo.Productos;
 import ar.edu.unlam.tallerweb1.modelo.Proveedor;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
@@ -16,7 +19,7 @@ public interface AdminDao {
 	void publicarProducto(Long id);
 	void quitarProducto(Long id);
 	List<Productos> verProductosOferta();
-	void insertarProducto(Productos producto, Long idCategoria);
+	void insertarProducto(Productos producto, Long idCategoria, CommonsMultipartFile file);
 	Productos buscarProducto(Long id);
 	void insertarStock(Compra stock, Long id);
 	void aumentarStockProducto(Integer cantidad, Long id);

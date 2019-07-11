@@ -1,12 +1,23 @@
 package ar.edu.unlam.tallerweb1.dao;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.ServletContext;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
 import ar.edu.unlam.tallerweb1.modelo.Productos;
 import ar.edu.unlam.tallerweb1.modelo.Proveedor;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
@@ -22,7 +33,9 @@ public class AdminDaoImpl implements AdminDao {
 
 	@Inject
 	private SessionFactory sessionFactory;
-
+	@Inject
+	private ServletContext context;
+	
 	@Override
 	public List<Productos> listarProductosDisponibles() {
 		final Session session = sessionFactory.getCurrentSession();
@@ -54,12 +67,34 @@ public class AdminDaoImpl implements AdminDao {
 	}
 
 	@Override
-	public void insertarProducto(Productos producto, Long idCategoria) {
+	public void insertarProducto(Productos producto, Long idCategoria, CommonsMultipartFile file) {
 		final Session session = sessionFactory.getCurrentSession();
 		Categoria categoria = (Categoria) session.createCriteria(Categoria.class)
 				.add(Restrictions.eq("id", idCategoria)).uniqueResult();
 		session.createCriteria(Productos.class).add(Restrictions.eq("descripcion", producto.getDescripcion()))
 				.uniqueResult();
+		InputStream inputStream = null;
+	    OutputStream outputStream = null;
+        String filename=file.getOriginalFilename();
+        Path currentWorkingDir= Paths.get(context.getRealPath("images"));
+        System.out.println(currentWorkingDir);
+        File nuevaImagen = new File(currentWorkingDir.toString(), filename);
+        try {
+            inputStream = file.getInputStream();
+
+            if (!nuevaImagen.exists()) {
+                nuevaImagen.createNewFile();
+            }
+            outputStream = new FileOutputStream(nuevaImagen);
+            int read = 0;
+            byte[] bytes = new byte[1024];
+
+            while ((read = inputStream.read(bytes)) != -1) {
+                outputStream.write(bytes, 0, read);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 		producto.setCategoria(categoria);
 		producto.setEstado(true);
 		producto.setStock(0);

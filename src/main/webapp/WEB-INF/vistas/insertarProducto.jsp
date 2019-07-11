@@ -15,7 +15,8 @@
 	<form:form action="guardarProducto" method="POST" modelAttribute="producto" enctype="multipart/form-data">
 
 					<label>Selecciona una imagen:</label>
-           			<form:input type="file" path="fichero" />
+					<input type="file" accept="image/*" name="file"/>
+					<br><br>
 					<label>Descripcion:</label>
 					<form:input path="descripcion" id="descripcion" type="string" class="form-control" />
 					<br><br>

@@ -11,10 +11,12 @@ import ar.edu.unlam.tallerweb1.modelo.Proveedor;
 import ar.edu.unlam.tallerweb1.modelo.Categoria;
 import ar.edu.unlam.tallerweb1.modelo.Compra;
 import ar.edu.unlam.tallerweb1.modelo.Notificacion;
+import ar.edu.unlam.tallerweb1.modelo.PedidoProducto;
 import ar.edu.unlam.tallerweb1.servicios.ServicioAdmin;
 import java.util.List;
 import javax.inject.Inject;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 @Controller
 public class ControladorAdmin {
@@ -60,9 +62,11 @@ public class ControladorAdmin {
 	}
 	
 	@RequestMapping(path="/guardarProducto", method = RequestMethod.POST)
-	public ModelAndView guardarProducto(@ModelAttribute("producto") Productos producto
-										, @ModelAttribute ("idCategoria") Long idCategoria) {
-		servicioAdmin.insertarProducto(producto, idCategoria);
+	public ModelAndView guardarProducto( @RequestParam CommonsMultipartFile file,
+										 @ModelAttribute("producto") Productos producto,
+										 @ModelAttribute ("idCategoria") Long idCategoria) 
+									{
+		servicioAdmin.insertarProducto(producto, idCategoria, file);
 		return new ModelAndView("exito");
 	}
 	
@@ -89,9 +93,9 @@ public class ControladorAdmin {
 		List<Notificacion> listaProductosVencidos= servicioAdmin.buscarProductosVencidos();
 		List<Notificacion> listaProductosEnOferta= servicioAdmin.buscarProductosEnOferta();
 		List<Proveedor> listaProveedores= servicioAdmin.listarProveedores();
-//		servicioAdmin.cambiarEstadoNotificaciones();
 		ModelMap modelo= new ModelMap();
-		modelo.put("NotificacionStockMinimo", listaProductosPocoStock);
+		List<PedidoProducto> listadoPedidoProducto	= servicioAdmin.devolverNotificacionesDePocoStockComoPedidos(listaProductosPocoStock);
+		modelo.put("NotificacionStockMinimo", listadoPedidoProducto);
 		modelo.put("NotificacionProductosVencidos", listaProductosVencidos);
 		modelo.put("NotificacionProductoEnOferta", listaProductosEnOferta);
 		modelo.put("proveedores", listaProveedores);
