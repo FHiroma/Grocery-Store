@@ -18,11 +18,18 @@
 						</c:forEach>
 						<li><a href="#">Mi Cuenta</a></li>
 					</c:if>
-					<c:if test="${usuario.rol == 'admin'}">
-						<li class="active"><a href="#">Home</a></li>
-						<li><a href="#">admin1</a></li>
-						<li><a href="#">admin2</a></li>
-						<li><a href="#">Mi admin3</a></li>
+					<c:if test="${usuario.rol == 'admin'}">			
+								<!-- <a href="http://localhost:8080/proyecto-limpio-spring/logout"> 
+				<button>Log out</button> </a> -->	
+			<c:if test="${listaNotificaciones.size() > 0}">
+			<br>
+				<h4>Notificaciones: ${listaNotificaciones.size()}</h4>
+			<br>
+				<li><a href="http://localhost:8080/grocery-store/consultarNotificaciones">Notificaciones</a></li>
+			</c:if>
+			<li><a href="http://localhost:8080/grocery-store/listarProductos">Listar Productos</a></li>
+			<li><a href="http://localhost:8080/grocery-store/insertarProducto">Insertar Producto</a></li>
+			<li><a href="http://localhost:8080/grocery-store/listarCarritosCompraClientes">Carritos Compra</a></li>
 					</c:if>
 					</ul>	
 					<!-- /NAV -->
