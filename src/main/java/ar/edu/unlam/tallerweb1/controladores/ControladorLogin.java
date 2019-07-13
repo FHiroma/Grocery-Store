@@ -137,7 +137,7 @@ public class ControladorLogin {
 		Usuario u= servicioUser.buscarUsuarioPorId(idU);
 		if(u != null) {
 			model.put("usuario", u);
-		}
+		} 
 		CarritoCompras carrito = (CarritoCompras) request.getSession().getAttribute("carrito");
 		if(carrito != null) {
 			List<DetalleVenta> lista= servicioAdmin.listarDetallesDeVentaConIdCarrito(carrito.getId());
@@ -145,6 +145,8 @@ public class ControladorLogin {
 			model.put("cantidad", cantidad);
 			model.put("carrito", carrito);
 		}
+		List<Categoria> listaCategorias=servicioAdmin.listarCategorias();
+		model.put("listaCategorias", listaCategorias);
 		List<Productos> listaProductos=servicioUser.verProductosDisponibles();
 		model.put("listaProductos", listaProductos);
 		return new ModelAndView("index",model);

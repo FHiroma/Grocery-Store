@@ -10,11 +10,11 @@
 				<div id="responsive-nav">
 					<!-- NAV -->
 					<ul class="main-nav nav navbar-nav">
-					<c:if test="${usuario.rol == 'user'}">
+					<c:if test="${usuario.rol != 'admin'}">
 						<li class="active"><a href="http://localhost:8080/grocery-store/">Home</a></li>
 						<li><a href="http://localhost:8080/grocery-store/ver-productos-en-oferta">Ofertas</a></li>
 						<c:forEach items="${listaCategorias}" var="categoria">
-						<li><a href="http://localhost:8080/grocery-store/categoria?id=${categoria.id}"">${categoria.descripcion }</a></li>
+						<li><a href="http://localhost:8080/grocery-store/categoria?id=${categoria.id}">${categoria.descripcion }</a></li>
 						</c:forEach>
 						<li><a href="#">Mi Cuenta</a></li>
 					</c:if>
