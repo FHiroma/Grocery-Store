@@ -1,5 +1,7 @@
 package ar.edu.unlam.tallerweb1.modelo;
 
+import java.net.URI;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,6 +19,7 @@ public class Productos {
 	private Integer diasCaducidad;
 	private Integer precio;
 	private Integer stock;
+	private String imagen;
 	@ManyToOne
 	private Categoria categoria;
 	
@@ -61,5 +64,11 @@ public class Productos {
 	}
 	public void setDiasCaducidad(Integer diasCaducidad) {
 		this.diasCaducidad = diasCaducidad;
+	}
+	public String getImagen() {
+		return imagen;
+	}
+	public void setImagen(String imagen) {
+		this.imagen = imagen;
 	}
 }

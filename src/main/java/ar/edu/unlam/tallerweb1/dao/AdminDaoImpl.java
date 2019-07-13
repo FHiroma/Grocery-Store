@@ -78,7 +78,6 @@ public class AdminDaoImpl implements AdminDao {
 	    OutputStream outputStream = null;
         String filename=file.getOriginalFilename();
         Path currentWorkingDir= Paths.get(context.getRealPath("images"));
-        System.out.println(currentWorkingDir);
         File nuevaImagen = new File(currentWorkingDir.toString(), filename);
         try {
             inputStream = file.getInputStream();
@@ -96,6 +95,8 @@ public class AdminDaoImpl implements AdminDao {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        String direccionDeImagen = "/images/"+filename;
+        producto.setImagen(direccionDeImagen);
 		producto.setCategoria(categoria);
 		producto.setEstado(true);
 		producto.setStock(0);

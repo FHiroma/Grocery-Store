@@ -29,6 +29,9 @@ public class ControladorBusqueda {
 	@RequestMapping (value="/busqueda", method= RequestMethod.GET)
 	public ModelAndView busquedaDeProductos (@RequestParam String busqueda){
 		List<Productos> listado = servicioBusqueda.listadoPosiblesResultados(busqueda);
+		if(listado.size()==1){
+			return new ModelAndView("redirect:/producto?producto="+listado.get(0).getDescripcion());
+		}
 		ModelMap modelo = new ModelMap();
 		modelo.put("lista", listado);
 		return new ModelAndView("listaResultadoBusqueda", modelo);

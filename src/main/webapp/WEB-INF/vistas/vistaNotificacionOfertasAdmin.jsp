@@ -14,27 +14,30 @@
 	<button>Atras</button> </a>
 	<br>
 
-	<c:if test="${not empty NotificacionStockMinimo}">
+	<c:if test="${not empty pedido}">
 		<h4>Productos Con Stock Minimo</h4>
-	<table>
-		<form:form action="organizarPedidos" method="POST" modelAttribute="pedido">
-  		<c:forEach items="${NotificacionStockMinimo}" var="notificacion" varStatus="status">
-  		<input type="hidden" name="pedido[${status.index}].producto" value="${notificacion.notificacion.producto.id}">
+			<table>
+			<form:form action="organizarPedidos" method="POST" modelAttribute="pedido">
+	  		<c:forEach items="${pedido}" var="notificacion" varStatus="status">
+	  		<input type="hidden" name="pedido[${status.index}].producto" value="${notificacion.notificacion.producto.id}">
     		<tr>
       			<td><c:out value="${notificacion.notificacion.descripcion}" /></td>
       			<td><c:out value="${notificacion.notificacion.producto.descripcion}" /></td>
       			<td><c:out value="${notificacion.notificacion.producto.stock}" /></td>
+      			<td><c:out value="pedido[${status.index}]" /></td>
       			<td>
-      				<select  name="pedido[${status.index}].proveedor">
+      			<select  name="pedido[${status.index}].proveedor">
 						<c:forEach items="${proveedores}" var="proveedor">
-		        			<option value="${proveedor.id}" selected>${proveedor.descripcion}</option>
-  						</c:forEach>
-   					 </select>
+		    			<option value="${proveedor.id}" selected>${proveedor.descripcion}</option>
+	  					</c:forEach>
+	   			</select>
+	   			</td>
+	   			<td><input name="pedido[${status.index}].cantidad" type="number" id="numero"/></td>
     		</tr>
   		</c:forEach>
-  			<button class="btn btn-lg btn-primary btn-block" Type="Submit"/>Login</button>
+			</table>
+  			<button class="btn btn-lg btn-primary btn-block" Type="Submit"/>Realizar pedidos</button>
   		</form:form>
-	</table>
 	</c:if>	
 	
 		<c:if test="${not empty NotificacionProductosVencidos}">

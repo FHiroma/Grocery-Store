@@ -26,14 +26,14 @@
 										<!-- product -->
 										<div class="product">
 											<div class="product-img">
-												<img src="./img/product01.png" alt="">
+												<img src="<%= request.getContextPath() %>${productos.imagen}" alt="">
 												<div class="product-label">
 													<span class="sale">-30%</span>
 													<span class="new">NEW</span>
 												</div>
 											</div>
 											<div class="product-body">
-												<p class="product-category">Category</p>
+												<p class="product-category">${productos.categoria.descripcion}</p>
 												<h3 class="product-name">  ${productos.descripcion} </h3>
 												<h3 class="product-stock">  ${productos.stock} </h3>
 												<h4 class="product-price"> ${productos.precio} <del class="product-old-price">$990.00 si es una oferta!!!</del> </h4>

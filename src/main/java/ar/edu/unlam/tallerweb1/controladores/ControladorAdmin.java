@@ -99,7 +99,7 @@ public class ControladorAdmin {
 		List<Proveedor> listaProveedores= servicioAdmin.listarProveedores();
 		ModelMap modelo= new ModelMap();
 		List<PedidoProducto> listadoPedidoProducto	= servicioAdmin.devolverNotificacionesDePocoStockComoPedidos(listaProductosPocoStock);
-		modelo.put("NotificacionStockMinimo", listadoPedidoProducto);
+		modelo.put("pedido", listadoPedidoProducto);
 		modelo.put("NotificacionProductosVencidos", listaProductosVencidos);
 		modelo.put("NotificacionProductoEnOferta", listaProductosEnOferta);
 		modelo.put("proveedores", listaProveedores);
