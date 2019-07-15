@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import ar.edu.unlam.tallerweb1.modelo.Productos;
 import ar.edu.unlam.tallerweb1.modelo.Proveedor;
+import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.modelo.CarritoCompras;
 import ar.edu.unlam.tallerweb1.modelo.Categoria;
 import ar.edu.unlam.tallerweb1.modelo.Compra;
@@ -15,10 +16,13 @@ import ar.edu.unlam.tallerweb1.modelo.DetalleVenta;
 import ar.edu.unlam.tallerweb1.modelo.Notificacion;
 import ar.edu.unlam.tallerweb1.modelo.PedidoProducto;
 import ar.edu.unlam.tallerweb1.servicios.ServicioAdmin;
+import ar.edu.unlam.tallerweb1.servicios.ServicioUser;
 
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
@@ -27,6 +31,8 @@ public class ControladorAdmin {
 	
 	@Inject
 	private ServicioAdmin servicioAdmin;
+	@Inject
+	private ServicioUser servicioUser;
 	
 	
 	@RequestMapping("/listarProductos")
@@ -113,9 +119,14 @@ public class ControladorAdmin {
 	
 	
 	@RequestMapping(path="/listarCarritosCompraClientes")
-	public ModelAndView listarCarritosCompraClientes() {
+	public ModelAndView listarCarritosCompraClientes(HttpServletRequest request) {
 		List<CarritoCompras> carritos=servicioAdmin.buscarCarritosCompra();
 		ModelMap modelo= new ModelMap();
+		Long id= (Long) request.getSession().getAttribute("id");
+		Usuario u= servicioUser.buscarUsuarioPorId(id);
+		if(u != null) {
+			modelo.put("usuario", u);
+		}
 		modelo.put("carritos", carritos);
 		return new ModelAndView("vista-carritos-compra-clientes", modelo);
 	}
