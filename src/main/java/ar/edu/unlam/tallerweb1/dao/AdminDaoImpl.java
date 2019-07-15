@@ -78,6 +78,7 @@ public class AdminDaoImpl implements AdminDao {
 	    OutputStream outputStream = null;
         String filename=file.getOriginalFilename();
         Path currentWorkingDir= Paths.get(context.getRealPath("images"));
+        //System.out.println(Paths.get(context.getRealPath("images")));
         File nuevaImagen = new File(currentWorkingDir.toString(), filename);
         try {
             inputStream = file.getInputStream();
@@ -100,6 +101,7 @@ public class AdminDaoImpl implements AdminDao {
 		producto.setCategoria(categoria);
 		producto.setEstado(true);
 		producto.setStock(0);
+		producto.setStockDeOferta(0);
 		session.save(producto);
 	}
 
@@ -261,6 +263,24 @@ public class AdminDaoImpl implements AdminDao {
 				.add(Restrictions.eq("id", id))
 				.uniqueResult();
 		return carrito;
+	}
+
+	@Override
+	public Boolean enviarCarrito(Long id) {
+//		CarritoCompras carrito= (CarritoCompras) sessionFactory.getCurrentSession()
+//				.createCriteria(CarritoCompras.class)
+//				.add(Restrictions.eq("id", id))
+//				.add(Restrictions.eq("estado", null))
+//				.uniqueResult();
+//		if(carrito != null) {
+//			@SuppressWarnings("unchecked")
+//			List<DetalleVenta> listaDetalle= sessionFactory.getCurrentSession()
+//					.createCriteria(DetalleVenta.class)
+//					.add(Restrictions.eq("carritoCompras", carrito))
+//					.list();
+//		}
+		// TODO Auto-generated method stub
+				return null;
 	}
 
 }

@@ -1,7 +1,5 @@
 package ar.edu.unlam.tallerweb1.modelo;
 
-import java.net.URI;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,6 +18,13 @@ public class Productos {
 	private Integer precio;
 	private Integer stock;
 	private String imagen;
+	private Integer stockDeOferta;
+	public Integer getStockDeOferta() {
+		return stockDeOferta;
+	}
+	public void setStockDeOferta(Integer stockDeOferta) {
+		this.stockDeOferta =stockDeOferta;
+	}
 	@ManyToOne
 	private Categoria categoria;
 	

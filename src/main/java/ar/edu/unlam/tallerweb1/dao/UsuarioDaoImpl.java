@@ -2,7 +2,6 @@ package ar.edu.unlam.tallerweb1.dao;
 
 import ar.edu.unlam.tallerweb1.modelo.CarritoCompras;
 import ar.edu.unlam.tallerweb1.modelo.Categoria;
-import ar.edu.unlam.tallerweb1.modelo.Compra;
 import ar.edu.unlam.tallerweb1.modelo.Productos;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import org.hibernate.Session;
@@ -50,11 +49,12 @@ public class UsuarioDaoImpl implements UsuarioDao {
 	}
 
 	@Override
-	public List<Compra> verProductosEnOferta() {
+	public List<Productos> verProductosEnOferta() {
 		final Session session = sessionFactory.getCurrentSession();
 		@SuppressWarnings("unchecked")
-		List<Compra> listaDeOfertas= session.createCriteria(Compra.class)
-				.add(Restrictions.eq("oferta", true))
+		List<Productos> listaDeOfertas= session.createCriteria(Productos.class)
+				.add(Restrictions.gt("stockDeOferta",0))
+				.add(Restrictions.eq("estado", true))
 				.list();
 		return listaDeOfertas;
 	}

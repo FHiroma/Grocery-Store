@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Compra {
+public class Compra implements Comparable<Compra>{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -77,5 +77,9 @@ public class Compra {
 	}
 	public void setFechaVencimiento(Calendar fechaVencimiento) {
 		this.fechaVencimiento = fechaVencimiento;
+	}
+	@Override
+	public int compareTo(Compra o) {
+		return this.getFechaIngreso().compareTo(o.getFechaIngreso());
 	}
 }

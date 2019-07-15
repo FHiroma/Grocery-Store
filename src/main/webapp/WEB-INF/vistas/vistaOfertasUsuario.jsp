@@ -27,11 +27,11 @@
 								<!-- tab -->
 								<div id="tab1" class="tab-pane active">
 									<div class="products-slick" data-nav="#slick-nav-1">
-										<c:forEach items="${listaOfertas}" var="compra">
+										<c:forEach items="${listaOfertas}" var="producto">
 										<!-- product -->
 										<div class="product">
 											<div class="product-img">
-												<img src="./img/product01.png" alt="">
+												<img src="<%= request.getContextPath() %>${productos.imagen}" alt="">
 												<div class="product-label">
 													<span class="sale">-30%</span>
 													<span class="new">NEW</span>
@@ -39,10 +39,10 @@
 											</div>
 											<div class="product-body">
 												<p class="product-category">Category</p>
-												<h3 class="product-name">  ${compra.producto.descripcion} </h3>
-												<h3 class="product-stock">  ${compra.producto.stock} </h3>
-												<h4 class="product-price">  <del class="product-old-price">${compra.producto.precio}</del> </h4>
-												<c:if test="${compra.oferta == true}">
+												<h3 class="product-name">  ${producto.descripcion} </h3>
+												<h3 class="product-stock">  ${producto.stockDeOferta} </h3>
+												<h4 class="product-price">  <del class="product-old-price">${producto.precio}</del> </h4>
+												<c:if test="${producto.stockDeOferta >= 0}">
 												<h3 class="product-sale">Oferta!!</h3>
 												<br>
 												</c:if>
@@ -60,7 +60,7 @@
 												</div>
 											</div>
 											<div class="add-to-cart">
-												<button class="add-to-cart-btn"><a href="http://localhost:8080/grocery-store/agregar-carrito?id=${compra.producto.id}"><i class="fa fa-shopping-cart"></i>agregar al carrito</a></button>
+												<button class="add-to-cart-btn"><a href="http://localhost:8080/grocery-store/agregar-carrito?id=${producto.id}"><i class="fa fa-shopping-cart"></i>agregar al carrito</a></button>
 											</div>
 										</div>
 										<!-- /product -->

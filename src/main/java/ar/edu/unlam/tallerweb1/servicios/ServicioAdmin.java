@@ -40,5 +40,6 @@ public interface ServicioAdmin {
 	List<DetalleVenta> listarDetallesDeVentaConIdCarrito(Long id);
 	CarritoCompras buscarCarritoComprasConId(Long id);
 	List<PedidoProducto> devolverNotificacionesDePocoStockComoPedidos(List<Notificacion> lista);
+	Boolean enviarCarrito(Long id);
 	
 }

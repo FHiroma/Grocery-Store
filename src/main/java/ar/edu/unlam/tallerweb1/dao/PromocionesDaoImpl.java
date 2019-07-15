@@ -40,7 +40,11 @@ public class PromocionesDaoImpl implements PromocionesDao{
 			.list();
 			if(listaNotificacion.size()==0) {
 				compra.setOferta(true);
+				Productos producto= compra.getProducto();
+				producto.setStockDeOferta(producto.getStockDeOferta()+compra.getStock());
+				producto.setStock(producto.getStock()-compra.getStock());
 				sesion.update(compra);
+				sesion.update(producto);
 				Notificacion notificacion = new Notificacion();
 				notificacion.setDescripcion("Producto en oferta");
 				notificacion.setEstado(false);
@@ -54,23 +58,26 @@ public class PromocionesDaoImpl implements PromocionesDao{
 	public void productosPocoStock() {
 		Session sesion = sessionFactory.getCurrentSession();
 		@SuppressWarnings("unchecked")
-		List<Productos> listaProductos= sesion.createCriteria(Productos.class)
-			.list();
-		for(Productos producto: listaProductos) {
-			if(producto.getStock()<=5) {
-				Notificacion n= new Notificacion();
-				n.setProducto(producto);
-				n.setEstado(false);
-				n.setDescripcion("Stock Minimo");
-				Session sesion1 = sessionFactory.getCurrentSession();
-				@SuppressWarnings("unchecked")
-				List<Notificacion> listaNotificacion= sesion1.createCriteria(Notificacion.class)
-				.add(Restrictions.eq("producto", producto))
-				.add(Restrictions.eq("descripcion", "Stock Minimo"))
-				.list();
-				if(listaNotificacion.size()==0) {
-					Session sesion2 = sessionFactory.getCurrentSession();
-					sesion2.save(n);
+		List<Productos> listaProductos = sesion.createCriteria(Productos.class).list();
+		for (Productos producto : listaProductos) {
+			@SuppressWarnings("unchecked")
+			List<Compra> compras = sesion.createCriteria(Compra.class)
+					.add(Restrictions.eq("producto", producto)).list();
+			if (compras.size() > 0) {
+				if (producto.getStock() <= 5) {
+					Notificacion n = new Notificacion();
+					n.setProducto(producto);
+					n.setEstado(false);
+					n.setDescripcion("Stock Minimo");
+					Session sesion1 = sessionFactory.getCurrentSession();
+					@SuppressWarnings("unchecked")
+					List<Notificacion> listaNotificacion = sesion1.createCriteria(Notificacion.class)
+							.add(Restrictions.eq("producto", producto))
+							.add(Restrictions.eq("descripcion", "Stock Minimo")).list();
+					if (listaNotificacion.size() == 0) {
+						Session sesion2 = sessionFactory.getCurrentSession();
+						sesion2.save(n);
+					}
 				}
 			}
 		}

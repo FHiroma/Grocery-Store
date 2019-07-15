@@ -38,4 +38,6 @@ public interface AdminDao {
 	List<CarritoCompras> buscarCarritosCompra();
 	List<DetalleVenta> listarDetallesDeVentaConIdCarrito(Long id);
 	CarritoCompras buscarCarritoComprasConId(Long id);
+	Boolean enviarCarrito(Long id);
+
 }

@@ -147,4 +147,10 @@ public class ServicioAdminImpl implements ServicioAdmin {
 		}
 		return listadoPedidoProductos;
 	}
+
+	@Override
+	public Boolean enviarCarrito(Long id) {
+		return servicioAdminDao.enviarCarrito(id);
+	}
+
 }

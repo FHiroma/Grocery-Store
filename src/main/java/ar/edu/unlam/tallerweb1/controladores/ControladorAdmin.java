@@ -140,4 +140,10 @@ public class ControladorAdmin {
 		modelo.put("carrito", carrito);
 		return new ModelAndView("vista-detalle-carrito", modelo);
 	}
+	
+	@RequestMapping(path="/enviar-carrito")
+	public ModelAndView enviarCarrito(@RequestParam ("id") Long id) {
+		Boolean resultado= servicioAdmin.enviarCarrito(id);
+		return new ModelAndView();
+	}
 }

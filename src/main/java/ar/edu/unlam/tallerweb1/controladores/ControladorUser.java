@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unlam.tallerweb1.modelo.CarritoCompras;
-import ar.edu.unlam.tallerweb1.modelo.Compra;
 import ar.edu.unlam.tallerweb1.modelo.DetalleVenta;
 import ar.edu.unlam.tallerweb1.modelo.Productos;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
@@ -29,7 +28,7 @@ public class ControladorUser {
 	
 	@RequestMapping("/ver-productos-en-oferta")
 	public ModelAndView verProductosEnOferta(HttpServletRequest request) {
-		List<Compra> listaDeOfertas= servicioUser.verProductosEnOferta();
+		List<Productos> listaDeOfertas= servicioUser.verProductosEnOferta();
 		ModelMap model= new ModelMap();
 		Long id= (Long) request.getSession().getAttribute("id");
 		Usuario u= servicioUser.buscarUsuarioPorId(id);
