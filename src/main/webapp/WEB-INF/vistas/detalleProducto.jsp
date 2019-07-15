@@ -9,11 +9,11 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-		<title>Electro - HTML Ecommerce Template</title>
-	<t:styleHeader></t:styleHeader>
+		<title>${producto.descripcion}</title>
+	<t:styleHeader ></t:styleHeader>
     </head>
 	<body>
-		<t:header>
+		<t:header user="${usuario}">
 		</t:header>
 		<t:nav>
 		</t:nav>

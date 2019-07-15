@@ -13,4 +13,6 @@ public interface ServicioUser {
 	void guardarCarritoVacio(CarritoCompras carrito);
 	Usuario buscarUsuarioPorId(Long id);
 	List<Productos> listarProductosDeLaCategoriaDeId( Long id);
+	void subirContadorDeUsuarioRecomendacion( Long id, Usuario usuario);
+	void registrarUsuario(Usuario usuario);
 }

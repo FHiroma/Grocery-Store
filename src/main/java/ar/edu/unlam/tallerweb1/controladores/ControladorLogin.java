@@ -101,7 +101,7 @@ public class ControladorLogin {
 		} else {
 			model.put("error", "Usuario o clave incorrecta");
 		}
-		return new ModelAndView("login", model);
+		return new ModelAndView("login2", model);
 	}
 
 	@RequestMapping(path = "/homeAdmin", method = RequestMethod.GET)
@@ -126,7 +126,7 @@ public class ControladorLogin {
 		} else {
 			model.put("error", "Usuario o clave incorrecta");
 		}
-		return new ModelAndView("login", model);
+		return new ModelAndView("login2", model);
 	}
 
 	// Escucha la url /, y redirige a la URL /login, es lo mismo que si se invoca la url /login directamente.

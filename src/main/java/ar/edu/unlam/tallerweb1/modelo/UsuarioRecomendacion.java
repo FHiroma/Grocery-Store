@@ -7,28 +7,22 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class CarritoCompras {
-	
+public class UsuarioRecomendacion {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@ManyToOne
-	private Usuario usuario;
+	private Recomendacion recomendacion;
 	@ManyToOne
-	private Direccion direccion;
-	private Boolean estado;
-
-	public Boolean getEstado() {
-		return estado;
+	private Usuario usuario;
+	private Integer cantidad;
+	
+	public Integer getCantidad() {
+		return cantidad;
 	}
-	public void setEstado(Boolean estado) {
-		this.estado = estado;
-	}
-	public Direccion getDireccion() {
-		return direccion;
-	}
-	public void setDireccion(Direccion direccion) {
-		this.direccion = direccion;
+	public void setCantidad(Integer cantidad) {
+		this.cantidad = cantidad;
 	}
 	public Long getId() {
 		return id;
@@ -36,10 +30,17 @@ public class CarritoCompras {
 	public void setId(Long id) {
 		this.id = id;
 	}
+	public Recomendacion getRecomendacion() {
+		return recomendacion;
+	}
+	public void setRecomendacion(Recomendacion recomendacion) {
+		this.recomendacion = recomendacion;
+	}
 	public Usuario getUsuario() {
 		return usuario;
 	}
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
+	
 }
