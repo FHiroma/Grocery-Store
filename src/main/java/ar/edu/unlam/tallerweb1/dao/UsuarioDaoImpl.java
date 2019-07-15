@@ -2,12 +2,8 @@ package ar.edu.unlam.tallerweb1.dao;
 
 import ar.edu.unlam.tallerweb1.modelo.CarritoCompras;
 import ar.edu.unlam.tallerweb1.modelo.Categoria;
-<<<<<<< HEAD
-=======
-import ar.edu.unlam.tallerweb1.modelo.Compra;
 import ar.edu.unlam.tallerweb1.modelo.Direccion;
 import ar.edu.unlam.tallerweb1.modelo.Localidades;
->>>>>>> 9dd264e3cef14208bde554bbabf3317d596bbeee
 import ar.edu.unlam.tallerweb1.modelo.Productos;
 import ar.edu.unlam.tallerweb1.modelo.Recomendacion;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
