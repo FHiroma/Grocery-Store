@@ -18,7 +18,14 @@ public class DetalleVenta {
 	private Productos producto;
 	private Integer cantidad;
 	private Integer subtotal;
+	private Boolean oferta;
 	
+	public Boolean getOferta() {
+		return oferta;
+	}
+	public void setOferta(Boolean oferta) {
+		this.oferta = oferta;
+	}
 	public Integer getSubtotal() {
 		return subtotal;
 	}

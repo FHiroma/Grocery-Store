@@ -19,6 +19,14 @@ public class Productos {
 	private Integer stock;
 	private String imagen;
 	private Integer stockDeOferta;
+	private Boolean oferta;
+	
+	public Boolean getOferta() {
+		return oferta;
+	}
+	public void setOferta(Boolean oferta) {
+		this.oferta = oferta;
+	}
 	public Integer getStockDeOferta() {
 		return stockDeOferta;
 	}

@@ -49,6 +49,7 @@ public class ControladorCarritoCompras {
 			detalle.setCarritoCompras(carrito);
 			detalle.setProducto(producto);
 			detalle.setSubtotal(producto.getPrecio());
+			detalle.setOferta(false);
 			detalle.setCantidad(1);
 			servicioDetalleVenta.registrarDetalle(detalle);
 			List<DetalleVenta> lista= servicioDetalleVenta.traerCarritoCompras(carrito);
@@ -69,6 +70,7 @@ public class ControladorCarritoCompras {
 				detalle.setCarritoCompras(carrito);
 				detalle.setProducto(producto);
 				detalle.setSubtotal(producto.getPrecio());
+				detalle.setOferta(false);
 				detalle.setCantidad(1);
 				servicioDetalleVenta.registrarDetalle(detalle);
 				List<DetalleVenta> lista= servicioDetalleVenta.traerCarritoCompras(carrito);
@@ -82,12 +84,11 @@ public class ControladorCarritoCompras {
 					model.put("usuario", u);
 				}
 				DetalleVenta detalle= servicioDetalleVenta.buscarDetalleVentaConCarritoProducto(carrito, producto);
-				detalle.setCantidad(detalle.getCantidad()+1);
-				detalle.setSubtotal(detalle.getSubtotal()+producto.getPrecio());
-				servicioDetalleVenta.actualizarDetalleVenta(detalle);	
+				Integer cantidad= detalle.getCantidad() + 1;
+				servicioDetalleVenta.modificarCantidadDeUnProductoDelCarrito(id, carrito, cantidad);	
 				List<DetalleVenta> lista= servicioDetalleVenta.traerCarritoCompras(carrito);
-				Integer cantidad= lista.size();
-				model.put("cantidad", cantidad);
+				Integer tamañoCarrito= lista.size();
+				model.put("cantidad", tamañoCarrito);
 				model.put("carrito", lista);
 			}
 		}
@@ -97,9 +98,8 @@ public class ControladorCarritoCompras {
 	@RequestMapping(value = "eliminar-producto-carrito", method = RequestMethod.GET)
 	public ModelAndView remove(@RequestParam("id") Long id, HttpServletRequest request) {
 		ModelMap modelo= new ModelMap();
-		Productos producto= servicioAdmin.buscarProducto(id);
 		CarritoCompras carrito=(CarritoCompras) request.getSession().getAttribute("carrito");
-		servicioDetalleVenta.eliminarDetalleVenta(producto, carrito);
+		servicioDetalleVenta.eliminarDetalleVenta(id, carrito);
 		List<DetalleVenta> lista= servicioDetalleVenta.traerCarritoCompras(carrito);
 		modelo.put("carrito", lista);
 		Integer cantidad= lista.size();
@@ -110,9 +110,8 @@ public class ControladorCarritoCompras {
 	@RequestMapping(value = "modificar-cantidad-producto", method = RequestMethod.GET)
 	public ModelAndView disminuir(@RequestParam("id") Long id,@RequestParam("cantidad") Integer cantidad, HttpServletRequest request) {
 		ModelMap modelo= new ModelMap();
-		Productos producto= servicioAdmin.buscarProducto(id);
 		CarritoCompras carrito=(CarritoCompras) request.getSession().getAttribute("carrito");
-		Boolean valor= servicioDetalleVenta.modificarCantidadDeUnProductoDelCarrito(producto, carrito, cantidad);
+		Boolean valor= servicioDetalleVenta.modificarCantidadDeUnProductoDelCarrito(id, carrito, cantidad);
 		if(valor == true) {
 			List<DetalleVenta> lista= servicioDetalleVenta.traerCarritoCompras(carrito);
 			Integer cantidadP= lista.size();

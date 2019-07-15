@@ -49,6 +49,7 @@ public class UsuarioDaoImpl implements UsuarioDao {
 		List<Productos> listaProductos= session.createCriteria(Productos.class)
 		.add(Restrictions.gt("stock",0))
 		.add(Restrictions.eq("estado", true))
+		.add(Restrictions.eq("oferta", false))
 		.list();
 		return listaProductos;
 	}
@@ -60,6 +61,7 @@ public class UsuarioDaoImpl implements UsuarioDao {
 		List<Productos> listaDeOfertas= session.createCriteria(Productos.class)
 				.add(Restrictions.gt("stockDeOferta",0))
 				.add(Restrictions.eq("estado", true))
+				.add(Restrictions.eq("oferta", true))
 				.list();
 		return listaDeOfertas;
 	}
