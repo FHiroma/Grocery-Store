@@ -14,33 +14,37 @@
 <t:header></t:header>
 
 <!-- Order Details -->
-					<div class="section-title">
-					<div class="col-md-12 order-details">
+					<div class="section-title justify-content-center">
+					<div class="col-md-2">
+					</div>
+					<div class="col-md-8 text-center order-details">
 						<div class="section-title text-center">
 							<h3 class="title">Your Order</h3>
 						</div>
 
 						
 						<div class="order-summary">
-							<div class="col-md-5 order-col">
-								<div><strong>PRODUCT</strong></div>
+							<div class="col-md-8 order-col">
+								<div class="col-md-5"><strong>PRODUCT</strong></div>
 								<div><strong>TOTAL</strong></div>
 							</div>
 						<c:forEach items="${carrito}" var="detalle">
 							<div class="order-products">
-								<div class="col-md-5 order-col">
-
+								<div class="col-md-7 order-col">
+									<div>
 									<div><c:out value="${detalle.producto.descripcion}" /></div>
 									<div><c:out value="${detalle.subtotal}" /></div>
+									</div>
 									<div>
 										<form  action="modificar-cantidad-producto" method="GET">
 											<input type="hidden" name="id" value="${detalle.producto.id}" required="required"> 
 											<input type="number" name="cantidad" value="${detalle.cantidad}" required="required" min="1" pattern="^[0-9]+">
-											<input type="submit" value="cantidad">
+											<input type="submit" class="btn btn-primary" value="Modificar">
 										</form>
 									</div>
-									<div> 
-    								<a href="http://localhost:8080/grocery-store/eliminar-producto-carrito?id=${detalle.producto.id}" class="primary-btn order-submit">EliminarProductos</a>
+									<div>
+    								<a href="http://localhost:8080/grocery-store/eliminar-producto-carrito?id=${detalle.producto.id}" class="btn btn-danger"> <i class="fa fa-close">
+    								Eliminar Productos</i></a>
     								</div>
     								<dir>
     									<c:if test="${not empty error}">
@@ -68,7 +72,5 @@
 					</div>
 				</div>
 					<!-- /Order Details -->
-	
-
 </body>
 </html>

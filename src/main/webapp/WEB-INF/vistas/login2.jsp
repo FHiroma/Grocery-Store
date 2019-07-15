@@ -29,7 +29,7 @@
 					<button class="btn btn-lg btn-primary btn-block" Type="Submit"/>Login</button>
 				</form:form>
 				<br>
-				<a href="http://localhost:8080/proyecto-limpio-spring/registro"> 
+				<a href="registro"> 
 				<h3 class="form-signin-heading">Registrate</h3> </a>
 				
 				<%--Bloque que es visible si el elemento error no está vacío	--%>

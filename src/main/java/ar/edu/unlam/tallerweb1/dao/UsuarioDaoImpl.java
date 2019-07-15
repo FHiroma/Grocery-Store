@@ -2,8 +2,17 @@ package ar.edu.unlam.tallerweb1.dao;
 
 import ar.edu.unlam.tallerweb1.modelo.CarritoCompras;
 import ar.edu.unlam.tallerweb1.modelo.Categoria;
+<<<<<<< HEAD
+=======
+import ar.edu.unlam.tallerweb1.modelo.Compra;
+import ar.edu.unlam.tallerweb1.modelo.Direccion;
+import ar.edu.unlam.tallerweb1.modelo.Localidades;
+>>>>>>> 9dd264e3cef14208bde554bbabf3317d596bbeee
 import ar.edu.unlam.tallerweb1.modelo.Productos;
+import ar.edu.unlam.tallerweb1.modelo.Recomendacion;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
+import ar.edu.unlam.tallerweb1.modelo.UsuarioRecomendacion;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -90,4 +99,60 @@ public class UsuarioDaoImpl implements UsuarioDao {
 			return null;
 		}
 	}
+
+	@Override
+	public void subirContadorDeUsuarioRecomendacion(Long id, Usuario usuario) {
+		UsuarioRecomendacion recomendacion = (UsuarioRecomendacion) sessionFactory.getCurrentSession()
+				.createCriteria(UsuarioRecomendacion.class)
+				.add(Restrictions.eq("usuario", usuario.getId()))
+				.add(Restrictions.eq("recomendacion", id))
+				.uniqueResult();
+		recomendacion.setCantidad(recomendacion.getCantidad()+1);
+		sessionFactory.getCurrentSession().update(recomendacion);
+	}
+
+	@Override
+	public boolean registrarUsuario(Usuario usuario) {
+			Session sesion = sessionFactory.getCurrentSession();
+			@SuppressWarnings("unchecked")
+			List<Usuario> listaUsuario= sesion.createCriteria(Usuario.class)
+					.add(Restrictions.like("email", usuario.getEmail()))
+					.list();
+			if(listaUsuario.isEmpty()){
+				usuario.setRol("user");
+				sessionFactory.getCurrentSession().save(usuario);
+				@SuppressWarnings("unchecked")
+				List<Recomendacion> listaRecomendaciones = sesion
+						.createCriteria(Recomendacion.class).list();
+				for(Recomendacion recomendacion: listaRecomendaciones){
+					UsuarioRecomendacion usuarioRecomendacion = new UsuarioRecomendacion();
+					usuarioRecomendacion.setCantidad(0);
+					usuarioRecomendacion.setRecomendacion(recomendacion);
+					usuarioRecomendacion.setUsuario(usuario);
+					sesion.save(usuarioRecomendacion);
+				}
+				return true;
+			}else{
+				return false;
+			}
+	}
+
+	@Override
+	public Localidades buscarLocalidadPorId(Long id) {
+		return (Localidades) sessionFactory.getCurrentSession()
+				.createCriteria(Localidades.class)
+				.add(Restrictions.eq("id", id))
+				.uniqueResult();
+	}
+
+	@Override
+	public Direccion crearDireccion(Long localidad, String calle, Integer numero) {
+		Direccion direccion = new Direccion();
+		direccion.setLocalidad(buscarLocalidadPorId(localidad));
+		direccion.setCalle(calle);
+		direccion.setNumero(numero);
+		sessionFactory.getCurrentSession().save(direccion);
+		return direccion;
+	}
+	
 }

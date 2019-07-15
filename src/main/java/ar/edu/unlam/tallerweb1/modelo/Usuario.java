@@ -1,11 +1,10 @@
 package ar.edu.unlam.tallerweb1.modelo;
 
-import java.io.File;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 // Clase que modela el concepto de Usuario, la anotacion @Entity le avisa a hibernate que esta clase es persistible
 // el paquete ar.edu.unlam.tallerweb1.modelo esta indicado en el archivo hibernateCOntext.xml para que hibernate
@@ -24,8 +23,9 @@ public class Usuario {
 	private String rol;
 	private String nombre;
 	private String apellido;
+	@ManyToOne
+	private Direccion direccion;
 	private Boolean estado;
-	private File text;
 	
 	public Long getId() {
 		return id;
@@ -71,10 +71,11 @@ public class Usuario {
 	public void setEstado(Boolean estado) {
 		this.estado = estado;
 	}
-	public File getText() {
-		return text;
+	public Direccion getDireccion() {
+		return direccion;
 	}
-	public void setText(File text) {
-		this.text = text;
+	public void setDireccion(Direccion direccion) {
+		this.direccion = direccion;
 	}
+	
 }

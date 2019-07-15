@@ -16,6 +16,9 @@
 						<c:forEach items="${listaCategorias}" var="categoria">
 						<li><a href="http://localhost:8080/grocery-store/categoria?id=${categoria.id}">${categoria.descripcion }</a></li>
 						</c:forEach>
+						<c:if test="${usuario.rol == 'user'}">
+						<li><a href="MiCuenta">Mi Cuenta</a></li>
+						</c:if>
 					</c:if>
 					<c:if test="${usuario.rol == 'admin'}">			
 								<!-- <a href="http://localhost:8080/proyecto-limpio-spring/logout"> 
