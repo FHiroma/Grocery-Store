@@ -13,14 +13,14 @@
 						<li><a href="#"><i class="fa fa-envelope-o"></i> email@email.com</a></li>
 						<li><a href="#"><i class="fa fa-map-marker"></i> 1734 Stonecoal Road</a></li>
 					</ul>
-					<c:if test="${not empty usuario}">
+					<c:if test="${not empty user}">
 					<ul class="header-links pull-right">
 						<li><a href="#"><i class="fa fa-dollar"></i> USD</a></li>
-						<li><a href="login"><i class="fa fa-user-o"></i> ${usuario.nombre}</a></li>
+						<li><a href="login"><i class="fa fa-user-o"></i> ${user.nombre}</a></li>
 						<li><a href="logout"><i class="fa fa-sign-out"></i> Salir</a></li>
 					</ul>
 					</c:if> 
-					<c:if test="${empty usuario}">
+					<c:if test="${empty user}">
 					<ul class="header-links pull-right">
 						<li><a href="#"><i class="fa fa-dollar"></i> USD</a></li>
 						<li><a href="login"><i class="fa fa-user-o"></i> Ingresá</a></li>

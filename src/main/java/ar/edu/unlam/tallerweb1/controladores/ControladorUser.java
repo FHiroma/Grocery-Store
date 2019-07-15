@@ -12,11 +12,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unlam.tallerweb1.modelo.CarritoCompras;
-import ar.edu.unlam.tallerweb1.modelo.Categoria;
 import ar.edu.unlam.tallerweb1.modelo.Compra;
 import ar.edu.unlam.tallerweb1.modelo.DetalleVenta;
 import ar.edu.unlam.tallerweb1.modelo.Localidades;
@@ -66,7 +64,7 @@ public class ControladorUser {
 		return new ModelAndView("vista-productos-una-categoria", modelo);
 	}
 	
-	@RequestMapping("/registro")
+	@RequestMapping(path="/registro")
 	public ModelAndView irARegistrarNuevaCuenta(){
 		ModelMap modelo = new ModelMap();
 		Usuario usuario = new Usuario();
@@ -77,14 +75,21 @@ public class ControladorUser {
 	}
 	
 	@RequestMapping(path="/registrarCuenta", method = RequestMethod.POST)
-	public ModelAndView registrarNuevaCuenta(@RequestParam Long localidad,
-			 @ModelAttribute("usuario") Usuario usuario){
-		
-		ModelMap modelo = new ModelMap();
-		List<Localidades> localidades = servicioAdmin.listarLocalidades();
-		modelo.put("usuario", usuario);
-		modelo.put("localidades", localidades);
-		return new ModelAndView("registrarUsuario", modelo);
+	public ModelAndView registrarNuevaCuenta(@ModelAttribute("usuario") Usuario usuario,
+											 @ModelAttribute ("localidad") Long localidad,
+											 @ModelAttribute ("calle") String calle,
+											 @ModelAttribute ("numero") Integer numero){
+		usuario.setDireccion(servicioUser.crearDireccion(localidad,calle,numero));
+		boolean validarPass = servicioUser.registrarUsuario(usuario);
+		String mensaje="";
+		ModelMap model = new ModelMap();
+		if(validarPass){
+			return new ModelAndView("redirect:/login");
+		}else{
+			mensaje="Revise sus datos.";
+			model.put("mensaje", mensaje);
+			return new ModelAndView("registrarUsuario", model);
+		}
 	}
 	
 	@RequestMapping("/MiCuenta")

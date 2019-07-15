@@ -1,7 +1,5 @@
 package ar.edu.unlam.tallerweb1.modelo;
 
-import java.io.File;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,8 +24,7 @@ public class Usuario {
 	private String nombre;
 	private String apellido;
 	@ManyToOne
-	private Localidades localidad;
-	private String nombreDeCalle;
+	private Direccion direccion;
 	private Boolean estado;
 	
 	public Long getId() {
@@ -74,17 +71,11 @@ public class Usuario {
 	public void setEstado(Boolean estado) {
 		this.estado = estado;
 	}
-	public Localidades getLocalidad() {
-		return localidad;
+	public Direccion getDireccion() {
+		return direccion;
 	}
-	public void setLocalidad(Localidades localidad) {
-		this.localidad = localidad;
-	}
-	public String getNombreDeCalle() {
-		return nombreDeCalle;
-	}
-	public void setNombreDeCalle(String nombreDeCalle) {
-		this.nombreDeCalle = nombreDeCalle;
+	public void setDireccion(Direccion direccion) {
+		this.direccion = direccion;
 	}
 	
 }

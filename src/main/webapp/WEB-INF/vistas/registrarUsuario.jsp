@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Login</title>
+<title>Registro</title>
 <t:styleHeader></t:styleHeader>
 </head>
 <body>
@@ -22,13 +22,13 @@
 						<div class="input-group-prepend">
 						    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
 						 </div>
-						 <form:input path="nombre" id="nombre" type="text" placeholder="Nombre" class="form-control" />
+						 <form:input path="nombre" id="nombre" type="string" placeholder="Nombre" class="form-control" />
 				    </div> <!-- form-group// -->
 				    <div class="form-group input-group">
 				    	<div class="input-group-prepend">
 						    <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
 						 </div>
-				        <form:input path="apellido" id="apellido" type="text" placeholder="Apellido" class="form-control" />
+				        <form:input path="apellido" id="apellido" type="string" placeholder="Apellido" class="form-control" />
 				    </div> <!-- form-group// -->
 				    <div class="form-group input-group">
 				    	<div class="input-group-prepend">
@@ -36,37 +36,32 @@
 						 </div>
 				        <form:input path="email" id="email" type="email" placeholder="Email" class="form-control" />
 				    </div> <!-- form-group// -->
-				    <div class="form-group input-group">
-				    	<div class="input-group-prepend">
-						    <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
-						</div>
-						<select name="localidad">
-						<option disabled selected value> -- Seleccione una localidad -- </option>
-						<c:forEach items="${localidades}" var="localidad">
-		        			<option value="${localidad.id}">${localidad.descripcion}</option>
-  						</c:forEach>
-					</select>
-				    </div> <!-- form-group// -->
-				    <div class="form-group input-group">
+   				    <div class="form-group input-group">
 				    	<div class="input-group-prepend">
 						    <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
 						</div>
 				        <form:input path="password" type="password" id="password" placeholder="Contraseña" class="form-control"/> 
-				    </div> <!-- form-group// -->      <div class="form-group input-group">
+				    </div> <!-- form-group// -->  
+				    <div class="form-group input-group">
 				    	<div class="input-group-prepend">
-						    <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+						    <span class="input-group-text"><i class="fa fa-map-marker"></i></span>
 						</div>
-				        <form:input path="nombreDeCalle" type="text" id="NombreDeCalle" placeholder="Nombre de Calle" class="form-control"/> 
-				    </div> <!-- form-group// -->                               
+						<select name="localidad" class="form-control">
+						<c:forEach items="${localidades}" var="localidad">
+		        			<option value="${localidad.id}">${localidad.descripcion}</option>
+  						</c:forEach>
+						</select>
+						<input name="calle" id="calle" type="text" placeholder="Calle">
+						</input>
+						<input name="numero" id="numero" type="number" placeholder="Numero">
+						</input>
+				    </div> <!-- form-group// -->                            
 				    <div class="form-group">
 				        <button type="submit" class="btn btn-primary btn-block"> Crear cuenta </button>
 				        </form:form>
-				    </div> <!-- form-group// -->                                                            
-				</form>
+				    </div> <!-- form-group// -->
 				</article>
 				</div> <!-- card.// -->
-				
-				</div> 
 				<!--container end.//-->
 
 				<c:if test="${not empty error}">
