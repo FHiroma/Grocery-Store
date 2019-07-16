@@ -14,6 +14,7 @@ import javax.servlet.ServletContext;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
@@ -304,9 +305,12 @@ public class AdminDaoImpl implements AdminDao {
 		Categoria categoria =  (Categoria)sessionFactory.getCurrentSession().createCriteria(Categoria.class)
 								.add(Restrictions.eq("descripcion", rec.getDescripcion()))
 								.uniqueResult();
+		Criterion stock = Restrictions.gt("stock", 0);
+		Criterion stockOferta = Restrictions.gt("stockDeOferta", 0);
 		@SuppressWarnings("unchecked")
 		List<Productos> listaRec = sessionFactory.getCurrentSession().createCriteria(Productos.class)
 				.add(Restrictions.eq("categoria", categoria))
+				.add(Restrictions.or(stock, stockOferta))
 				.list();
 		return listaRec;
 	}
