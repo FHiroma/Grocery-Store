@@ -54,7 +54,6 @@ public class ControladorCarritoCompras {
 			detalle.setCarritoCompras(carrito);
 			detalle.setProducto(producto);
 			detalle.setSubtotal(producto.getPrecio());
-
 			detalle.setCantidad(1);
 			servicioDetalleVenta.registrarDetalle(detalle);
 			List<DetalleVenta> lista= servicioDetalleVenta.traerCarritoCompras(carrito);
@@ -75,7 +74,6 @@ public class ControladorCarritoCompras {
 				detalle.setCarritoCompras(carrito);
 				detalle.setProducto(producto);
 				detalle.setSubtotal(producto.getPrecio());
-
 				detalle.setCantidad(1);
 				servicioDetalleVenta.registrarDetalle(detalle);
 				List<DetalleVenta> lista= servicioDetalleVenta.traerCarritoCompras(carrito);
@@ -93,8 +91,9 @@ public class ControladorCarritoCompras {
 				detalle.setSubtotal(detalle.getSubtotal()+producto.getPrecio());
 				servicioDetalleVenta.actualizarDetalleVenta(detalle);	
 				List<DetalleVenta> lista= servicioDetalleVenta.traerCarritoCompras(carrito);
-		Integer cantidad= lista.size();
-				model.put("cantidad", cantidad);				model.put("carrito", lista);
+				Integer cantidad= lista.size();
+				model.put("cantidad", cantidad);
+				model.put("carrito", lista);
 			}
 		}
 			return new ModelAndView("lala", model);
@@ -156,20 +155,16 @@ public class ControladorCarritoCompras {
 	}
 	
 	@RequestMapping(value = "verificar-direccion", method = RequestMethod.POST)
-	public ModelAndView verificarDireccion(@ModelAttribute ("direccion") Direccion direccion
-											, @ModelAttribute ("idLocalidad") Long idLocalidad
-											, HttpServletRequest request) {
-		Direccion direccionTabla=servicioAdmin.guardarDireccionDeCompra(direccion, idLocalidad);
-		ModelMap modelo = new ModelMap();
-		/*LOGICA CON API GOOGLE MAPS */
-		
-		CarritoCompras carrito=(CarritoCompras) request.getSession().getAttribute("carrito");
-		servicioAdmin.agregarDireccionAlCarrito(carrito, direccionTabla);
-		
-		/* MOSTRAR UNA PANTALLA QUE SOLICITE UN METODO DE PAGO */
-		List<DetalleVenta> lista= servicioDetalleVenta.traerCarritoCompras(carrito);
-		Preference p = servicioMercadoPago.traerPreferenciasParaMercadoPago(lista,carrito);
-		modelo.put("mercadopago", p);
-		return new ModelAndView("vistaMercadoPago",modelo);
-	}
+    public ModelAndView verificarDireccion(@ModelAttribute ("direccion") Direccion direccion
+                                            , @ModelAttribute ("idLocalidad") Long idLocalidad
+                                            , HttpServletRequest request) {
+        Direccion direccionTabla=servicioAdmin.guardarDireccionDeCompra(direccion, idLocalidad);
+        ModelMap modelo = new ModelMap();
+        CarritoCompras carrito=(CarritoCompras) request.getSession().getAttribute("carrito");
+        servicioAdmin.agregarDireccionAlCarrito(carrito, direccionTabla);
+        List<DetalleVenta> lista= servicioDetalleVenta.traerCarritoCompras(carrito);
+        Preference p = servicioMercadoPago.traerPreferenciasParaMercadoPago(lista,carrito);
+        modelo.put("mercadopago", p);
+        return new ModelAndView("vistaMercadoPago",modelo);
+    }
 }
