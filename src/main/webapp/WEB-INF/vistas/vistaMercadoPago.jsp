@@ -8,18 +8,16 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Grocery-Store</title>
+<title>Pago</title>
 <t:styleHeader></t:styleHeader>
 </head>
 <body>
-	<t:header user="${usuario}"></t:header>
+	<t:header></t:header>
 	<t:nav></t:nav>
-	<t:index list="${listaProductos}"></t:index>
-	<c:if test="${not empty listaRecomendados}">
-	<t:indexRecomendacion list="${listaRecomendados}"></t:indexRecomendacion>
-	</c:if>
+	<body>
+    <a href="${mercadopago.initPoint}">Pagar con Mercado Pago</a>
+  	</body>
 	<t:footer>
 	</t:footer>
-	
 </body>
 </html>

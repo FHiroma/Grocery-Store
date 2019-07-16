@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.mercadopago.resources.Preference;
+
 import ar.edu.unlam.tallerweb1.modelo.CarritoCompras;
 import ar.edu.unlam.tallerweb1.modelo.DetalleVenta;
 import ar.edu.unlam.tallerweb1.modelo.Direccion;
@@ -21,6 +23,7 @@ import ar.edu.unlam.tallerweb1.modelo.Productos;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.servicios.ServicioAdmin;
 import ar.edu.unlam.tallerweb1.servicios.ServicioDetalleVenta;
+import ar.edu.unlam.tallerweb1.servicios.ServicioMercadoPago;
 import ar.edu.unlam.tallerweb1.servicios.ServicioUser;
 
 @Controller
@@ -32,6 +35,8 @@ public class ControladorCarritoCompras {
 	private ServicioDetalleVenta servicioDetalleVenta;
 	@Inject
 	private ServicioUser servicioUsuario;
+	@Inject
+	private ServicioMercadoPago servicioMercadoPago;
 	
 	@RequestMapping("/agregar-carrito")
 	public ModelAndView agregarAlCarrito(HttpServletRequest request, @RequestParam ("id") Long id) {
@@ -49,6 +54,7 @@ public class ControladorCarritoCompras {
 			detalle.setCarritoCompras(carrito);
 			detalle.setProducto(producto);
 			detalle.setSubtotal(producto.getPrecio());
+
 			detalle.setCantidad(1);
 			servicioDetalleVenta.registrarDetalle(detalle);
 			List<DetalleVenta> lista= servicioDetalleVenta.traerCarritoCompras(carrito);
@@ -69,6 +75,7 @@ public class ControladorCarritoCompras {
 				detalle.setCarritoCompras(carrito);
 				detalle.setProducto(producto);
 				detalle.setSubtotal(producto.getPrecio());
+
 				detalle.setCantidad(1);
 				servicioDetalleVenta.registrarDetalle(detalle);
 				List<DetalleVenta> lista= servicioDetalleVenta.traerCarritoCompras(carrito);
@@ -86,9 +93,8 @@ public class ControladorCarritoCompras {
 				detalle.setSubtotal(detalle.getSubtotal()+producto.getPrecio());
 				servicioDetalleVenta.actualizarDetalleVenta(detalle);	
 				List<DetalleVenta> lista= servicioDetalleVenta.traerCarritoCompras(carrito);
-				Integer cantidad= lista.size();
-				model.put("cantidad", cantidad);
-				model.put("carrito", lista);
+		Integer cantidad= lista.size();
+				model.put("cantidad", cantidad);				model.put("carrito", lista);
 			}
 		}
 			return new ModelAndView("lala", model);
@@ -154,14 +160,16 @@ public class ControladorCarritoCompras {
 											, @ModelAttribute ("idLocalidad") Long idLocalidad
 											, HttpServletRequest request) {
 		Direccion direccionTabla=servicioAdmin.guardarDireccionDeCompra(direccion, idLocalidad);
-		
+		ModelMap modelo = new ModelMap();
 		/*LOGICA CON API GOOGLE MAPS */
 		
 		CarritoCompras carrito=(CarritoCompras) request.getSession().getAttribute("carrito");
 		servicioAdmin.agregarDireccionAlCarrito(carrito, direccionTabla);
 		
 		/* MOSTRAR UNA PANTALLA QUE SOLICITE UN METODO DE PAGO */
-		
-		return new ModelAndView("exito");
+		List<DetalleVenta> lista= servicioDetalleVenta.traerCarritoCompras(carrito);
+		Preference p = servicioMercadoPago.traerPreferenciasParaMercadoPago(lista,carrito);
+		modelo.put("mercadopago", p);
+		return new ModelAndView("vistaMercadoPago",modelo);
 	}
 }

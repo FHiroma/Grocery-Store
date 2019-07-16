@@ -9,6 +9,11 @@
 			<div class="container">
 				<!-- row -->
 				<div class="row">
+				<div class="col-md-12">
+						<div class="section-title">
+							<h3 class="title">Recomendados</h3>
+						</div>
+					</div>
 					<!-- Products tab & slick -->
 					<div class="col-md-12 d-flex">
 						<div class="row">
@@ -19,7 +24,6 @@
 									<c:forEach  items="${list}" var="productos">
 										<!-- product -->
 										<div class="product">
-											<a href="producto?producto=${productos.descripcion}">
 											<div class="product-img">
 												<img src="<%= request.getContextPath() %>${productos.imagen}">
 												<div class="product-label">
@@ -27,7 +31,6 @@
 													<span class="new">NEW</span>
 												</div>
 											</div>
-											</a>
 											<div class="product-body">
 												<p class="product-category">${productos.categoria.descripcion}</p>
 												<h3 class="product-name">  ${productos.descripcion} </h3>

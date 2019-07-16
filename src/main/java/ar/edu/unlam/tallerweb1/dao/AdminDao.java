@@ -6,6 +6,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import ar.edu.unlam.tallerweb1.modelo.Productos;
 import ar.edu.unlam.tallerweb1.modelo.Proveedor;
+import ar.edu.unlam.tallerweb1.modelo.Recomendacion;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.modelo.CarritoCompras;
 import ar.edu.unlam.tallerweb1.modelo.Categoria;
@@ -39,5 +40,6 @@ public interface AdminDao {
 	List<DetalleVenta> listarDetallesDeVentaConIdCarrito(Long id);
 	CarritoCompras buscarCarritoComprasConId(Long id);
 	Boolean enviarCarrito(Long id);
+	List<Productos> buscarProductosRecomendados(Recomendacion rec);
 
 }

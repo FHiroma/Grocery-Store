@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import ar.edu.unlam.tallerweb1.modelo.Productos;
@@ -35,6 +36,8 @@ public class BusquedaDaoImpl implements BusquedaDao{
 		Productos producto= (Productos) session.createCriteria(Productos.class)
 		.add(Restrictions.like("descripcion", nombre, MatchMode.START))
 		.add(Restrictions.eq("estado", true))
+		.addOrder(Order.desc("descripcion"))
+		.setMaxResults(1)
 		.uniqueResult();
 		return producto;
 	}
