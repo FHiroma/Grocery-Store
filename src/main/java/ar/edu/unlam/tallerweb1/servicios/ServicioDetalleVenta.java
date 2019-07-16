@@ -13,7 +13,7 @@ public interface ServicioDetalleVenta {
 	DetalleVenta buscarDetalleVentaConCarritoProducto(CarritoCompras carrito, Productos producto);
 	void actualizarDetalleVenta(DetalleVenta detalle);
 	List<DetalleVenta> traerCarritoCompras(CarritoCompras carrito);
-	void eliminarDetalleVenta(Productos producto, CarritoCompras carrito);
-	Boolean modificarCantidadDeUnProductoDelCarrito(Productos producto, CarritoCompras carrito, Integer cantidad);
+	void eliminarDetalleVenta(Long id, CarritoCompras carrito);
+	Boolean modificarCantidadDeUnProductoDelCarrito(Long id, CarritoCompras carrito, Integer cantidad);
 
 }

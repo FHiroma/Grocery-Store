@@ -38,17 +38,26 @@ public class PromocionesDaoImpl implements PromocionesDao{
 			.add(Restrictions.eq("producto", compra.getProducto()))
 			.add(Restrictions.eq("descripcion", "Producto en oferta"))
 			.list();
+			Productos producto= compra.getProducto();
 			if(listaNotificacion.size()==0) {
+				Productos productoOferta= new Productos();
+				productoOferta.setDescripcion(compra.getProducto().getDescripcion() + "Oferta");
+				productoOferta.setOferta(true);
+				productoOferta.setStockDeOferta(compra.getStock());
+				productoOferta.setDiasCaducidad(compra.getProducto().getDiasCaducidad());
+				productoOferta.setEstado(compra.getProducto().getEstado());
+				productoOferta.setPrecio((compra.getProducto().getPrecio()/2));
+				productoOferta.setImagen(compra.getProducto().getImagen());
+				sessionFactory.getCurrentSession().save(productoOferta);
 				compra.setOferta(true);
-				Productos producto= compra.getProducto();
-				producto.setStockDeOferta(producto.getStockDeOferta()+compra.getStock());
-				producto.setStock(producto.getStock()-compra.getStock());
+				compra.setProducto(productoOferta);
+				producto.setStock(producto.getStock() - productoOferta.getStockDeOferta());
 				sesion.update(compra);
 				sesion.update(producto);
 				Notificacion notificacion = new Notificacion();
 				notificacion.setDescripcion("Producto en oferta");
 				notificacion.setEstado(false);
-				notificacion.setProducto(compra.getProducto());
+				notificacion.setProducto(productoOferta);
 				sesion.save(notificacion);
 				}
 			}
@@ -58,29 +67,25 @@ public class PromocionesDaoImpl implements PromocionesDao{
 	public void productosPocoStock() {
 		Session sesion = sessionFactory.getCurrentSession();
 		@SuppressWarnings("unchecked")
-		List<Productos> listaProductos = sesion.createCriteria(Productos.class).list();
-		for (Productos producto : listaProductos) {
+		List<Productos> listaProductos = sesion.createCriteria(Productos.class)
+								.add(Restrictions.eq("oferta", false)).list();
+		for(Productos producto: listaProductos) {
+			if (producto.getStock() <= 5) {
+			Notificacion n = new Notificacion();
+			n.setProducto(producto);
+			n.setEstado(false);
+			n.setDescripcion("Stock Minimo");
+			Session sesion1 = sessionFactory.getCurrentSession();
 			@SuppressWarnings("unchecked")
-			List<Compra> compras = sesion.createCriteria(Compra.class)
-					.add(Restrictions.eq("producto", producto)).list();
-			if (compras.size() > 0) {
-				if (producto.getStock() <= 5) {
-					Notificacion n = new Notificacion();
-					n.setProducto(producto);
-					n.setEstado(false);
-					n.setDescripcion("Stock Minimo");
-					Session sesion1 = sessionFactory.getCurrentSession();
-					@SuppressWarnings("unchecked")
-					List<Notificacion> listaNotificacion = sesion1.createCriteria(Notificacion.class)
-							.add(Restrictions.eq("producto", producto))
-							.add(Restrictions.eq("descripcion", "Stock Minimo")).list();
-					if (listaNotificacion.size() == 0) {
-						Session sesion2 = sessionFactory.getCurrentSession();
-						sesion2.save(n);
-					}
-				}
+			List<Notificacion> listaNotificacion = sesion1.createCriteria(Notificacion.class)
+					.add(Restrictions.eq("producto", producto))
+					.add(Restrictions.eq("descripcion", "Stock Minimo")).list();
+			if (listaNotificacion.size() == 0) {
+				Session sesion2 = sessionFactory.getCurrentSession();
+				sesion2.save(n);
 			}
 		}
+	}
 	}
 
 	@Override
@@ -103,13 +108,15 @@ public class PromocionesDaoImpl implements PromocionesDao{
 				if(compra != null) {
 				compra.setVencido(true);
 				Productos producto= compra.getProducto();
-				producto.setStock(producto.getStock()-compra.getStock());
-				sessionFactory.getCurrentSession().update(producto);
-				sessionFactory.getCurrentSession().update(compra);
+				if(producto.getOferta() == true) {
+					producto.setStockDeOferta(producto.getStockDeOferta() - compra.getStock());
+					sessionFactory.getCurrentSession().update(producto);
+					sessionFactory.getCurrentSession().update(compra);
+				}
 				@SuppressWarnings("unchecked")
 				List<Notificacion> lista=(List<Notificacion>) sessionFactory.getCurrentSession()
 						.createCriteria(Notificacion.class)
-						.add(Restrictions.eq("producto", compra.getProducto()))
+						.add(Restrictions.eq("producto", producto))
 						.add(Restrictions.eq("descripcion", "Producto Vencido"))
 						.list();
 				if(lista.size()==0) {
@@ -119,11 +126,11 @@ public class PromocionesDaoImpl implements PromocionesDao{
 					n.setProducto(compra.getProducto());
 					sessionFactory.getCurrentSession().save(n);
 				}
-				ProductosVencidos productoVencido=  new ProductosVencidos();
-				productoVencido.setProducto(compra.getProducto());
-				productoVencido.setCantidad(compra.getStock());
-				productoVencido.setFechaCompra(compra.getFechaIngreso());
-				sessionFactory.getCurrentSession().save(productoVencido);
+//				ProductosVencidos productoVencido=  new ProductosVencidos();
+//				productoVencido.setProducto(compra.getProducto());
+//				productoVencido.setCantidad(compra.getStock());
+//				productoVencido.setFechaCompra(compra.getFechaIngreso());
+//				sessionFactory.getCurrentSession().save(productoVencido);
 				}
 			}	
 		}

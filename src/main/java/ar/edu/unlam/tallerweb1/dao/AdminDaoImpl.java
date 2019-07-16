@@ -101,6 +101,7 @@ public class AdminDaoImpl implements AdminDao {
         producto.setImagen(direccionDeImagen);
 		producto.setCategoria(categoria);
 		producto.setEstado(true);
+		producto.setOferta(false);
 		producto.setStock(0);
 		producto.setStockDeOferta(0);
 		session.save(producto);
@@ -268,20 +269,34 @@ public class AdminDaoImpl implements AdminDao {
 
 	@Override
 	public Boolean enviarCarrito(Long id) {
-//		CarritoCompras carrito= (CarritoCompras) sessionFactory.getCurrentSession()
-//				.createCriteria(CarritoCompras.class)
-//				.add(Restrictions.eq("id", id))
-//				.add(Restrictions.eq("estado", null))
-//				.uniqueResult();
-//		if(carrito != null) {
-//			@SuppressWarnings("unchecked")
-//			List<DetalleVenta> listaDetalle= sessionFactory.getCurrentSession()
-//					.createCriteria(DetalleVenta.class)
-//					.add(Restrictions.eq("carritoCompras", carrito))
-//					.list();
-//		}
-		// TODO Auto-generated method stub
-				return null;
+		CarritoCompras carrito= (CarritoCompras) sessionFactory.getCurrentSession()
+				.createCriteria(CarritoCompras.class)
+				.add(Restrictions.eq("id", id))
+				.add(Restrictions.eq("estado", null))
+				.uniqueResult();
+		if(carrito != null) {
+			@SuppressWarnings("unchecked")
+			List<DetalleVenta> listaDetalle= sessionFactory.getCurrentSession()
+					.createCriteria(DetalleVenta.class)
+					.add(Restrictions.eq("carritoCompras", carrito))
+					.list();
+			if(listaDetalle.size() > 0) {
+				for(DetalleVenta detalle: listaDetalle) {
+					Productos producto= detalle.getProducto();
+					Integer cantidad= detalle.getCantidad();
+					if(cantidad >= producto.getStockDeOferta()) {
+						producto.setStockDeOferta(producto.getStockDeOferta() - detalle.getCantidad());
+						sessionFactory.getCurrentSession().update(producto);
+					} else {
+						producto.setStock(producto.getStock() - detalle.getCantidad());
+						sessionFactory.getCurrentSession().update(producto);
+					}
+				}
+			}
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	@Override

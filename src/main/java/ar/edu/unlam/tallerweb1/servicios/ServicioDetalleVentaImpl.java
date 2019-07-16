@@ -45,13 +45,13 @@ public class ServicioDetalleVentaImpl implements ServicioDetalleVenta {
 	}
 
 	@Override
-	public void eliminarDetalleVenta(Productos producto, CarritoCompras carrito) {
-		servicioDetalleVentaDao.eliminarDetalleVenta(producto, carrito);
+	public void eliminarDetalleVenta(Long id, CarritoCompras carrito) {
+		servicioDetalleVentaDao.eliminarDetalleVenta(id, carrito);
 	}
 
 	@Override
-	public Boolean modificarCantidadDeUnProductoDelCarrito(Productos producto, CarritoCompras carrito, Integer cantidad) {
-		 return servicioDetalleVentaDao.modificarCantidadDeUnProductoDelCarrito(producto, carrito, cantidad);
+	public Boolean modificarCantidadDeUnProductoDelCarrito(Long id, CarritoCompras carrito, Integer cantidad) {
+		 return servicioDetalleVentaDao.modificarCantidadDeUnProductoDelCarrito(id, carrito, cantidad);
 	}
 
 }
