@@ -15,6 +15,9 @@
 	<t:header user="${usuario}"></t:header>
 	<t:nav></t:nav>
 	<t:index list="${listaProductos}"></t:index>
+	<c:if test="${not empty listaRecomendados}">
+	<t:indexRecomendacion list="${listaRecomendados}"></t:indexRecomendacion>
+	</c:if>
 	<t:footer>
 	</t:footer>
 	

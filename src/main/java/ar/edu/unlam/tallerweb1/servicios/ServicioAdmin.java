@@ -6,6 +6,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import ar.edu.unlam.tallerweb1.modelo.Productos;
 import ar.edu.unlam.tallerweb1.modelo.Proveedor;
+import ar.edu.unlam.tallerweb1.modelo.Recomendacion;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.modelo.CarritoCompras;
 import ar.edu.unlam.tallerweb1.modelo.Categoria;
@@ -18,6 +19,7 @@ import ar.edu.unlam.tallerweb1.modelo.PedidoProducto;
 
 public interface ServicioAdmin {
 	List<Productos> listarProductosDisponibles();
+	List<Productos> buscarProductosRecomendados(Recomendacion rec);
 	void publicarProducto(Long id);
 	void quitarProducto(Long id);
 	List<Productos> verProductosOferta();

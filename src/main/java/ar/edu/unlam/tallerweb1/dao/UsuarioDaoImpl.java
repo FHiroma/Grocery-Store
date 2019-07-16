@@ -11,6 +11,10 @@ import ar.edu.unlam.tallerweb1.modelo.UsuarioRecomendacion;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -97,14 +101,18 @@ public class UsuarioDaoImpl implements UsuarioDao {
 	}
 
 	@Override
-	public void subirContadorDeUsuarioRecomendacion(Long id, Usuario usuario) {
-		UsuarioRecomendacion recomendacion = (UsuarioRecomendacion) sessionFactory.getCurrentSession()
-				.createCriteria(UsuarioRecomendacion.class)
-				.add(Restrictions.eq("usuario", usuario.getId()))
-				.add(Restrictions.eq("recomendacion", id))
+	public void subirContadorDeUsuarioRecomendacion(String categoria, Usuario usuario) {
+		Recomendacion recomendacion = (Recomendacion) sessionFactory.getCurrentSession()
+				.createCriteria(Recomendacion.class)
+				.add(Restrictions.eq("descripcion", categoria))
 				.uniqueResult();
-		recomendacion.setCantidad(recomendacion.getCantidad()+1);
-		sessionFactory.getCurrentSession().update(recomendacion);
+		UsuarioRecomendacion Usuariorecomendacion = (UsuarioRecomendacion) sessionFactory.getCurrentSession()
+				.createCriteria(UsuarioRecomendacion.class)
+				.add(Restrictions.eq("usuario", usuario))
+				.add(Restrictions.eq("recomendacion", recomendacion))
+				.uniqueResult();
+		Usuariorecomendacion.setCantidad(Usuariorecomendacion.getCantidad()+1);
+		sessionFactory.getCurrentSession().update(Usuariorecomendacion);
 	}
 
 	@Override
@@ -149,6 +157,26 @@ public class UsuarioDaoImpl implements UsuarioDao {
 		direccion.setNumero(numero);
 		sessionFactory.getCurrentSession().save(direccion);
 		return direccion;
+	}
+
+	@Override
+	public Recomendacion BuscarRecomendacionDelUsuario(Usuario u) {
+		DetachedCriteria maxCount = DetachedCriteria.forClass(UsuarioRecomendacion.class)
+				.setProjection(Projections.max("cantidad"));
+		
+		UsuarioRecomendacion urec = (UsuarioRecomendacion) sessionFactory.getCurrentSession()
+				.createCriteria(UsuarioRecomendacion.class)
+				.add(Restrictions.eq("usuario", u))
+				.add(Property.forName("cantidad").eq(maxCount))
+				.addOrder(Order.desc("cantidad"))
+				.setMaxResults(1)
+				.uniqueResult();
+		if(urec != null){
+		return urec.getRecomendacion();
+		}
+		else{
+			return null;
+		}
 	}
 	
 }

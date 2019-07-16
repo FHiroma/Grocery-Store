@@ -12,6 +12,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import ar.edu.unlam.tallerweb1.dao.AdminDao;
 import ar.edu.unlam.tallerweb1.modelo.Productos;
 import ar.edu.unlam.tallerweb1.modelo.Proveedor;
+import ar.edu.unlam.tallerweb1.modelo.Recomendacion;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.modelo.CarritoCompras;
 import ar.edu.unlam.tallerweb1.modelo.Categoria;
@@ -151,6 +152,11 @@ public class ServicioAdminImpl implements ServicioAdmin {
 	@Override
 	public Boolean enviarCarrito(Long id) {
 		return servicioAdminDao.enviarCarrito(id);
+	}
+
+	@Override
+	public List<Productos> buscarProductosRecomendados(Recomendacion rec) {
+		return servicioAdminDao.buscarProductosRecomendados(rec);
 	}
 
 }

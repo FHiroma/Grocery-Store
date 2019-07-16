@@ -20,6 +20,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import ar.edu.unlam.tallerweb1.modelo.Productos;
 import ar.edu.unlam.tallerweb1.modelo.Proveedor;
+import ar.edu.unlam.tallerweb1.modelo.Recomendacion;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.modelo.CarritoCompras;
 import ar.edu.unlam.tallerweb1.modelo.Categoria;
@@ -281,6 +282,18 @@ public class AdminDaoImpl implements AdminDao {
 //		}
 		// TODO Auto-generated method stub
 				return null;
+	}
+
+	@Override
+	public List<Productos> buscarProductosRecomendados(Recomendacion rec) {
+		Categoria categoria =  (Categoria)sessionFactory.getCurrentSession().createCriteria(Categoria.class)
+								.add(Restrictions.eq("descripcion", rec.getDescripcion()))
+								.uniqueResult();
+		@SuppressWarnings("unchecked")
+		List<Productos> listaRec = sessionFactory.getCurrentSession().createCriteria(Productos.class)
+				.add(Restrictions.eq("categoria", categoria))
+				.list();
+		return listaRec;
 	}
 
 }

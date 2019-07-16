@@ -9,6 +9,7 @@ import ar.edu.unlam.tallerweb1.modelo.CarritoCompras;
 import ar.edu.unlam.tallerweb1.modelo.Direccion;
 import ar.edu.unlam.tallerweb1.modelo.Localidades;
 import ar.edu.unlam.tallerweb1.modelo.Productos;
+import ar.edu.unlam.tallerweb1.modelo.Recomendacion;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 
 @Service("servicioUser")
@@ -44,8 +45,8 @@ public class ServicioUserImpl implements ServicioUser {
 	}
 
 	@Override
-	public void subirContadorDeUsuarioRecomendacion(Long id, Usuario usuario) {
-		servicioUsuarioDao.subirContadorDeUsuarioRecomendacion(id, usuario);
+	public void subirContadorDeUsuarioRecomendacion(String categoria, Usuario usuario) {
+		servicioUsuarioDao.subirContadorDeUsuarioRecomendacion(categoria, usuario);
 		
 	}
 
@@ -63,5 +64,10 @@ public class ServicioUserImpl implements ServicioUser {
 	@Override
 	public Direccion crearDireccion(Long localidad, String calle, Integer numero) {
 		return servicioUsuarioDao.crearDireccion(localidad, calle, numero);
+	}
+
+	@Override
+	public Recomendacion buscarRecomendacionDelUsuario(Usuario u) {
+		return servicioUsuarioDao.BuscarRecomendacionDelUsuario(u);
 	}
 }

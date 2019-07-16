@@ -22,6 +22,7 @@ import ar.edu.unlam.tallerweb1.modelo.Categoria;
 import ar.edu.unlam.tallerweb1.modelo.DetalleVenta;
 import ar.edu.unlam.tallerweb1.modelo.Notificacion;
 import ar.edu.unlam.tallerweb1.modelo.Productos;
+import ar.edu.unlam.tallerweb1.modelo.Recomendacion;
 
 @Controller
 public class ControladorLogin {
@@ -137,6 +138,11 @@ public class ControladorLogin {
 		Usuario u= servicioUser.buscarUsuarioPorId(idU);
 		if(u != null) {
 			model.put("usuario", u);
+			Recomendacion rec= servicioUser.buscarRecomendacionDelUsuario(u);
+			if(rec != null){
+			List<Productos> listaRecomendados= servicioAdmin.buscarProductosRecomendados(rec);
+			model.put("listaRecomendados", listaRecomendados);
+			}
 		} 
 		CarritoCompras carrito = (CarritoCompras) request.getSession().getAttribute("carrito");
 		if(carrito != null) {

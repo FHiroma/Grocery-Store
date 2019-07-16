@@ -27,16 +27,13 @@
 									<input class="input" type="text" name="nombre" value="${usuario.nombre}" disabled>
 								</div>
 								<div class="form-group">
-									<input class="input" type="email" name="apellido" value="${usuario.apellido}" disabled">
+									<input class="input" type="email" name="apellido" value="${usuario.apellido}" disabled>
 								</div>
 								<div class="form-group">
-									<input class="input" type="text" name="address" placeholder="Address">
+									<input class="input" type="text" name="address"  value="${usuario.direccion.calle}  ${usuario.direccion.numero}" disabled>
 								</div>
 								<div class="form-group">
-									<input class="input" type="text" name="city" placeholder="City">
-								</div>
-								<div class="form-group">
-									<input class="input" type="tel" name="tel" placeholder="Telephone">
+									<input class="input" type="text" name="city" value="${usuario.direccion.localidad.descripcion}" disabled>
 								</div>
 								</div>
 							</div>
