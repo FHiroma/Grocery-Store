@@ -13,7 +13,6 @@ import org.springframework.stereotype.Repository;
 import ar.edu.unlam.tallerweb1.modelo.Compra;
 import ar.edu.unlam.tallerweb1.modelo.Notificacion;
 import ar.edu.unlam.tallerweb1.modelo.Productos;
-import ar.edu.unlam.tallerweb1.modelo.ProductosVencidos;
 
 @Repository("promoDao")
 public class PromocionesDaoImpl implements PromocionesDao{

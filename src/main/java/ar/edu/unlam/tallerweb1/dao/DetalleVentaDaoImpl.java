@@ -25,13 +25,12 @@ public class DetalleVentaDaoImpl implements DetalleVentaDao {
 
 	@Override
 	public Boolean existe(CarritoCompras carrito, Productos producto) {
-		@SuppressWarnings("unchecked")
-		List<DetalleVenta> Listadetalle= sessionFactory.getCurrentSession()
+		DetalleVenta detalle= (DetalleVenta) sessionFactory.getCurrentSession()
 				.createCriteria(DetalleVenta.class)
 				.add(Restrictions.eq("carritoCompras", carrito))
 				.add(Restrictions.eq("producto", producto))
-				.list();
-		if(Listadetalle != null) {
+				.uniqueResult();
+		if(detalle != null) {
 			return true;
 		}else {
 			return false;
@@ -40,13 +39,12 @@ public class DetalleVentaDaoImpl implements DetalleVentaDao {
 
 	@Override
 	public DetalleVenta buscarDetalleVentaConCarritoProducto(CarritoCompras carrito, Productos producto) {
-		@SuppressWarnings("unchecked")
-		List<DetalleVenta> detalleVenta= (List<DetalleVenta>) sessionFactory.getCurrentSession()
+		DetalleVenta detalleVenta= (DetalleVenta) sessionFactory.getCurrentSession()
 				.createCriteria(DetalleVenta.class)
 				.add(Restrictions.eq("producto", producto))
 				.add(Restrictions.eq("carritoCompras", carrito))
-				.list();
-		return detalleVenta.get(0);
+				.uniqueResult();
+		return detalleVenta;
 	}
 
 	@Override
@@ -77,54 +75,32 @@ public class DetalleVentaDaoImpl implements DetalleVentaDao {
 	}
 
 	@Override
-	public Boolean modificarCantidadDeUnProductoDelCarrito(Long id, CarritoCompras carrito, Integer cantidad) {
-		DetalleVenta detalle = (DetalleVenta) sessionFactory.getCurrentSession().createCriteria(DetalleVenta.class)
-				.add(Restrictions.eq("carritoCompras", carrito)).add(Restrictions.eq("id", id)).uniqueResult();
-		@SuppressWarnings("unchecked")
-		DetalleVenta detalleVenta = (DetalleVenta) sessionFactory.getCurrentSession()
-				.createCriteria(DetalleVenta.class).add(Restrictions.eq("producto", detalle.getProducto()))
-				.add(Restrictions.eq("oferta", true)).add(Restrictions.eq("carritoCompras", carrito))
+	public Boolean modificarCantidadDeUnProductoDelCarrito(Productos producto, CarritoCompras carrito, Integer cantidad) {
+		DetalleVenta detalle=(DetalleVenta) sessionFactory.getCurrentSession()
+				.createCriteria(DetalleVenta.class)
+				.add(Restrictions.eq("carritoCompras", carrito))
+				.add(Restrictions.eq("producto", producto))
 				.uniqueResult();
-		Productos producto = detalle.getProducto();
-		if(detalleVenta != null && cantidad >= producto.getStock()) {
-			detalle.setCantidad(cantidad);
-			detalle.setOferta(false);
-			detalle.setSubtotal(detalle.getCantidad() * detalle.getProducto().getPrecio());
-			sessionFactory.getCurrentSession().update(detalle);
-			return true;
-		}
-		if (detalle != null && cantidad <= producto.getStock() + producto.getStockDeOferta()) {
-			Integer dif = cantidad;
-			if (detalleVenta == null && detalle.getOferta()==false) {
-				if (cantidad >= producto.getStockDeOferta()) {
-					dif = cantidad - producto.getStockDeOferta();
-					DetalleVenta detalleVentaOferta = new DetalleVenta();
-					detalleVentaOferta.setProducto(producto);
-					detalleVentaOferta.setCantidad(producto.getStockDeOferta());
-					detalleVentaOferta.setCarritoCompras(carrito);
-					detalleVentaOferta.setOferta(true);
-					detalleVentaOferta.setSubtotal((detalle.getProducto().getPrecio() * detalleVentaOferta.getCantidad()) / 2);
-					sessionFactory.getCurrentSession().save(detalleVentaOferta);
-				}
-			}
-			if (detalleVenta != null && cantidad >= producto.getStockDeOferta()) {
-				detalleVenta.setProducto(producto);
-				detalleVenta.setCantidad(producto.getStockDeOferta());
-				detalleVenta.setCarritoCompras(carrito);
-				detalleVenta.setSubtotal((detalle.getProducto().getPrecio() * detalleVenta.getCantidad()) / 2);
-				sessionFactory.getCurrentSession().update(detalleVenta);
-			}
-			if (dif > 0) {
-				detalle.setCantidad(dif);
-				detalle.setOferta(false);
+		if(producto.getOferta() == false) {
+			if(detalle != null && cantidad <= producto.getStock()) {
+				detalle.setCantidad(cantidad);
 				detalle.setSubtotal(detalle.getCantidad() * detalle.getProducto().getPrecio());
 				sessionFactory.getCurrentSession().update(detalle);
+				return true;
 			} else {
-				sessionFactory.getCurrentSession().delete(detalle);
+				return false;
 			}
-			return true;
-		} else {
-			return false;
+		} else if(producto.getOferta() == true) {
+			if(detalle != null && cantidad <= producto.getStockDeOferta()) {
+				detalle.setCantidad(cantidad);
+				detalle.setSubtotal(detalle.getCantidad() * detalle.getProducto().getPrecio());
+				sessionFactory.getCurrentSession().update(detalle);
+				return true;
+			}
+			else {
+				return false;
+			}
 		}
+		return false;
 	}
 }

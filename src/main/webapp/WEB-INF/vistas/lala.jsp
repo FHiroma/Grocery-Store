@@ -37,22 +37,23 @@
 									</div>
 									<div>
 										<form  action="modificar-cantidad-producto" method="GET">
-											<input type="hidden" name="id" value="${detalle.id}" required="required"> 
+											<input type="hidden" name="id" value="${detalle.producto.id}" required="required"> 
 											<input type="number" name="cantidad" value="${detalle.cantidad}" required="required" min="1" pattern="^[0-9]+">
 											<input type="submit" class="btn btn-primary" value="Modificar">
 										</form>
 									</div>
 									<div>
-    								<a href="http://localhost:8080/grocery-store/eliminar-producto-carrito?id=${detalle.id}" class="btn btn-danger"> <i class="fa fa-close">
+    								<a href="http://localhost:8080/grocery-store/eliminar-producto-carrito?id=${detalle.producto.id}" class="btn btn-danger"> <i class="fa fa-close">
     								Eliminar Productos</i></a>
     								</div>
     								<dir>
-    									<c:if test="${not empty error}">
-			        						<h4><span>${error}</span></h4>
-			        						<br>
-		        						</c:if>	
+    										<c:if test="${detalle.producto.id eq producto.id}">
+    											<c:if test="${not empty error}">
+			        								<h4><span>${error}</span></h4>
+			        								<br>
+		        								</c:if>	
+    										</c:if>	
     								</dir>
-
 								</div>
 							</div>
 						</c:forEach>
