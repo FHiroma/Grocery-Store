@@ -156,9 +156,15 @@ public class ControladorAdmin {
 		Boolean resultado= servicioAdmin.enviarCarrito(id);
 		if(resultado == true) {
 			return new ModelAndView("exito");
-		} else {
-			
-		}
+		} 
 		return null;
+	}
+	
+	public void setServicioAdmin(ServicioAdmin servicioAdmin) {
+		this.servicioAdmin=servicioAdmin;
+	}
+	
+	public ServicioAdmin getServicioAdmin() {
+		return this.servicioAdmin;
 	}
 }

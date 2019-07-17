@@ -112,4 +112,12 @@ public class ControladorUser {
 		}
 		return new ModelAndView("login2", model);
 	}
+	
+	public ServicioUser getServicioUser() {
+		return servicioUser;
+	}
+	
+	public void setServicioUser(ServicioUser servicioUser) {
+		this.servicioUser= servicioUser;
+	}
 }

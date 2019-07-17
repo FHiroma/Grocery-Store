@@ -39,4 +39,13 @@ public class ControladorProducto {
 		modelo.put("producto", producto);
 		return new ModelAndView("detalleProducto",modelo);
 	}
+	
+	
+	public ServicioBusqueda getServicioBusqueda() {
+		return servicioBusqueda;
+	}
+	
+	public void setServicioBUsqueda(ServicioBusqueda servicioBusqueda) {
+		this.servicioBusqueda= servicioBusqueda;
+	}
 }
