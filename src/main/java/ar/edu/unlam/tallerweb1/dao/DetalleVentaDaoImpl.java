@@ -63,12 +63,13 @@ public class DetalleVentaDaoImpl implements DetalleVentaDao {
 	}
 
 	@Override
-	public void eliminarDetalleVenta(Long id, CarritoCompras carrito) {
+	public void eliminarDetalleVenta(Productos producto, CarritoCompras carrito) {
 		DetalleVenta detalle=(DetalleVenta) sessionFactory.getCurrentSession()
 				.createCriteria(DetalleVenta.class)
 				.add(Restrictions.eq("carritoCompras", carrito))
-				.add(Restrictions.eq("id", id))
+				.add(Restrictions.eq("producto", producto))
 				.uniqueResult();
+		System.out.println(detalle.getProducto().getDescripcion());
 		if(detalle != null) {
 			sessionFactory.getCurrentSession().delete(detalle);
 		}

@@ -43,5 +43,6 @@ public interface ServicioAdmin {
 	CarritoCompras buscarCarritoComprasConId(Long id);
 	List<PedidoProducto> devolverNotificacionesDePocoStockComoPedidos(List<Notificacion> lista);
 	Boolean enviarCarrito(Long id);
+	List<CarritoCompras> buscarCarritosCompraConfirmados();
 	
 }

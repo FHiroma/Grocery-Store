@@ -237,6 +237,7 @@ public class AdminDaoImpl implements AdminDao {
 		@SuppressWarnings("unchecked")
 		List<CarritoCompras> listaCarritos= sessionFactory.getCurrentSession()
 				.createCriteria(CarritoCompras.class)
+				.add(Restrictions.isNull("estado"))
 				.list();
 		return listaCarritos;
 	}
@@ -245,13 +246,13 @@ public class AdminDaoImpl implements AdminDao {
 	public List<DetalleVenta> listarDetallesDeVentaConIdCarrito(Long id) {
 		CarritoCompras carrito=(CarritoCompras) sessionFactory.getCurrentSession()
 				.createCriteria(CarritoCompras.class)
-				.add(Restrictions.eqOrIsNull("id", id))
+				.add(Restrictions.eq("id", id))
 				.uniqueResult();
 		if (carrito != null) {
 			@SuppressWarnings("unchecked")
 			List<DetalleVenta> listaDetallesVenta= sessionFactory.getCurrentSession()
 					.createCriteria(DetalleVenta.class)
-					.add(Restrictions.eqOrIsNull("carritoCompras", carrito))
+					.add(Restrictions.eq("carritoCompras", carrito))
 					.list();
 			return listaDetallesVenta;
 		} else {
@@ -273,7 +274,6 @@ public class AdminDaoImpl implements AdminDao {
 		CarritoCompras carrito= (CarritoCompras) sessionFactory.getCurrentSession()
 				.createCriteria(CarritoCompras.class)
 				.add(Restrictions.eq("id", id))
-				.add(Restrictions.eq("estado", null))
 				.uniqueResult();
 		if(carrito != null) {
 			@SuppressWarnings("unchecked")
@@ -283,17 +283,19 @@ public class AdminDaoImpl implements AdminDao {
 					.list();
 			if(listaDetalle.size() > 0) {
 				for(DetalleVenta detalle: listaDetalle) {
-					Productos producto= detalle.getProducto();
-					Integer cantidad= detalle.getCantidad();
-					if(cantidad >= producto.getStockDeOferta()) {
-						producto.setStockDeOferta(producto.getStockDeOferta() - detalle.getCantidad());
-						sessionFactory.getCurrentSession().update(producto);
-					} else {
-						producto.setStock(producto.getStock() - detalle.getCantidad());
-						sessionFactory.getCurrentSession().update(producto);
+					Productos productoDelDetalleDeVenta= detalle.getProducto();
+					if(productoDelDetalleDeVenta.getOferta().equals(true)) {
+						productoDelDetalleDeVenta.setStockDeOferta(productoDelDetalleDeVenta.getStockDeOferta() - detalle.getCantidad());
+						System.out.println("paso por el true");
+						sessionFactory.getCurrentSession().update(productoDelDetalleDeVenta);
+					}  else {
+						productoDelDetalleDeVenta.setStock(productoDelDetalleDeVenta.getStock() - detalle.getCantidad());
+						sessionFactory.getCurrentSession().update(productoDelDetalleDeVenta);
 					}
 				}
 			}
+			carrito.setEstado(true);
+			sessionFactory.getCurrentSession().update(carrito);
 			return true;
 		} else {
 			return false;
@@ -313,6 +315,16 @@ public class AdminDaoImpl implements AdminDao {
 				.add(Restrictions.or(stock, stockOferta))
 				.list();
 		return listaRec;
+	}
+
+	@Override
+	public List<CarritoCompras> buscarCarritosCompraConfirmados() {
+		@SuppressWarnings("unchecked")
+		List<CarritoCompras> listaCarritos= sessionFactory.getCurrentSession()
+				.createCriteria(CarritoCompras.class)
+				.add(Restrictions.eq("estado", true))
+				.list();
+		return listaCarritos;
 	}
 
 }

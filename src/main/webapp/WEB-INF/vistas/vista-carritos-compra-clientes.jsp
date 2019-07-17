@@ -20,9 +20,10 @@
 							<h3 class="title">Carritos De Comprar</h3>
 						</div>
 
-						
 						<div class="order-summary">
-							
+						<div class="section-title">
+							<h4>Pedidos Nuevos</h4>
+						</div>
 						<c:forEach items="${carritos}" var="carrito">
 							<div class="order-products">
 								<div class="col-md-5 order-col">
@@ -49,8 +50,38 @@
 						</c:forEach>
 
 						</div>
-				
-								
+		<!-- -------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+		<div class="order-summary">
+						<div class="section-title">
+							<h4>Pedidos Confirmados</h4>
+						</div>
+						<c:forEach items="${carritosConfirmados}" var="carritoConfirmado">
+							<div class="order-products">
+								<div class="col-md-5 order-col">
+
+									<div><c:out value="${carritoConfirmado.direccion.localidad.descripcion }" /></div>
+									<div><c:out value="${carritoConfirmado.direccion.calle }" /></div>
+									<div><c:out value="${carritoConfirmado.direccion.numero }" /></div>
+									<div>
+										<c:if test="${carrito.estado == true}">
+		        							<h4><a href="http://localhost:8080/grocery-store/detalle-carrito?id=${carrito.id}"><button>Detalle</button></a></h4>	        
+   										</c:if> 								
+    								</div>
+        
+									
+    								<dir>
+    									<c:if test="${not empty error}">
+			        						<h4><span>${error}</span></h4>
+			        						<br>
+		        						</c:if>	
+    								</dir>
+
+								</div>
+							</div>
+						</c:forEach>
+
+						</div>
+		<!-- -------------------------------------------------------------------------------------------------------------------------------------------------------- -->
 					</div>
 				</div>
 					<!-- /Order Details -->

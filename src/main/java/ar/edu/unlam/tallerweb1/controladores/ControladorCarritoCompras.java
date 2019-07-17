@@ -102,8 +102,9 @@ public class ControladorCarritoCompras {
 	@RequestMapping(value = "eliminar-producto-carrito", method = RequestMethod.GET)
 	public ModelAndView remove(@RequestParam("id") Long id, HttpServletRequest request) {
 		ModelMap modelo= new ModelMap();
+		Productos producto= servicioAdmin.buscarProducto(id);
 		CarritoCompras carrito=(CarritoCompras) request.getSession().getAttribute("carrito");
-		servicioDetalleVenta.eliminarDetalleVenta(id, carrito);
+		servicioDetalleVenta.eliminarDetalleVenta(producto, carrito);
 		List<DetalleVenta> lista= servicioDetalleVenta.traerCarritoCompras(carrito);
 		modelo.put("carrito", lista);
 		Integer cantidad= lista.size();

@@ -111,16 +111,18 @@ public class ControladorAdmin {
 		modelo.put("proveedores", listaProveedores);
 		return new ModelAndView("vistaNotificacionOfertasAdmin", modelo);
 	}
+	
 	@RequestMapping(path="/organizarPedidos" , method = RequestMethod.POST)
 	public ModelAndView confeccionarPedidos(@ModelAttribute ("pedido") ArrayList<PedidoProducto> proveedor){
 		ModelMap modelo= new ModelMap();
+		System.out.println(proveedor.size());
 		return new ModelAndView("exito", modelo);
 	}
-	
 	
 	@RequestMapping(path="/listarCarritosCompraClientes")
 	public ModelAndView listarCarritosCompraClientes(HttpServletRequest request) {
 		List<CarritoCompras> carritos=servicioAdmin.buscarCarritosCompra();
+		List<CarritoCompras> carritosConfirmados= servicioAdmin.buscarCarritosCompraConfirmados();
 		ModelMap modelo= new ModelMap();
 		Long id= (Long) request.getSession().getAttribute("id");
 		Usuario u= servicioUser.buscarUsuarioPorId(id);
@@ -128,6 +130,7 @@ public class ControladorAdmin {
 			modelo.put("usuario", u);
 		}
 		modelo.put("carritos", carritos);
+		modelo.put("carritosConfirmados", carritosConfirmados);
 		return new ModelAndView("vista-carritos-compra-clientes", modelo);
 	}
 	
@@ -144,6 +147,11 @@ public class ControladorAdmin {
 	@RequestMapping(path="/enviar-carrito")
 	public ModelAndView enviarCarrito(@RequestParam ("id") Long id) {
 		Boolean resultado= servicioAdmin.enviarCarrito(id);
-		return new ModelAndView();
+		if(resultado == true) {
+			return new ModelAndView("exito");
+		} else {
+			
+		}
+		return null;
 	}
 }

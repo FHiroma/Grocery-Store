@@ -159,4 +159,9 @@ public class ServicioAdminImpl implements ServicioAdmin {
 		return servicioAdminDao.buscarProductosRecomendados(rec);
 	}
 
+	@Override
+	public List<CarritoCompras> buscarCarritosCompraConfirmados() {
+		return servicioAdminDao.buscarCarritosCompraConfirmados();
+	}
+
 }
