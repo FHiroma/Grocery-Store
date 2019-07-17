@@ -6,6 +6,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.google.maps.model.DistanceMatrix;
+
 import ar.edu.unlam.tallerweb1.modelo.Productos;
 import ar.edu.unlam.tallerweb1.modelo.Proveedor;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
@@ -16,6 +19,7 @@ import ar.edu.unlam.tallerweb1.modelo.DetalleVenta;
 import ar.edu.unlam.tallerweb1.modelo.Notificacion;
 import ar.edu.unlam.tallerweb1.modelo.PedidoProducto;
 import ar.edu.unlam.tallerweb1.servicios.ServicioAdmin;
+import ar.edu.unlam.tallerweb1.servicios.ServicioGoogleApi;
 import ar.edu.unlam.tallerweb1.servicios.ServicioUser;
 
 import java.util.ArrayList;
@@ -33,7 +37,8 @@ public class ControladorAdmin {
 	private ServicioAdmin servicioAdmin;
 	@Inject
 	private ServicioUser servicioUser;
-	
+	@Inject
+	private ServicioGoogleApi servicioGoogle;
 	
 	@RequestMapping("/listarProductos")
 	public ModelAndView listarProductos() {
@@ -138,7 +143,9 @@ public class ControladorAdmin {
 	public ModelAndView detalleCarrito(@RequestParam ("id") Long id) {
 		List<DetalleVenta> lista= servicioAdmin.listarDetallesDeVentaConIdCarrito(id);
 		CarritoCompras carrito= servicioAdmin.buscarCarritoComprasConId(id);
+		DistanceMatrix dm = servicioGoogle.calcularDistanciaDeLaDireccion(carrito.getDireccion());
 		ModelMap modelo= new ModelMap();
+		modelo.put("distanciaYTiempo", dm.toString());
 		modelo.put("listaDetalleVenta", lista);
 		modelo.put("carrito", carrito);
 		return new ModelAndView("vista-detalle-carrito", modelo);

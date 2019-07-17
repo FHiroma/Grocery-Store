@@ -30,7 +30,7 @@
 									<div><c:out value="${detalleVenta.producto.descripcion }" /></div>
 									<div><c:out value="${detalleVenta.cantidad }" /></div>
 									<div><c:out value="${detalleVenta.subtotal }" /></div>
-				
+									<div><c:out value="${distanciaYTiempo}" /></div>
 								</div>
 							</div>
 						</c:forEach>
