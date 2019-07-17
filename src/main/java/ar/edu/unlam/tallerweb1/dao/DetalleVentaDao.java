@@ -13,7 +13,7 @@ public interface DetalleVentaDao {
 	DetalleVenta buscarDetalleVentaConCarritoProducto(CarritoCompras carrito, Productos producto);
 	void actualizarDetalleVenta(DetalleVenta detalle);
 	List<DetalleVenta> traerCarritoCompras(CarritoCompras carrito);
-	void eliminarDetalleVenta(Long id, CarritoCompras carrito);
+	void eliminarDetalleVenta(Productos producto, CarritoCompras carrito);
 	Boolean modificarCantidadDeUnProductoDelCarrito(Productos producto, CarritoCompras carrito, Integer cantidad);
 
 }

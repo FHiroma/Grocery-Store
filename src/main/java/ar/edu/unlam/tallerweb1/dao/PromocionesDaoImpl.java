@@ -47,6 +47,7 @@ public class PromocionesDaoImpl implements PromocionesDao{
 				productoOferta.setEstado(compra.getProducto().getEstado());
 				productoOferta.setPrecio((compra.getProducto().getPrecio()/2));
 				productoOferta.setImagen(compra.getProducto().getImagen());
+				productoOferta.setCategoria(compra.getProducto().getCategoria());
 				sessionFactory.getCurrentSession().save(productoOferta);
 				compra.setOferta(true);
 				compra.setProducto(productoOferta);
@@ -67,24 +68,26 @@ public class PromocionesDaoImpl implements PromocionesDao{
 		Session sesion = sessionFactory.getCurrentSession();
 		@SuppressWarnings("unchecked")
 		List<Productos> listaProductos = sesion.createCriteria(Productos.class)
-								.add(Restrictions.eq("oferta", false)).list();
-		for(Productos producto: listaProductos) {
+						.add(Restrictions.eq("oferta", false))
+						.list();
+		for (Productos producto : listaProductos) {
 			if (producto.getStock() <= 5) {
-			Notificacion n = new Notificacion();
-			n.setProducto(producto);
-			n.setEstado(false);
-			n.setDescripcion("Stock Minimo");
-			Session sesion1 = sessionFactory.getCurrentSession();
-			@SuppressWarnings("unchecked")
-			List<Notificacion> listaNotificacion = sesion1.createCriteria(Notificacion.class)
-					.add(Restrictions.eq("producto", producto))
-					.add(Restrictions.eq("descripcion", "Stock Minimo")).list();
-			if (listaNotificacion.size() == 0) {
-				Session sesion2 = sessionFactory.getCurrentSession();
-				sesion2.save(n);
+				Notificacion n = new Notificacion();
+				n.setProducto(producto);
+				n.setEstado(false);
+				n.setDescripcion("Stock Minimo");
+				Session sesion1 = sessionFactory.getCurrentSession();
+				@SuppressWarnings("unchecked")
+				List<Notificacion> listaNotificacion = sesion1.createCriteria(Notificacion.class)
+						.add(Restrictions.eq("producto", producto))
+						.add(Restrictions.eq("descripcion", "Stock Minimo"))
+						.list();
+				if (listaNotificacion.size() == 0) {
+					Session sesion2 = sessionFactory.getCurrentSession();
+					sesion2.save(n);
+				}
 			}
 		}
-	}
 	}
 
 	@Override

@@ -45,8 +45,8 @@ public class ServicioDetalleVentaImpl implements ServicioDetalleVenta {
 	}
 
 	@Override
-	public void eliminarDetalleVenta(Long id, CarritoCompras carrito) {
-		servicioDetalleVentaDao.eliminarDetalleVenta(id, carrito);
+	public void eliminarDetalleVenta(Productos producto, CarritoCompras carrito) {
+		servicioDetalleVentaDao.eliminarDetalleVenta(producto, carrito);
 	}
 
 	@Override
