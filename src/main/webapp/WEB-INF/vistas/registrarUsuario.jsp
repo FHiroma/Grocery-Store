@@ -15,6 +15,9 @@
 	<t:header></t:header>
 	<t:nav></t:nav>
 				<div class="container" style="width:60%;">
+				<div class="section-title text-center">
+					<h3 class="title">Registrate</h3>
+				</div>
 				<div class="card bg-light">
 				<article class="card-body mx-auto">
 					<form:form action="registrarCuenta" method="POST" modelAttribute="usuario">

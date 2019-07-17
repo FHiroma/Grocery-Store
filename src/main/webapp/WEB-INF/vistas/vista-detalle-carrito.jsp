@@ -24,7 +24,9 @@
   								<div class="col-md-2"><c:out value="${detalleVenta.cantidad }" /></div>
   								<div class="col-md-2"><c:out value="${detalleVenta.subtotal }" /></div>
   								<div class="col-md-2"><c:out value="${distanciaYTiempo}" /></div>
-        						<div class="col-md-2">
+							</div>
+						</c:forEach>
+						<div class="col-md-2">
 									<c:if test="${carrito.estado ne true }">
 		        							<a href="http://localhost:8080/grocery-store/enviar-carrito?id=${carrito.id}" class="btn btn-primary">Confirmar</a>	        
    									</c:if>
@@ -33,9 +35,7 @@
 									<c:if test="${carrito.estado ne true }">
 		        							<a href="http://localhost:8080/grocery-store/cancelar-carrito?id=${carrito.id}" class="btn btn-danger">Cancelar</a>	        
    									</c:if>
-    							</div>
-							</div>
-						</c:forEach>				
+    							</div>				
 					</div>								
 					<!-- /Order Details -->
 </body>

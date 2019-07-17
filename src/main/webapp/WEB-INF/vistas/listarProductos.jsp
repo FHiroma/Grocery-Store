@@ -11,54 +11,48 @@
 <t:styleHeader></t:styleHeader>
 </head>
 <body>
-<t:header></t:header>
+	<t:header user="${usuario}"></t:header>
+	<t:nav></t:nav>
 
 <!-- Order Details -->
-					<div class="section-title justify-content-center">
-					<div class="col-md-2">
-					</div>
-					<div class="col-md-8 text-center order-details">
+					
+					
+					<div class="col-md-12 order-details">
 						<div class="section-title text-center">
 							<h3 class="title">Lista De Productos</h3>
 						</div>
 
 						
-						<div class="order-summary">
-							<div class="col-md-8 order-col">
-								<div class="col-md-5"><strong>PRODUCT</strong></div>
-								<div><strong>TOTAL</strong></div>
-							</div>
+					
+							
 						<c:forEach items="${lista}" var="productos">
-							<div class="order-products">
-								<div class="col-md-7 order-col">
-									<div>
-									<div><c:out value="${productos.descripcion}" /></div>
-									<div><c:out value="${productos.estado}" /></div>
-									</div>
-									<div>
-										<c:if test="${productos.estado == false}">
-											<a href="http://localhost:8080/grocery-store/publicar-producto?id=${productos.id}" class="btn btn-primary""> <i class="fa fa-close">
+							
+							<div class="row">
+  								<div class="col-md-2"><c:out value="${productos.descripcion}" /></div>
+  								<div class="col-md-2"><c:out value="${productos.estado}" /></div>
+        						<div class="col-md-2">
+									<c:if test="${productos.estado == false}">
+											<a href="http://localhost:8080/grocery-store/publicar-producto?id=${productos.id}" class="btn btn-primary"> <i class="fa fa-close">
     										Publicar</i></a>
-										</c:if>
-    								</div>
-    								<div>
-										<c:if test="${productos.estado == true}">
+									</c:if>
+    							</div>
+    							<div class="col-md-2">
+									<c:if test="${productos.estado == true}">
 											<a href="http://localhost:8080/grocery-store/quitar-producto?id=${productos.id}" class="btn btn-danger"> <i class="fa fa-close">
     										Quitar</i></a>
-										</c:if>
-    								</div>
-    								<div>
-										<c:if test="${productos.estado == true}">
+									</c:if>
+    							</div>
+    							<div class="col-md-2">
+									<c:if test="${productos.estado == true}">
 											<a href="http://localhost:8080/grocery-store/mostrar-formulario?id=${productos.id}" class="btn btn-primary"> <i class="fa fa-close">
     										Formulario</i></a>
-										</c:if>
-    								</div>	
-								</div>
-							</div>
+									</c:if>
+    							</div>
+							</div>	
+							<br>
 						</c:forEach>		
-						</div>			
+									
 					</div>
-				</div>
 					<!-- /Order Details -->
 </body>
 </html>

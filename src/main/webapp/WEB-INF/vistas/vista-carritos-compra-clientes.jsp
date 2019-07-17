@@ -26,12 +26,12 @@
   								<div class="col-md-3"><c:out value="${carrito.direccion.localidad.descripcion }" /></div>
   								<div class="col-md-3"><c:out value="${carrito.direccion.calle }" /></div>
   								<div class="col-md-3"><c:out value="${carrito.direccion.numero }" /></div>
-        							<div class="col-md-3">
-										<c:if test="${empty carrito.estado }">
-											<a href="http://localhost:8080/grocery-store/detalle-carrito?id=${carrito.id}" class="btn btn-primary">Detalle</a>
-										</c:if>
-    								</div>
-								</div>	
+        						<div class="col-md-3">
+									<c:if test="${empty carrito.estado }">
+										<a href="http://localhost:8080/grocery-store/detalle-carrito?id=${carrito.id}" class="btn btn-primary">Detalle</a>
+									</c:if>
+    							</div>
+							</div>	
 						</c:forEach>
 						
 						<div class="section-title">
