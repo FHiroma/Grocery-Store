@@ -143,9 +143,9 @@ public class ControladorAdmin {
 	public ModelAndView detalleCarrito(@RequestParam ("id") Long id) {
 		List<DetalleVenta> lista= servicioAdmin.listarDetallesDeVentaConIdCarrito(id);
 		CarritoCompras carrito= servicioAdmin.buscarCarritoComprasConId(id);
-		DistanceMatrix dm = servicioGoogle.calcularDistanciaDeLaDireccion(carrito.getDireccion());
+		//DistanceMatrix dm = servicioGoogle.calcularDistanciaDeLaDireccion(carrito.getDireccion());
 		ModelMap modelo= new ModelMap();
-		modelo.put("distanciaYTiempo", dm.toString());
+		//modelo.put("distanciaYTiempo", dm.toString());
 		modelo.put("listaDetalleVenta", lista);
 		modelo.put("carrito", carrito);
 		return new ModelAndView("vista-detalle-carrito", modelo);

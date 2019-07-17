@@ -14,42 +14,29 @@
 	<t:header user="${usuario}"></t:header>
 	<t:nav></t:nav>
 <!-- Order Details -->
-					<div class="section-title">
 					<div class="col-md-12 order-details">
 						<div class="section-title text-center">
 							<h3 class="title">Detalle de carrito</h3>
-						</div>
-
-						
-						<div class="order-summary">
-							
+						</div>	
 						<c:forEach items="${listaDetalleVenta}" var="detalleVenta">
-							<div class="order-products">
-								<div class="col-md-5 order-col">
-
-									<div><c:out value="${detalleVenta.producto.descripcion }" /></div>
-									<div><c:out value="${detalleVenta.cantidad }" /></div>
-									<div><c:out value="${detalleVenta.subtotal }" /></div>
-									<div><c:out value="${distanciaYTiempo}" /></div>
-								</div>
+							<div class="row">
+  								<div class="col-md-2"><c:out value="${detalleVenta.producto.descripcion }" /></div>
+  								<div class="col-md-2"><c:out value="${detalleVenta.cantidad }" /></div>
+  								<div class="col-md-2"><c:out value="${detalleVenta.subtotal }" /></div>
+  								<div class="col-md-2"><c:out value="${distanciaYTiempo}" /></div>
+        						<div class="col-md-2">
+									<c:if test="${carrito.estado ne true }">
+		        							<a href="http://localhost:8080/grocery-store/enviar-carrito?id=${carrito.id}" class="btn btn-primary">Confirmar</a>	        
+   									</c:if>
+    							</div>
+    							<div class="col-md-2">
+									<c:if test="${carrito.estado ne true }">
+		        							<a href="http://localhost:8080/grocery-store/cancelar-carrito?id=${carrito.id}" class="btn btn-danger">Cancelar</a>	        
+   									</c:if>
+    							</div>
 							</div>
-						</c:forEach>
-									<div>
-										<c:if test="${carrito.estado == null}">
-		        							<h4><a href="http://localhost:8080/grocery-store/enviar-carrito?id=${carrito.id}"><button>Confirmar</button></a></h4>	        
-   										</c:if> 								
-    								</div>
-    								<div>
-										<c:if test="${carrito.estado == null}">
-		        							<h4><a href="http://localhost:8080/grocery-store/cancelar-carrito?id=${carrito.id}"><button>Cancelar</button></a></h4>	        
-   										</c:if> 								
-    								</div>
- 									
-						</div>								
-					</div>
-				</div>
+						</c:forEach>				
+					</div>								
 					<!-- /Order Details -->
-	
-
 </body>
 </html>

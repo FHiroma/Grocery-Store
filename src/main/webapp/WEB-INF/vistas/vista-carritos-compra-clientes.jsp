@@ -14,78 +14,42 @@
 	<t:header user="${usuario}"></t:header>
 	<t:nav></t:nav>
 <!-- Order Details -->
-					<div class="section-title">
-					<div class="col-md-12 order-details">
+					<div class="col-md-12 order-details">					
 						<div class="section-title text-center">
 							<h3 class="title">Carritos De Comprar</h3>
 						</div>
-
-						<div class="order-summary">
 						<div class="section-title">
 							<h4>Pedidos Nuevos</h4>
 						</div>
 						<c:forEach items="${carritos}" var="carrito">
-							<div class="order-products">
-								<div class="col-md-5 order-col">
-
-									<div><c:out value="${carrito.direccion.localidad.descripcion }" /></div>
-									<div><c:out value="${carrito.direccion.calle }" /></div>
-									<div><c:out value="${carrito.direccion.numero }" /></div>
-									<div>
-										<c:if test="${carrito.estado == null}">
-		        							<h4><a href="http://localhost:8080/grocery-store/detalle-carrito?id=${carrito.id}"><button>Detalle</button></a></h4>	        
-   										</c:if> 								
+							<div class="row">
+  								<div class="col-md-3"><c:out value="${carrito.direccion.localidad.descripcion }" /></div>
+  								<div class="col-md-3"><c:out value="${carrito.direccion.calle }" /></div>
+  								<div class="col-md-3"><c:out value="${carrito.direccion.numero }" /></div>
+        							<div class="col-md-3">
+										<c:if test="${empty carrito.estado }">
+											<a href="http://localhost:8080/grocery-store/detalle-carrito?id=${carrito.id}" class="btn btn-primary">Detalle</a>
+										</c:if>
     								</div>
-        
-									
-    								<dir>
-    									<c:if test="${not empty error}">
-			        						<h4><span>${error}</span></h4>
-			        						<br>
-		        						</c:if>	
-    								</dir>
-
-								</div>
-							</div>
+								</div>	
 						</c:forEach>
-
-						</div>
-		<!-- -------------------------------------------------------------------------------------------------------------------------------------------------------- -->
-		<div class="order-summary">
+						
 						<div class="section-title">
-							<h4>Pedidos Confirmados</h4>
+							<h4>Carritos de compra confirmados</h4>
 						</div>
 						<c:forEach items="${carritosConfirmados}" var="carritoConfirmado">
-							<div class="order-products">
-								<div class="col-md-5 order-col">
-
-									<div><c:out value="${carritoConfirmado.direccion.localidad.descripcion }" /></div>
-									<div><c:out value="${carritoConfirmado.direccion.calle }" /></div>
-									<div><c:out value="${carritoConfirmado.direccion.numero }" /></div>
-									<div>
-										<c:if test="${carrito.estado == true}">
-		        							<h4><a href="http://localhost:8080/grocery-store/detalle-carrito?id=${carrito.id}"><button>Detalle</button></a></h4>	        
-   										</c:if> 								
-    								</div>
-        
-									
-    								<dir>
-    									<c:if test="${not empty error}">
-			        						<h4><span>${error}</span></h4>
-			        						<br>
-		        						</c:if>	
-    								</dir>
-
-								</div>
-							</div>
+							<div class="row">
+  								<div class="col-md-3"><c:out value="${carritoConfirmado.direccion.localidad.descripcion }" /></div>
+  								<div class="col-md-3"><c:out value="${carritoConfirmado.direccion.calle }" /></div>
+  								<div class="col-md-3"><c:out value="${carritoConfirmado.direccion.numero }" /></div>
+        						<div class="col-md-3">
+									<c:if test="${carritoConfirmado.estado == true }">
+										<a href="http://localhost:8080/grocery-store/detalle-carrito?id=${carritoConfirmado.id}" class="btn btn-primary">Detalle</a>
+									</c:if>
+    							</div>
+							</div>	
 						</c:forEach>
-
-						</div>
-		<!-- -------------------------------------------------------------------------------------------------------------------------------------------------------- -->
 					</div>
-				</div>
 					<!-- /Order Details -->
-	
-
 </body>
 </html>
