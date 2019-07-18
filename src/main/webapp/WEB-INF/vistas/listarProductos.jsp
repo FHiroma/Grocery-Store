@@ -37,7 +37,7 @@
 									</div>
 									<div>
 										<c:if test="${productos.estado == false}">
-											<a href="http://localhost:8080/grocery-store/publicar-producto?id=${productos.id}" class="btn btn-danger"> <i class="fa fa-close">
+											<a href="http://localhost:8080/grocery-store/publicar-producto?id=${productos.id}" class="btn btn-primary""> <i class="fa fa-close">
     										Publicar</i></a>
 										</c:if>
     								</div>
@@ -49,7 +49,7 @@
     								</div>
     								<div>
 										<c:if test="${productos.estado == true}">
-											<a href="http://localhost:8080/grocery-store/mostrar-formulario?id=${productos.id}" class="btn btn-danger"> <i class="fa fa-close">
+											<a href="http://localhost:8080/grocery-store/mostrar-formulario?id=${productos.id}" class="btn btn-primary"> <i class="fa fa-close">
     										Formulario</i></a>
 										</c:if>
     								</div>	
