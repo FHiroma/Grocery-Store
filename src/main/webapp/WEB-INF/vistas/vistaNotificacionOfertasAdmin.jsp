@@ -14,14 +14,14 @@
 	<button>Atras</button> </a>
 	<br>
 
-	<c:if test="${not empty pedido}">
+	<c:if test="${!empty pedido}">
 		<h4>Productos Con Stock Minimo</h4>
 			<table>
 			<form:form action="organizarPedidos" method="POST" modelAttribute="pedido">
 	  		<c:forEach items="${pedido.pp}" varStatus="status">
 	  		<form:hidden path="pp[${status.index}].producto"/>
     		<tr>
-      			<td><h4>${pp[${status.index}].notificacion.descripcion}</h4></td>
+      			<td><h4>pp[${status.index}].notificacion.descripcion</h4></td>
       			<td>
       			<form:select path="pp[${status.index}].proveedor">
       					<form:option value="NONE">--Selecciona--</form:option>
@@ -34,7 +34,7 @@
     		</tr>
   			</c:forEach>
 			</table>
-			<button class="btn btn-lg btn-primary btn-block" value="Realizar pedidos" Type="Submit"/>Realizar pedidos</button>
+			<button class="btn btn-lg btn-primary btn-block" value="Realizar pedidos" Type="Submit">Realizar pedidos</button>
 			</form:form>
 	</c:if>	
 	

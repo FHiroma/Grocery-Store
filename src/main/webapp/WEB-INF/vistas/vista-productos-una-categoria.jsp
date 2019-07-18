@@ -14,28 +14,43 @@
 <body>
 	<t:header user="${usuario}"></t:header>
 	<t:nav></t:nav>
-<!-- Products tab & slick -->
-	
-					<div class="col-md-12">
+<!-- SECTION -->
+		<div class="section">
+			<!-- container -->
+			<div class="container">
+				<!-- row -->
+				<div class="row">
+					<!-- Products tab & slick -->
+					<div class="col-md-12 d-flex">
 						<div class="row">
 							<div class="products-tabs">
 								<!-- tab -->
 								<div id="tab1" class="tab-pane active">
 									<div class="products-slick" data-nav="#slick-nav-1">
-										<c:forEach items="${listaProductos}" var="productos">
+									<c:forEach  items="${listaProductos}" var="productos">
 										<!-- product -->
 										<div class="product">
+											<a href="producto?producto=${productos.descripcion}">
 											<div class="product-img">
-												<img src="./img/product01.png" alt="">
+												<img src="<%= request.getContextPath() %>${productos.imagen}">
+												<c:if test="${productos.oferta eq true}">
 												<div class="product-label">
-													<span class="sale">-30%</span>
-													<span class="new">NEW</span>
+													<span class="new">Oferta</span>
 												</div>
+												</c:if>
 											</div>
+											</a>
 											<div class="product-body">
-												<p class="product-category">Category</p>
+												<p class="product-category">${productos.categoria.descripcion}</p>
 												<h3 class="product-name">  ${productos.descripcion} </h3>
-												<h3 class="product-stock">  ${productos.stock} </h3>
+												<h3 class="product-stock">
+												<c:if test="${productos.oferta eq true}">
+												  ${productos.stockDeOferta}
+												</c:if>
+												<c:if test="${productos.oferta ne true}">
+												  ${productos.stock}
+												</c:if>
+												</h3>
 												<h4 class="product-price"> ${productos.precio} <del class="product-old-price">$990.00 si es una oferta!!!</del> </h4>
 												<div class="product-rating">
 													<i class="fa fa-star"></i>
@@ -55,7 +70,7 @@
 											</div>
 										</div>
 										<!-- /product -->
-										</c:forEach>
+									</c:forEach>
 									</div>
 									<div id="slick-nav-1" class="products-slick-nav"></div>
 								</div>
@@ -63,8 +78,13 @@
 							</div>
 						</div>
 					</div>
-			
 					<!-- Products tab & slick -->
+				</div>
+				<!-- /row -->
+			</div>
+			<!-- /container -->
+		</div>
+		<!-- /SECTION -->
 	<t:footer>
 	</t:footer>
 	

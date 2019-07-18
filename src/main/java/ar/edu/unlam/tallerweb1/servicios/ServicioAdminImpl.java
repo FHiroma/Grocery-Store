@@ -24,6 +24,7 @@ import ar.edu.unlam.tallerweb1.modelo.Localidades;
 import ar.edu.unlam.tallerweb1.modelo.Notificacion;
 import ar.edu.unlam.tallerweb1.modelo.OrdenCompra;
 import ar.edu.unlam.tallerweb1.modelo.PedidoProducto;
+import ar.edu.unlam.tallerweb1.modelo.ProductoOrdenCompra;
 
 @Service("servicioAdmin")
 @Transactional
@@ -179,6 +180,21 @@ public class ServicioAdminImpl implements ServicioAdmin {
 	@Override
 	public List<OrdenCompra> traerOrdenesDeCompra() {
 		return servicioAdminDao.traerOrdenesDeCompra();
+	}
+
+	@Override
+	public void confirmarOrdenDeCompra(Long id) {
+		servicioAdminDao.confirmarOrdenDeCompra(id);
+	}
+
+	@Override
+	public List<ProductoOrdenCompra> verDetallesDeOrdenDeCompra(Long id) {
+		return servicioAdminDao.verDetallesDeOrdenDeCompra(id);
+	}
+
+	@Override
+	public OrdenCompra traerOrdenDeCompra(Long id) {
+		return servicioAdminDao.traerOrdenDeCompra(id);
 	}
 
 }

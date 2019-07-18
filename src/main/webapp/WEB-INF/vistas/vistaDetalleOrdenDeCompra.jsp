@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Detalles de Orden</title>
 <t:styleHeader></t:styleHeader>
 </head>
 <body>
@@ -17,39 +17,30 @@
 					<div class="section-title">
 					<div class="col-md-12 order-details">
 						<div class="section-title text-center">
-							<h3 class="title">Orden De Compra</h3>
+							<h3 class="title">Orden de Compra para ${ordenCompra.proveedor.descripcion}</h3>
 						</div>
 
 						<div class="order-summary">
 						<div class="section-title">
-							<h4>Pedidos Nuevos</h4>
+							<h4>Productos a pedir</h4>
 						</div>
-						<c:forEach items="${ordenCompra}" var="orden">
+						<c:forEach items="${list}" var="orden">
 							<div class="order-products">
 								<div class="col-md-5 order-col">
 
-									<div>${orden.proveedor.descripcion}</div><br>
-									<div>${orden.fecha}</div><br>
-									<div>${orden.estado}</div><br>
-									<div>
-        								<form action="verDetallesDeOrdenDeCompra" method="post">
-  											<button type="submit" name="id" value="${orden.id}" class="btn btn-primary btn-block">Ver detalles de Orden</button>
-										</form>
-    								</div>
-									<div>
-										<c:if test="${orden.estado eq true}">
-		        							<h4><form action="confirmarOrdenDeCompra" method="post">
-    											<button type="submit" name="id" value="${orden.id}" class="btn btn-primary btn-block">Confirmar Orden</button>
-												</form>
-											</h4>	        
-   										</c:if> 								
-    								</div>
+									<div><c:out value="${orden.producto.descripcion}" /></div>
+									<div><c:out value="${orden.cantidad}" /></div>
 								</div>
 							</div>
 						</c:forEach>
-
+						<c:if test="${ordenCompra.estado eq true}">
+		        							<h4><form action="confirmarOrdenDeCompra" method="post">
+    											<button type="submit" name="id" value="${ordenCompra.id}" class="btn btn-primary btn-block">Confirmar Orden</button>
+												</form>
+											</h4>	        
+   										</c:if> 
 						</div>
-				</div>
+					</div>
 				</div>
 	
 </body>

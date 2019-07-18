@@ -12,7 +12,7 @@
 <t:styleHeader></t:styleHeader>
 </head>
 <body>
-	<t:header></t:header>
+	<t:header  user="${usuario}"></t:header>
 	<t:nav></t:nav>
 	<body>
     <a href="${mercadopago.initPoint}">Pagar con Mercado Pago</a>
