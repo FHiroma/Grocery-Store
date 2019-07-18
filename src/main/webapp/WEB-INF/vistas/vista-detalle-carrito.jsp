@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -19,7 +20,8 @@
 						<div class="section-title text-center">
 							<h3 class="title">Detalle de carrito</h3>
 						</div>
-
+						<h3><fmt:formatNumber type="number" maxFractionDigits="0" value="${distanciaTiempo.tiempo}"/> minutos</h3>
+						<h3><fmt:formatNumber type="number" maxFractionDigits="2" value="${distanciaTiempo.distancia}"/> Km</h3>
 						
 						<div class="order-summary">
 							
@@ -30,7 +32,7 @@
 									<div><c:out value="${detalleVenta.producto.descripcion }" /></div>
 									<div><c:out value="${detalleVenta.cantidad }" /></div>
 									<div><c:out value="${detalleVenta.subtotal }" /></div>
-									<div><c:out value="${distanciaYTiempo}" /></div>
+				
 								</div>
 							</div>
 						</c:forEach>

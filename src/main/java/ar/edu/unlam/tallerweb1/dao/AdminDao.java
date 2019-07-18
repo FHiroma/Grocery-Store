@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
@@ -15,6 +16,8 @@ import ar.edu.unlam.tallerweb1.modelo.DetalleVenta;
 import ar.edu.unlam.tallerweb1.modelo.Direccion;
 import ar.edu.unlam.tallerweb1.modelo.Localidades;
 import ar.edu.unlam.tallerweb1.modelo.Notificacion;
+import ar.edu.unlam.tallerweb1.modelo.OrdenCompra;
+import ar.edu.unlam.tallerweb1.modelo.PedidoProducto;
 
 public interface AdminDao {
 	List<Productos> listarProductosDisponibles();
@@ -42,5 +45,6 @@ public interface AdminDao {
 	Boolean enviarCarrito(Long id);
 	List<Productos> buscarProductosRecomendados(Recomendacion rec);
 	List<CarritoCompras> buscarCarritosCompraConfirmados();
-
+	void crearOrdenesDeCompraEnBaseAListaPedidoProducto(ArrayList<PedidoProducto> list);
+	List<OrdenCompra> traerOrdenesDeCompra();
 }

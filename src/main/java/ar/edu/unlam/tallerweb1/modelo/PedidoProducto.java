@@ -6,14 +6,7 @@ public class PedidoProducto{
 	private Long producto;
 	private Integer cantidad;
 	private Notificacion notificacion;
-	
-	
-	public PedidoProducto(Long producto, Notificacion notificacion) {
-		this.proveedor = null;
-		this.producto = producto;
-		this.notificacion = notificacion;
-		this.cantidad = null;
-	}
+
 	public Notificacion getNotificacion() {
 		return notificacion;
 	}
@@ -38,6 +31,5 @@ public class PedidoProducto{
 	public void setCantidad(Integer cantidad) {
 		this.cantidad = cantidad;
 	}
-	
 	
 }

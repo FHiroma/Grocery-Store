@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.servicios;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
@@ -13,8 +14,10 @@ import ar.edu.unlam.tallerweb1.modelo.Categoria;
 import ar.edu.unlam.tallerweb1.modelo.Compra;
 import ar.edu.unlam.tallerweb1.modelo.DetalleVenta;
 import ar.edu.unlam.tallerweb1.modelo.Direccion;
+import ar.edu.unlam.tallerweb1.modelo.ListPedidoProducto;
 import ar.edu.unlam.tallerweb1.modelo.Localidades;
 import ar.edu.unlam.tallerweb1.modelo.Notificacion;
+import ar.edu.unlam.tallerweb1.modelo.OrdenCompra;
 import ar.edu.unlam.tallerweb1.modelo.PedidoProducto;
 
 public interface ServicioAdmin {
@@ -41,8 +44,9 @@ public interface ServicioAdmin {
 	List<CarritoCompras> buscarCarritosCompra();
 	List<DetalleVenta> listarDetallesDeVentaConIdCarrito(Long id);
 	CarritoCompras buscarCarritoComprasConId(Long id);
-	List<PedidoProducto> devolverNotificacionesDePocoStockComoPedidos(List<Notificacion> lista);
+	ListPedidoProducto devolverNotificacionesDePocoStockComoPedidos(List<Notificacion> lista);
 	Boolean enviarCarrito(Long id);
 	List<CarritoCompras> buscarCarritosCompraConfirmados();
-	
+	void crearOrdenesDeCompraEnBaseAListaPedidoProducto(ArrayList<PedidoProducto> list);
+	List<OrdenCompra> traerOrdenesDeCompra();
 }

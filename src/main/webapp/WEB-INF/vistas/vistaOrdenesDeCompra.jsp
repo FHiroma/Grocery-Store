@@ -17,42 +17,39 @@
 					<div class="section-title">
 					<div class="col-md-12 order-details">
 						<div class="section-title text-center">
-							<h3 class="title">Carritos De Comprar</h3>
+							<h3 class="title">Orden De Compra</h3>
 						</div>
 
 						<div class="order-summary">
 						<div class="section-title">
 							<h4>Pedidos Nuevos</h4>
 						</div>
-						<c:forEach items="${carritos}" var="carrito">
+						<c:forEach items="${ordenCompra}" var="orden">
 							<div class="order-products">
 								<div class="col-md-5 order-col">
 
-									<div><c:out value="${carrito.direccion.localidad.descripcion}" /></div>
-									<div><c:out value="${carrito.direccion.calle}" /></div>
-									<div><c:out value="${carrito.direccion.numero }" /></div>
+									<div>${orden.proveedor.descripcion}</div><br>
+									<div>${orden.fecha}</div><br>
+									<div>${orden.estado}</div><br>
 									<div>
-										<c:if test="${carrito.estado == null}">
-		        							<h4><a href="http://localhost:8080/grocery-store/detalle-carrito?id=${carrito.id}"><button>Detalle</button></a></h4>	        
+        								<form action="verDetalleDeOrden" method="post">
+  											<button type="submit" name="id" value="${orden.id}" class="btn btn-primary btn-block">Ver detalles de Orden</button>
+										</form>
+    								</div>
+									<div>
+										<c:if test="${orden.estado eq true}">
+		        							<h4><form action="emitirOrdenDeCompra" method="post">
+    											<button type="submit" name="id" value="${orden.id}" class="btn btn-primary btn-block">Confirmar Orden</button>
+												</form>
+											</h4>	        
    										</c:if> 								
     								</div>
-        
-									
-    								<dir>
-    									<c:if test="${not empty error}">
-			        						<h4><span>${error}</span></h4>
-			        						<br>
-		        						</c:if>	
-    								</dir>
-
 								</div>
 							</div>
 						</c:forEach>
 
 						</div>
-		<!-- -------------------------------------------------------------------------------------------------------------------------------------------------------- -->
-		<!-- -------------------------------------------------------------------------------------------------------------------------------------------------------- -->
-					</div>
+				</div>
 				</div>
 	
 </body>
