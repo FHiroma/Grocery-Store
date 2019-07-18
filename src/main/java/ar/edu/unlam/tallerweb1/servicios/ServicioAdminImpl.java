@@ -19,8 +19,10 @@ import ar.edu.unlam.tallerweb1.modelo.Categoria;
 import ar.edu.unlam.tallerweb1.modelo.Compra;
 import ar.edu.unlam.tallerweb1.modelo.DetalleVenta;
 import ar.edu.unlam.tallerweb1.modelo.Direccion;
+import ar.edu.unlam.tallerweb1.modelo.ListPedidoProducto;
 import ar.edu.unlam.tallerweb1.modelo.Localidades;
 import ar.edu.unlam.tallerweb1.modelo.Notificacion;
+import ar.edu.unlam.tallerweb1.modelo.OrdenCompra;
 import ar.edu.unlam.tallerweb1.modelo.PedidoProducto;
 
 @Service("servicioAdmin")
@@ -140,13 +142,17 @@ public class ServicioAdminImpl implements ServicioAdmin {
 		return servicioAdminDao.buscarCarritoComprasConId(id);
 	}
 	@Override
-	public List<PedidoProducto> devolverNotificacionesDePocoStockComoPedidos(List<Notificacion> lista) {
-		List<PedidoProducto> listadoPedidoProductos = new ArrayList<>();
+	public ListPedidoProducto devolverNotificacionesDePocoStockComoPedidos(List<Notificacion> lista) {
+		ListPedidoProducto lpp = new ListPedidoProducto();
+		ArrayList<PedidoProducto> arraypp = new ArrayList<PedidoProducto>();
 		for(Notificacion notificacion: lista){
-			PedidoProducto pp = new PedidoProducto(notificacion.getProducto().getId(),notificacion);
-			listadoPedidoProductos.add(pp);
+			PedidoProducto pp = new PedidoProducto();
+			pp.setProducto(notificacion.getProducto().getId());
+			pp.setNotificacion(notificacion);
+			arraypp.add(pp);
 		}
-		return listadoPedidoProductos;
+		lpp.setPp(arraypp);
+		return lpp;
 	}
 
 	@Override
@@ -162,6 +168,17 @@ public class ServicioAdminImpl implements ServicioAdmin {
 	@Override
 	public List<CarritoCompras> buscarCarritosCompraConfirmados() {
 		return servicioAdminDao.buscarCarritosCompraConfirmados();
+	}
+
+	@Override
+	public void crearOrdenesDeCompraEnBaseAListaPedidoProducto(ArrayList<PedidoProducto> list) {
+		servicioAdminDao.crearOrdenesDeCompraEnBaseAListaPedidoProducto(list);
+		
+	}
+
+	@Override
+	public List<OrdenCompra> traerOrdenesDeCompra() {
+		return servicioAdminDao.traerOrdenesDeCompra();
 	}
 
 }

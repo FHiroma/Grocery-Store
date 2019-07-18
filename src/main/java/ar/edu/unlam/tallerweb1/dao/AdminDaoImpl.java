@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -15,6 +16,7 @@ import javax.servlet.ServletContext;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
@@ -30,6 +32,9 @@ import ar.edu.unlam.tallerweb1.modelo.DetalleVenta;
 import ar.edu.unlam.tallerweb1.modelo.Direccion;
 import ar.edu.unlam.tallerweb1.modelo.Localidades;
 import ar.edu.unlam.tallerweb1.modelo.Notificacion;
+import ar.edu.unlam.tallerweb1.modelo.OrdenCompra;
+import ar.edu.unlam.tallerweb1.modelo.PedidoProducto;
+import ar.edu.unlam.tallerweb1.modelo.ProductoOrdenCompra;
 
 @Repository("adminDao")
 public class AdminDaoImpl implements AdminDao {
@@ -326,6 +331,68 @@ public class AdminDaoImpl implements AdminDao {
 				.add(Restrictions.eq("estado", true))
 				.list();
 		return listaCarritos;
+	}
+
+	@Override
+	public void crearOrdenesDeCompraEnBaseAListaPedidoProducto(ArrayList<PedidoProducto> list) {
+		Session sesion = sessionFactory.getCurrentSession();
+		for(PedidoProducto pedidoProducto: list){
+			Productos producto = (Productos) sesion.createCriteria(Productos.class)
+								.add(Restrictions.eq("id",pedidoProducto.getProducto()))
+								.uniqueResult();
+			
+			Proveedor proveedor = (Proveedor) sesion.createCriteria(Proveedor.class)
+								  .add(Restrictions.eq("id", pedidoProducto.getProveedor()))
+								  .uniqueResult();
+			
+			OrdenCompra oc = (OrdenCompra) sesion.createCriteria(OrdenCompra.class)
+					 .add(Restrictions.eq("proveedor", proveedor))
+					 .add(Restrictions.eq("estado", true))
+					 .uniqueResult();
+			
+			ProductoOrdenCompra pocTest = (ProductoOrdenCompra) sesion.createCriteria(ProductoOrdenCompra.class)
+					  .add(Restrictions.eq("producto", producto))
+					  .createAlias("ordenCompra", "ordenCompraAlias")
+					  .add(Restrictions.eq("ordenCompraAlias.estado", true))
+					  .add(Restrictions.eq("ordenCompraAlias.proveedor", proveedor))
+					  .uniqueResult();
+			if(oc == null){
+				OrdenCompra ordenCompra = new OrdenCompra();
+				ordenCompra.setEstado(true);
+				ordenCompra.setFecha();
+				ordenCompra.setProveedor(proveedor);
+				sesion.save(ordenCompra);
+					if(pocTest == null){
+						ProductoOrdenCompra poc = new ProductoOrdenCompra();
+						poc.setCantidad(pedidoProducto.getCantidad());
+						poc.setProducto(producto);
+						poc.setOrdenCompra(ordenCompra);
+						sesion.save(poc);
+					}
+				}
+			else{
+				if(pocTest == null){
+					ProductoOrdenCompra poc = new ProductoOrdenCompra();
+					poc.setCantidad(pedidoProducto.getCantidad());
+					poc.setProducto(producto);
+					poc.setOrdenCompra(oc);
+					sesion.save(poc);
+				}
+				else{
+				pocTest.setCantidad(pocTest.getCantidad()+pedidoProducto.getCantidad());
+				sesion.update(pocTest);
+				}
+			}
+		}
+	}
+
+	@Override
+	public List<OrdenCompra> traerOrdenesDeCompra() {
+		@SuppressWarnings("unchecked")
+		List<OrdenCompra> lista = sessionFactory.getCurrentSession().createCriteria(OrdenCompra.class)
+								  .addOrder(Order.desc("id"))
+								  .list();
+		return lista;
 	}
 
 }

@@ -1,6 +1,6 @@
 package ar.edu.unlam.tallerweb1.modelo;
 
-import java.util.Calendar;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,25 +16,15 @@ public class OrdenCompra{
 	private Long id;
 	@ManyToOne
 	private Proveedor proveedor;
-	private Integer cantidad;
-	private Calendar fecha;
+	private Boolean estado;
+	private Date fecha;
 	
-	public Calendar getFecha() {
+	public Date getFecha() {
 		return fecha;
 	}
 	public void setFecha() {
-		Calendar fecha= Calendar.getInstance();
-		fecha.set(Calendar.HOUR_OF_DAY, 0);
-		fecha.set(Calendar.MINUTE, 0);
-		fecha.set(Calendar.SECOND, 0);
-		fecha.set(Calendar.MILLISECOND, 0);
-		this.fecha = fecha;
-	}
-	public Integer getCantidad() {
-		return cantidad;
-	}
-	public void setCantidad(Integer cantidad) {
-		this.cantidad = cantidad;
+		Date fechaYHora = new Date();
+		this.fecha = fechaYHora;
 	}
 	public Long getId() {
 		return id;
@@ -47,6 +37,12 @@ public class OrdenCompra{
 	}
 	public void setProveedor(Proveedor proveedor) {
 		this.proveedor = proveedor;
+	}
+	public Boolean getEstado() {
+		return estado;
+	}
+	public void setEstado(Boolean estado) {
+		this.estado = estado;
 	}
 	
 }

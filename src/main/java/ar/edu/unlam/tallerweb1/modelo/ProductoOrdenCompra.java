@@ -14,9 +14,16 @@ public class ProductoOrdenCompra {
 	private Long id;
 	@ManyToOne
 	private Productos producto;
+	private Integer cantidad;
 	@ManyToOne
 	private OrdenCompra ordenCompra;
 	
+	public Integer getCantidad() {
+		return cantidad;
+	}
+	public void setCantidad(Integer cantidad) {
+		this.cantidad = cantidad;
+	}
 	public Long getId() {
 		return id;
 	}

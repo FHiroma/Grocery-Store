@@ -16,7 +16,10 @@ import ar.edu.unlam.tallerweb1.modelo.CarritoCompras;
 import ar.edu.unlam.tallerweb1.modelo.Categoria;
 import ar.edu.unlam.tallerweb1.modelo.Compra;
 import ar.edu.unlam.tallerweb1.modelo.DetalleVenta;
+import ar.edu.unlam.tallerweb1.modelo.DistanciaTiempo;
+import ar.edu.unlam.tallerweb1.modelo.ListPedidoProducto;
 import ar.edu.unlam.tallerweb1.modelo.Notificacion;
+import ar.edu.unlam.tallerweb1.modelo.OrdenCompra;
 import ar.edu.unlam.tallerweb1.modelo.PedidoProducto;
 import ar.edu.unlam.tallerweb1.servicios.ServicioAdmin;
 import ar.edu.unlam.tallerweb1.servicios.ServicioGoogleApi;
@@ -109,7 +112,7 @@ public class ControladorAdmin {
 		List<Notificacion> listaProductosEnOferta= servicioAdmin.buscarProductosEnOferta();
 		List<Proveedor> listaProveedores= servicioAdmin.listarProveedores();
 		ModelMap modelo= new ModelMap();
-		List<PedidoProducto> listadoPedidoProducto	= servicioAdmin.devolverNotificacionesDePocoStockComoPedidos(listaProductosPocoStock);
+		ListPedidoProducto listadoPedidoProducto	= servicioAdmin.devolverNotificacionesDePocoStockComoPedidos(listaProductosPocoStock);
 		modelo.put("pedido", listadoPedidoProducto);
 		modelo.put("NotificacionProductosVencidos", listaProductosVencidos);
 		modelo.put("NotificacionProductoEnOferta", listaProductosEnOferta);
@@ -118,10 +121,20 @@ public class ControladorAdmin {
 	}
 	
 	@RequestMapping(path="/organizarPedidos" , method = RequestMethod.POST)
-	public ModelAndView confeccionarPedidos(@ModelAttribute ("pedido") ArrayList<PedidoProducto> proveedor){
+	public ModelAndView confeccionarPedidos(@ModelAttribute ("pedido") ListPedidoProducto proveedor){
+		servicioAdmin.crearOrdenesDeCompraEnBaseAListaPedidoProducto(proveedor.getPp());
+		List<OrdenCompra> lista = servicioAdmin.traerOrdenesDeCompra();
 		ModelMap modelo= new ModelMap();
-		System.out.println(proveedor.size());
-		return new ModelAndView("exito", modelo);
+		modelo.put("ordenCompra", lista);
+		return new ModelAndView("vistaOrdenesDeCompra", modelo);
+	}
+	
+	@RequestMapping(path="/verOrdenesDeCompra")
+	public ModelAndView confeccionarPedidos(){
+		List<OrdenCompra> lista = servicioAdmin.traerOrdenesDeCompra();
+		ModelMap modelo= new ModelMap();
+		modelo.put("ordenCompra", lista);
+		return new ModelAndView("vistaOrdenesDeCompra", modelo);
 	}
 	
 	@RequestMapping(path="/listarCarritosCompraClientes")
@@ -143,9 +156,9 @@ public class ControladorAdmin {
 	public ModelAndView detalleCarrito(@RequestParam ("id") Long id) {
 		List<DetalleVenta> lista= servicioAdmin.listarDetallesDeVentaConIdCarrito(id);
 		CarritoCompras carrito= servicioAdmin.buscarCarritoComprasConId(id);
-		//DistanceMatrix dm = servicioGoogle.calcularDistanciaDeLaDireccion(carrito.getDireccion());
+		DistanciaTiempo dt = servicioGoogle.calcularDistanciaDeLaDireccion(carrito.getDireccion());
 		ModelMap modelo= new ModelMap();
-		//modelo.put("distanciaYTiempo", dm.toString());
+		modelo.put("distanciaTiempo", dt);
 		modelo.put("listaDetalleVenta", lista);
 		modelo.put("carrito", carrito);
 		return new ModelAndView("vista-detalle-carrito", modelo);

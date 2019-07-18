@@ -18,26 +18,24 @@
 		<h4>Productos Con Stock Minimo</h4>
 			<table>
 			<form:form action="organizarPedidos" method="POST" modelAttribute="pedido">
-	  		<c:forEach items="${pedido}" var="notificacion" varStatus="status">
-	  		<input type="hidden" name="pedido[${status.index}].producto" value="${notificacion.notificacion.producto.id}">
+	  		<c:forEach items="${pedido.pp}" varStatus="status">
+	  		<form:hidden path="pp[${status.index}].producto"/>
     		<tr>
-      			<td><c:out value="${notificacion.notificacion.descripcion}" /></td>
-      			<td><c:out value="${notificacion.notificacion.producto.descripcion}" /></td>
-      			<td><c:out value="${notificacion.notificacion.producto.stock}" /></td>
-      			<td><c:out value="pedido[${status.index}]" /></td>
+      			<td><h4>${pp[${status.index}].notificacion.descripcion}</h4></td>
       			<td>
-      			<select  name="pedido[${status.index}].proveedor">
-						<c:forEach items="${proveedores}" var="proveedor">
-		    			<option value="${proveedor.id}" selected>${proveedor.descripcion}</option>
+      			<form:select path="pp[${status.index}].proveedor">
+      					<form:option value="NONE">--Selecciona--</form:option>
+     					<c:forEach items="${proveedores}" var="proveedor">
+		    			<form:option value="${proveedor.id}">${proveedor.descripcion}</form:option>
 	  					</c:forEach>
-	   			</select>
+	   			</form:select>
 	   			</td>
-	   			<td><input name="pedido[${status.index}].cantidad" type="number" id="numero"/></td>
+	   			<td><form:input path="pp[${status.index}].cantidad" type="number" id="numero"/></td>
     		</tr>
-  		</c:forEach>
+  			</c:forEach>
 			</table>
-  			<button class="btn btn-lg btn-primary btn-block" Type="Submit"/>Realizar pedidos</button>
-  		</form:form>
+			<button class="btn btn-lg btn-primary btn-block" value="Realizar pedidos" Type="Submit"/>Realizar pedidos</button>
+			</form:form>
 	</c:if>	
 	
 		<c:if test="${not empty NotificacionProductosVencidos}">
