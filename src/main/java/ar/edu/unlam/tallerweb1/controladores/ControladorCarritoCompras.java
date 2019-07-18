@@ -189,7 +189,6 @@ public class ControladorCarritoCompras {
         HttpSession session = request.getSession();
 		if( session != null){
 		request.removeAttribute("carrito");
-		session.invalidate();
 		}
         return new ModelAndView("vistaMercadoPago",modelo);
     }

@@ -81,25 +81,9 @@
 							</div>
 							<div>
 								<h3 class="product-price">$ ${producto.precio} <del class="product-old-price">$990.00</del></h3>
-								<span class="product-available">In Stock</span>
+								<span class="product-available">${producto.stock}</span>
 							</div>
 							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-
-							<div class="product-options">
-								<label>
-									Size
-									<select class="input-select">
-										<option value="0">X</option>
-									</select>
-								</label>
-								<label>
-									Color
-									<select class="input-select">
-										<option value="0">Red</option>
-									</select>
-								</label>
-							</div>
-
 							<div class="add-to-cart">
 								<div class="qty-label">
 									Qty
@@ -109,7 +93,7 @@
 										<span class="qty-down">-</span>
 									</div>
 								</div>
-								<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+								<button class="add-to-cart-btn" href="http://localhost:8080/grocery-store/agregar-carrito?id=${productos.id}"><i class="fa fa-shopping-cart"></i> add to cart</button>
 							</div>
 
 							<ul class="product-btns">
@@ -119,8 +103,7 @@
 
 							<ul class="product-links">
 								<li>Category:</li>
-								<li><a href="#">Headphones</a></li>
-								<li><a href="#">Accessories</a></li>
+								<li><a href="#">${productos.categoria.descripcion}</a></li>
 							</ul>
 
 							<ul class="product-links">

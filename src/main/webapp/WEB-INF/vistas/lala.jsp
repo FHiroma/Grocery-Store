@@ -12,7 +12,7 @@
 </head>
 <body>
 <t:header></t:header>
-
+<c:set var = "salary" value = "${salary}"/>
 <!-- Order Details -->
 					<div class="section-title justify-content-center">
 					<div class="col-md-2">
@@ -56,11 +56,9 @@
     								</dir>
 								</div>
 							</div>
-							
 						</c:forEach>
 						<div class="order-col">
 								<div><strong>TOTAL</strong></div>
-								<c:set var = "salary" scope = "session" value = "${salary + detalle.subtotal}"/>
 								<div><strong class="order-total"><c:out value = "${salary}"/></strong></div>
 							</div>
 							

@@ -3,14 +3,8 @@ package ar.edu.unlam.tallerweb1.persistencia;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import org.junit.Test;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.ModelAndView;
@@ -19,11 +13,9 @@ import ar.edu.unlam.tallerweb1.controladores.ControladorAdmin;
 import ar.edu.unlam.tallerweb1.controladores.ControladorUser;
 
 import ar.edu.unlam.tallerweb1.modelo.Direccion;
-import ar.edu.unlam.tallerweb1.modelo.Productos;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.servicios.ServicioUser;
 import ar.edu.unlam.tallerweb1.servicios.ServicioAdmin;
-import ar.edu.unlam.tallerweb1.servicios.ServicioBusqueda;
 
 public class TestMockito {
 	

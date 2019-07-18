@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unlam.tallerweb1.modelo.CarritoCompras;
+import ar.edu.unlam.tallerweb1.modelo.Categoria;
 import ar.edu.unlam.tallerweb1.modelo.DetalleVenta;
 import ar.edu.unlam.tallerweb1.modelo.Localidades;
 import ar.edu.unlam.tallerweb1.modelo.Productos;
@@ -46,6 +47,8 @@ public class ControladorUser {
 			model.put("cantidad", cantidad);
 			model.put("carrito", carrito);
 		}
+		List<Categoria> listaCategorias=servicioAdmin.listarCategorias();
+		model.put("listaCategorias", listaCategorias);
 		model.put("listaOfertas", listaDeOfertas);
 		return new ModelAndView("vistaOfertasUsuario", model);
 	}
@@ -59,6 +62,8 @@ public class ControladorUser {
 			modelo.put("usuario", u);
 		}
 		List<Productos> listaProductos= servicioUser.listarProductosDeLaCategoriaDeId(id);
+		List<Categoria> listaCategorias=servicioAdmin.listarCategorias();
+		modelo.put("listaCategorias", listaCategorias);
 		modelo.put("listaProductos", listaProductos);
 		return new ModelAndView("vista-productos-una-categoria", modelo);
 	}

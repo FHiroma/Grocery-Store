@@ -224,11 +224,12 @@
 							<div class="col-md-6 col-xs-3">
 								<div class="product">
 									<div class="product-img">
-										<img src="images/product02.png" alt="">
-										<div class="product-label">
-											<span class="sale">-30%</span>
-											<span class="new">NEW</span>
-										</div>
+										<img src="<%= request.getContextPath() %>${productos.imagen}" alt="">
+										<c:if test="${productos.oferta eq true}">
+												<div class="product-label">
+													<span class="new">Oferta</span>
+												</div>
+												</c:if>
 									</div>
 									<div class="product-body">
 										<p class="product-category">Category</p>

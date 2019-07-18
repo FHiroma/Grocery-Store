@@ -331,6 +331,7 @@ public class AdminDaoImpl implements AdminDao {
 		List<CarritoCompras> listaCarritos= sessionFactory.getCurrentSession()
 				.createCriteria(CarritoCompras.class)
 				.add(Restrictions.eq("estado", true))
+				.add(Restrictions.isNotNull("direccion"))
 				.list();
 		return listaCarritos;
 	}

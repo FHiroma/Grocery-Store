@@ -1,5 +1,7 @@
 package ar.edu.unlam.tallerweb1.controladores;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
@@ -10,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import ar.edu.unlam.tallerweb1.modelo.Categoria;
 import ar.edu.unlam.tallerweb1.modelo.Productos;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
+import ar.edu.unlam.tallerweb1.servicios.ServicioAdmin;
 import ar.edu.unlam.tallerweb1.servicios.ServicioBusqueda;
 import ar.edu.unlam.tallerweb1.servicios.ServicioUser;
 
@@ -21,6 +25,8 @@ public class ControladorProducto {
 	private ServicioBusqueda servicioBusqueda;
 	@Inject
 	private ServicioUser servicioUser;
+	@Inject
+	private ServicioAdmin servicioAdmin;
 	
 	@RequestMapping(value="/producto", method= RequestMethod.GET)
 	public ModelAndView verDetallesDeProducto (@RequestParam ("producto") String descripcion,HttpServletRequest request){
@@ -36,6 +42,8 @@ public class ControladorProducto {
 			modelo.put("usuario", u);
 			servicioUser.subirContadorDeUsuarioRecomendacion(producto.getCategoria().getDescripcion(), u);
 		}
+		List<Categoria> listaCategorias=servicioAdmin.listarCategorias();
+		modelo.put("listaCategorias", listaCategorias);
 		modelo.put("producto", producto);
 		return new ModelAndView("detalleProducto",modelo);
 	}

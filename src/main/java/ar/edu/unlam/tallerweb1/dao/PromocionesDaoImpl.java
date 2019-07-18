@@ -84,6 +84,7 @@ public class PromocionesDaoImpl implements PromocionesDao{
 						.add(Restrictions.eq("descripcion", "Stock Minimo"))
 						.add(Restrictions.eq("estado",false))
 						.list();
+				@SuppressWarnings("unchecked")
 				List<ProductoOrdenCompra> poc = sesion1.createCriteria(ProductoOrdenCompra.class)
 												.add(Restrictions.eq("producto", producto))
 												.createAlias("ordenCompra", "ordenCompraAlias")

@@ -12,9 +12,9 @@
 <t:styleHeader></t:styleHeader>
 </head>
 <body>
-		<t:header></t:header>
+		<t:header user="${usuario}"></t:header>
 		<t:nav></t:nav>
-	<div class="container" style="width:60%;">
+	<div class="container" style="width:50%;">
 				<div class="section-title text-center">
 					<h3 class="title">Direccion de Envio</h3>
 				</div>
