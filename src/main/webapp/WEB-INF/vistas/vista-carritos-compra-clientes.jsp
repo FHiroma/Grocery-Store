@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Carritos de Compra</title>
 <t:styleHeader></t:styleHeader>
 </head>
 <body>
@@ -17,7 +17,7 @@
 					<div class="section-title">
 					<div class="col-md-12 order-details">
 						<div class="section-title text-center">
-							<h3 class="title">Carritos De Comprar</h3>
+							<h3 class="title">Carritos De Compra</h3>
 						</div>
 
 						<div class="order-summary">
@@ -48,10 +48,7 @@
 								</div>
 							</div>
 						</c:forEach>
-
 						</div>
-		<!-- -------------------------------------------------------------------------------------------------------------------------------------------------------- -->
-		<!-- -------------------------------------------------------------------------------------------------------------------------------------------------------- -->
 					</div>
 				</div>
 	
