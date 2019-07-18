@@ -48,7 +48,8 @@ public class AdminDaoImpl implements AdminDao {
 	public List<Productos> listarProductosDisponibles() {
 		final Session session = sessionFactory.getCurrentSession();
 		@SuppressWarnings("unchecked")
-		List<Productos> listaProductos = session.createCriteria(Productos.class).list();
+		List<Productos> listaProductos = session.createCriteria(Productos.class)
+			.add(Restrictions.eq("oferta", false)).list();
 		return listaProductos;
 	}
 

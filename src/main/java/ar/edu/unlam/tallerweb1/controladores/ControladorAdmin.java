@@ -85,8 +85,6 @@ public class ControladorAdmin {
 										 @ModelAttribute ("idCategoria") Long idCategoria) 
 									{
 		servicioAdmin.insertarProducto(producto, idCategoria, file);
-		ModelMap modelo= new ModelMap();
-		modelo.put("mensaje", "Producto ingresado exitosamente");
 		return new ModelAndView("exito");
 	}
 	
@@ -95,7 +93,7 @@ public class ControladorAdmin {
 		ModelMap modelo= new ModelMap();
 		Compra stock = new Compra();
 		modelo.put("stock", stock);
-		modelo.put("producto", id);
+		modelo.put("productoId", id);
 		return new ModelAndView("formularioStock",modelo);
 	}
 	
@@ -104,9 +102,7 @@ public class ControladorAdmin {
 									, @ModelAttribute("id") Long id) {
 		servicioAdmin.insertarStock(stock, id);
 		servicioAdmin.aumentarStockProducto(stock.getStock(),id);
-		ModelMap modelo= new ModelMap();
-		modelo.put("mensaje", "Agregado exitosamente");
-		return new ModelAndView("exito",modelo);
+		return new ModelAndView("exito");
 	}
 	
 	@RequestMapping(path="/consultarNotificaciones")
@@ -141,13 +137,6 @@ public class ControladorAdmin {
 		return new ModelAndView("vistaOrdenesDeCompra", modelo);
 	}
 	
-	@RequestMapping(path="/emitirOrdenCompra", method = RequestMethod.POST)
-	public ModelAndView emitirOrdenDeCompra(@RequestParam ("id") Long id){
-		String mensaje = servicioAdmin.emitirOrdenCompra();
-		ModelMap modelo = new ModelMap();
-		return new ModelAndView("exito",modelo);
-	}
-	
 	@RequestMapping(path="/listarCarritosCompraClientes")
 	public ModelAndView listarCarritosCompraClientes(HttpServletRequest request) {
 		List<CarritoCompras> carritos=servicioAdmin.buscarCarritosCompra();
@@ -179,10 +168,16 @@ public class ControladorAdmin {
 	public ModelAndView enviarCarrito(@RequestParam ("id") Long id) {
 		Boolean resultado= servicioAdmin.enviarCarrito(id);
 		if(resultado == true) {
-			ModelMap modelo = new ModelMap();
-			modelo.put("mensaje", "Carrito enviado.");
 			return new ModelAndView("exito");
-		}
+		} 
 		return null;
+	}
+	
+	public void setServicioAdmin(ServicioAdmin servicioAdmin) {
+		this.servicioAdmin=servicioAdmin;
+	}
+	
+	public ServicioAdmin getServicioAdmin() {
+		return this.servicioAdmin;
 	}
 }
