@@ -37,10 +37,10 @@
 												<h3 class="product-name">  ${productos.descripcion} </h3>
 												<h3 class="product-stock">
 												<c:if test="${productos.oferta eq true}">
-												  ${productos.stockDeOferta}>
+												  ${productos.stockDeOferta}
 												</c:if>
 												<c:if test="${productos.oferta ne true}">
-												  ${productos.stock}>
+												  ${productos.stock}
 												</c:if>
 												</h3>
 												<h4 class="product-price"> ${productos.precio} <del class="product-old-price">$990.00 si es una oferta!!!</del> </h4>

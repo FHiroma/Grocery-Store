@@ -108,7 +108,7 @@ public class ControladorAdmin {
 			modelo.put("usuario", u);
 		}
 		servicioAdmin.insertarProducto(producto, idCategoria, file);
-		return new ModelAndView("exito");
+		return new ModelAndView("exito",modelo);
 	}
 	
 	@RequestMapping(path="/mostrar-formulario")
@@ -137,7 +137,7 @@ public class ControladorAdmin {
 		}
 		servicioAdmin.insertarStock(stock, id);
 		servicioAdmin.aumentarStockProducto(stock.getStock(),id);
-		return new ModelAndView("exito");
+		return new ModelAndView("exito",modelo);
 	}
 	
 	@RequestMapping(path="/consultarNotificaciones")
@@ -229,7 +229,7 @@ public class ControladorAdmin {
 		}
 		Boolean resultado= servicioAdmin.enviarCarrito(id);
 		if(resultado == true) {
-			return new ModelAndView("exito");
+			return new ModelAndView("exito",modelo);
 		} 
 		return null;
 	}
@@ -266,5 +266,13 @@ public class ControladorAdmin {
 	
 	public ServicioAdmin getServicioAdmin() {
 		return this.servicioAdmin;
+	}
+
+	public ServicioUser getServicioUser() {
+		return servicioUser;
+	}
+
+	public void setServicioUser(ServicioUser servicioUser) {
+		this.servicioUser = servicioUser;
 	}
 }

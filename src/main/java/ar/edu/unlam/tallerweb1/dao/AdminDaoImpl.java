@@ -388,6 +388,7 @@ public class AdminDaoImpl implements AdminDao {
 			Notificacion notif = (Notificacion) sesion.createCriteria(Notificacion.class)
 					.add(Restrictions.like("descripcion", "Stock Minimo"))
 					.add(Restrictions.eq("producto", producto))
+					.add(Restrictions.eq("estado", false))
 					.uniqueResult();
 			notif.setEstado(true);
 			sesion.update(notif);

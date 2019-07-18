@@ -34,7 +34,7 @@
 												<h3 class="product-name">  ${productos.descripcion} </h3>
 												<h3 class="product-stock">
 												<c:if test="${productos.oferta eq true}">
-												  ${productos.stockDeOferta}>
+												  ${productos.stockDeOferta}
 												</c:if>
 												<c:if test="${productos.oferta ne true}">
 												  ${productos.stock}

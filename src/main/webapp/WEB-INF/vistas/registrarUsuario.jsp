@@ -25,38 +25,38 @@
 						<div class="input-group-prepend">
 						    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
 						 </div>
-						 <form:input path="nombre" id="nombre" type="string" placeholder="Nombre" class="form-control" />
+						 <form:input path="nombre" id="nombre" type="string" required="true" placeholder="Nombre" class="form-control" />
 				    </div> <!-- form-group// -->
 				    <div class="form-group input-group">
 				    	<div class="input-group-prepend">
 						    <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
 						 </div>
-				        <form:input path="apellido" id="apellido" type="string" placeholder="Apellido" class="form-control" />
+				        <form:input path="apellido" id="apellido" type="string" required="true" placeholder="Apellido" class="form-control" />
 				    </div> <!-- form-group// -->
 				    <div class="form-group input-group">
 				    	<div class="input-group-prepend">
 						    <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
 						 </div>
-				        <form:input path="email" id="email" type="email" placeholder="Email" class="form-control" />
+				        <form:input path="email" id="email" type="email" required="true" placeholder="Email" class="form-control" />
 				    </div> <!-- form-group// -->
    				    <div class="form-group input-group">
 				    	<div class="input-group-prepend">
 						    <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
 						</div>
-				        <form:input path="password" type="password" id="password" placeholder="Contraseña" class="form-control"/> 
+				        <form:input path="password" type="password" id="password" required="true"  placeholder="Contraseña" class="form-control"/> 
 				    </div> <!-- form-group// -->  
 				    <div class="form-group input-group">
 				    	<div class="input-group-prepend">
 						    <span class="input-group-text"><i class="fa fa-map-marker"></i></span>
 						</div>
-						<select name="localidad" class="form-control">
+						<select name="localidad" required="true" class="form-control">
 						<c:forEach items="${localidades}" var="localidad">
 		        			<option value="${localidad.id}">${localidad.descripcion}</option>
   						</c:forEach>
 						</select>
-						<input name="calle" id="calle" type="text" placeholder="Calle">
+						<input name="calle" id="calle" type="text" required="true" placeholder="Calle">
 						</input>
-						<input name="numero" id="numero" type="number" placeholder="Numero">
+						<input name="numero" id="numero" type="number" min="1"required="true" placeholder="Numero">
 						</input>
 				    </div> <!-- form-group// -->                            
 				    <div class="form-group">

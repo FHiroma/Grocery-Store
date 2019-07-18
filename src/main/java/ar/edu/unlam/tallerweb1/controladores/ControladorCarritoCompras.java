@@ -102,6 +102,11 @@ public class ControladorCarritoCompras {
 	@RequestMapping(value = "eliminar-producto-carrito", method = RequestMethod.GET)
 	public ModelAndView remove(@RequestParam("id") Long id, HttpServletRequest request) {
 		ModelMap modelo= new ModelMap();
+		Long idU= (Long) request.getSession().getAttribute("id");
+		Usuario u= servicioUsuario.buscarUsuarioPorId(idU);
+		if(u != null) {
+			modelo.put("usuario", u);
+		}
 		Productos producto= servicioAdmin.buscarProducto(id);
 		CarritoCompras carrito=(CarritoCompras) request.getSession().getAttribute("carrito");
 		servicioDetalleVenta.eliminarDetalleVenta(producto, carrito);
@@ -115,6 +120,11 @@ public class ControladorCarritoCompras {
 	@RequestMapping(value = "modificar-cantidad-producto", method = RequestMethod.GET)
 	public ModelAndView disminuir(@RequestParam("id") Long id,@RequestParam("cantidad") Integer cantidad, HttpServletRequest request) {
 		ModelMap modelo= new ModelMap();
+		Long idU= (Long) request.getSession().getAttribute("id");
+		Usuario u= servicioUsuario.buscarUsuarioPorId(idU);
+		if(u != null) {
+			modelo.put("usuario", u);
+		}
 		Productos producto= servicioAdmin.buscarProducto(id);
 		CarritoCompras carrito=(CarritoCompras) request.getSession().getAttribute("carrito");
 		Boolean valor= servicioDetalleVenta.modificarCantidadDeUnProductoDelCarrito(producto, carrito, cantidad);
@@ -138,6 +148,10 @@ public class ControladorCarritoCompras {
 	public ModelAndView verificarSesion(HttpServletRequest request) {
 		Long id= (Long) request.getSession().getAttribute("id");
 		ModelMap modelo= new ModelMap();
+		Usuario u= servicioUsuario.buscarUsuarioPorId(id);
+		if(u != null) {
+			modelo.put("usuario", u);
+		}
 		if(id != null) {
 			Usuario usuario=servicioUsuario.buscarUsuarioPorId(id);
 			CarritoCompras carrito=(CarritoCompras) request.getSession().getAttribute("carrito");
@@ -161,6 +175,11 @@ public class ControladorCarritoCompras {
                                             , HttpServletRequest request) {
         Direccion direccionTabla=servicioAdmin.guardarDireccionDeCompra(direccion, idLocalidad);
         ModelMap modelo = new ModelMap();
+        Long idU= (Long) request.getSession().getAttribute("id");
+		Usuario u= servicioUsuario.buscarUsuarioPorId(idU);
+		if(u != null) {
+			modelo.put("usuario", u);
+		}
         CarritoCompras carrito=(CarritoCompras) request.getSession().getAttribute("carrito");
         servicioAdmin.agregarDireccionAlCarrito(carrito, direccionTabla);
         List<DetalleVenta> lista= servicioDetalleVenta.traerCarritoCompras(carrito);

@@ -52,7 +52,7 @@ public class UsuarioDaoImpl implements UsuarioDao {
 		final Session session = sessionFactory.getCurrentSession();
 		@SuppressWarnings("unchecked")
 		List<Productos> listaProductos= session.createCriteria(Productos.class)
-		.add(Restrictions.gt("stock",0))
+		.add(Restrictions.or(Restrictions.gt("stock",0), Restrictions.gt("stockDeOferta", 0)))
 		.add(Restrictions.eq("estado", true))
 		.list();
 		return listaProductos;

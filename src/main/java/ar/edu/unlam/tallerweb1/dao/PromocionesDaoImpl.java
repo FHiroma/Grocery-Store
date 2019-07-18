@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import ar.edu.unlam.tallerweb1.modelo.Compra;
 import ar.edu.unlam.tallerweb1.modelo.Notificacion;
+import ar.edu.unlam.tallerweb1.modelo.ProductoOrdenCompra;
 import ar.edu.unlam.tallerweb1.modelo.Productos;
 
 @Repository("promoDao")
@@ -81,8 +82,14 @@ public class PromocionesDaoImpl implements PromocionesDao{
 				List<Notificacion> listaNotificacion = sesion1.createCriteria(Notificacion.class)
 						.add(Restrictions.eq("producto", producto))
 						.add(Restrictions.eq("descripcion", "Stock Minimo"))
+						.add(Restrictions.eq("estado",false))
 						.list();
-				if (listaNotificacion.size() == 0) {
+				List<ProductoOrdenCompra> poc = sesion1.createCriteria(ProductoOrdenCompra.class)
+												.add(Restrictions.eq("producto", producto))
+												.createAlias("ordenCompra", "ordenCompraAlias")
+												.add(Restrictions.eq("ordenCompraAlias.estado", true))
+												.list();
+				if (listaNotificacion.size() == 0 && poc.size() == 0) {
 					Session sesion2 = sessionFactory.getCurrentSession();
 					sesion2.save(n);
 				}
