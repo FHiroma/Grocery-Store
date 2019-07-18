@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -166,6 +167,11 @@ public class ControladorCarritoCompras {
         List<DetalleVenta> lista= servicioDetalleVenta.traerCarritoCompras(carrito);
         Preference p = servicioMercadoPago.traerPreferenciasParaMercadoPago(lista,carrito);
         modelo.put("mercadopago", p);
+        HttpSession session = request.getSession();
+		if( session != null){
+		request.removeAttribute("carrito");
+		session.invalidate();
+		}
         return new ModelAndView("vistaMercadoPago",modelo);
     }
 }
