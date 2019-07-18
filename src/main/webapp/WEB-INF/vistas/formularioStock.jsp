@@ -24,7 +24,7 @@
 				</div>
 				<form:input path="stock" id="stock" type="number" placeholder="Precio" class="form-control" />
 			</div>
-			<input name="id" id="id" type="hidden" value="${producto}" />
+			<input name="id" id="id" type="hidden" value="${productoId}" />
 			<button class="btn btn-lg btn-primary btn-block" Type="Submit">Insertar
 				Stock</button>
 		</form:form>

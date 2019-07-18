@@ -93,7 +93,7 @@ public class ControladorAdmin {
 		ModelMap modelo= new ModelMap();
 		Compra stock = new Compra();
 		modelo.put("stock", stock);
-		modelo.put("producto", id);
+		modelo.put("productoId", id);
 		return new ModelAndView("formularioStock",modelo);
 	}
 	

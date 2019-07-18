@@ -26,26 +26,6 @@
 						<div class="order-summary">
 							
 						<c:forEach items="${listaDetalleVenta}" var="detalleVenta">
-<<<<<<< HEAD
-							<div class="row">
-  								<div class="col-md-2"><c:out value="${detalleVenta.producto.descripcion }" /></div>
-  								<div class="col-md-2"><c:out value="${detalleVenta.cantidad }" /></div>
-  								<div class="col-md-2"><c:out value="${detalleVenta.subtotal }" /></div>
-  								<div class="col-md-2"><c:out value="${distanciaYTiempo}" /></div>
-							</div>
-						</c:forEach>
-						<div class="col-md-2">
-									<c:if test="${carrito.estado ne true }">
-		        							<a href="http://localhost:8080/grocery-store/enviar-carrito?id=${carrito.id}" class="btn btn-primary">Confirmar</a>	        
-   									</c:if>
-    							</div>
-    							<div class="col-md-2">
-									<c:if test="${carrito.estado ne true }">
-		        							<a href="http://localhost:8080/grocery-store/cancelar-carrito?id=${carrito.id}" class="btn btn-danger">Cancelar</a>	        
-   									</c:if>
-    							</div>				
-					</div>								
-=======
 							<div class="order-products">
 								<div class="col-md-5 order-col">
 
@@ -70,7 +50,6 @@
 						</div>								
 					</div>
 				</div>
->>>>>>> 1c98f94235092c4af625d403d82b5bc3b3e56fd2
 					<!-- /Order Details -->
 	
 
