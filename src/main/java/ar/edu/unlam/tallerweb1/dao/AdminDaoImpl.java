@@ -184,7 +184,9 @@ public class AdminDaoImpl implements AdminDao {
 	public List<Notificacion> buscarProductosStockMinimo() {
 		@SuppressWarnings("unchecked")
 		List<Notificacion> productosStockMinimo= sessionFactory.getCurrentSession().createCriteria(Notificacion.class)
-				.add(Restrictions.eq("descripcion", "Stock Minimo")).list();
+				.add(Restrictions.eq("descripcion", "Stock Minimo"))
+				.add(Restrictions.eq("estado", false))
+				.list();
 		return productosStockMinimo;
 	}
 
@@ -383,6 +385,12 @@ public class AdminDaoImpl implements AdminDao {
 				sesion.update(pocTest);
 				}
 			}
+			Notificacion notif = (Notificacion) sesion.createCriteria(Notificacion.class)
+					.add(Restrictions.like("descripcion", "Stock Minimo"))
+					.add(Restrictions.eq("producto", producto))
+					.uniqueResult();
+			notif.setEstado(true);
+			sesion.update(notif);
 		}
 	}
 
@@ -390,9 +398,36 @@ public class AdminDaoImpl implements AdminDao {
 	public List<OrdenCompra> traerOrdenesDeCompra() {
 		@SuppressWarnings("unchecked")
 		List<OrdenCompra> lista = sessionFactory.getCurrentSession().createCriteria(OrdenCompra.class)
+								  .addOrder(Order.desc("estado"))
 								  .addOrder(Order.desc("id"))
 								  .list();
 		return lista;
+	}
+
+	@Override
+	public void confirmarOrdenDeCompra(Long id) {
+		OrdenCompra oc = (OrdenCompra)sessionFactory.getCurrentSession().createCriteria(OrdenCompra.class)
+				.add(Restrictions.eq("id", id)).uniqueResult();
+		oc.setEstado(false);
+		sessionFactory.getCurrentSession().save(oc);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<ProductoOrdenCompra> verDetallesDeOrdenDeCompra(Long id) {
+		OrdenCompra oc = (OrdenCompra)sessionFactory.getCurrentSession().createCriteria(OrdenCompra.class)
+				.add(Restrictions.eq("id", id)).uniqueResult();
+		return sessionFactory.getCurrentSession().createCriteria(ProductoOrdenCompra.class)
+				.add(Restrictions.eq("ordenCompra",oc))
+				.list();
+	}
+
+	@Override
+	public OrdenCompra traerOrdenDeCompra(Long id) {
+		OrdenCompra oc= (OrdenCompra)sessionFactory.getCurrentSession().createCriteria(OrdenCompra.class)
+				  .add(Restrictions.eq("id", id))
+				  .uniqueResult();
+		return oc;
 	}
 
 }

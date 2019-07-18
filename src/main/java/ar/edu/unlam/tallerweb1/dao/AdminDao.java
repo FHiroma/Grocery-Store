@@ -18,6 +18,7 @@ import ar.edu.unlam.tallerweb1.modelo.Localidades;
 import ar.edu.unlam.tallerweb1.modelo.Notificacion;
 import ar.edu.unlam.tallerweb1.modelo.OrdenCompra;
 import ar.edu.unlam.tallerweb1.modelo.PedidoProducto;
+import ar.edu.unlam.tallerweb1.modelo.ProductoOrdenCompra;
 
 public interface AdminDao {
 	List<Productos> listarProductosDisponibles();
@@ -47,4 +48,7 @@ public interface AdminDao {
 	List<CarritoCompras> buscarCarritosCompraConfirmados();
 	void crearOrdenesDeCompraEnBaseAListaPedidoProducto(ArrayList<PedidoProducto> list);
 	List<OrdenCompra> traerOrdenesDeCompra();
+	void confirmarOrdenDeCompra(Long id);
+	List<ProductoOrdenCompra> verDetallesDeOrdenDeCompra(Long id);
+	OrdenCompra traerOrdenDeCompra(Long id);
 }

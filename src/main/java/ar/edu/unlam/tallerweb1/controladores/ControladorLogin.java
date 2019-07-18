@@ -75,7 +75,7 @@ public class ControladorLogin {
 				// si el usuario no existe agrega un mensaje de error en el modelo.
 				model.put("error", "Usuario o clave incorrecta");
 			}
-			return new ModelAndView("login", model);
+			return new ModelAndView("login2", model);
 		}
 	
 	@RequestMapping(path = "/homeUser", method = RequestMethod.GET)
@@ -137,6 +137,10 @@ public class ControladorLogin {
 		Long idU= (Long) request.getSession().getAttribute("id");
 		Usuario u= servicioUser.buscarUsuarioPorId(idU);
 		if(u != null) {
+			String rol = (String) request.getSession().getAttribute("rol");
+			if (!"user".equals(rol)) {
+				return new ModelAndView("redirect:/homeAdmin");
+				}
 			model.put("usuario", u);
 			Recomendacion rec= servicioUser.buscarRecomendacionDelUsuario(u);
 			if(rec != null){

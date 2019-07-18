@@ -32,6 +32,7 @@
 			<li><a href="http://localhost:8080/grocery-store/listarProductos">Listar Productos</a></li>
 			<li><a href="http://localhost:8080/grocery-store/insertarProducto">Insertar Producto</a></li>
 			<li><a href="http://localhost:8080/grocery-store/listarCarritosCompraClientes">Carritos Compra</a></li>
+			<li><a href="http://localhost:8080/grocery-store/verOrdenesDeCompra">Ordenes de Compra</a></li>
 					</c:if>
 					</ul>	
 					<!-- /NAV -->

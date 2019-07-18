@@ -10,7 +10,7 @@
 <t:styleHeader></t:styleHeader>
 </head>
 <body>
-	<t:header>
+	<t:header  user="${usuario}">
 		</t:header>
 		<t:nav>
 		</t:nav>

@@ -12,6 +12,7 @@ import ar.edu.unlam.tallerweb1.modelo.UsuarioRecomendacion;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Property;
@@ -94,6 +95,7 @@ public class UsuarioDaoImpl implements UsuarioDao {
 			List<Productos> lista= sessionFactory.getCurrentSession()
 					.createCriteria(Productos.class)
 					.add(Restrictions.eq("categoria", categoria))
+					.add(Restrictions.or(Restrictions.gt("stock",0), Restrictions.gt("stockDeOferta", 0)))
 					.list();
 			return lista;
 		} else {
