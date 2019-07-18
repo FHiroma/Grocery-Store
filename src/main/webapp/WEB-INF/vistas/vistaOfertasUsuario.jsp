@@ -31,7 +31,7 @@
 										<!-- product -->
 										<div class="product">
 											<div class="product-img">
-												<img src="<%= request.getContextPath() %>${productos.imagen}" alt="">
+												<img src="<%= request.getContextPath() %>${producto.imagen}" alt="">
 												<div class="product-label">
 													<span class="sale">-30%</span>
 													<span class="new">NEW</span>
