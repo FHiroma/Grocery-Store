@@ -56,12 +56,14 @@
     								</dir>
 								</div>
 							</div>
+							
 						</c:forEach>
-
-							<div class="order-col">
+						<div class="order-col">
 								<div><strong>TOTAL</strong></div>
-								<div><strong class="order-total">$2940.00</strong></div>
+								<c:set var = "salary" scope = "session" value = "${salary + detalle.subtotal}"/>
+								<div><strong class="order-total"><c:out value = "${salary}"/></strong></div>
 							</div>
+							
 						</div>
 				
 								<c:if test="${empty carrito}">
