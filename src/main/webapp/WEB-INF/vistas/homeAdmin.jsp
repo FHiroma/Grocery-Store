@@ -14,7 +14,8 @@
 <body>
 	<t:header user="${usuario}"></t:header>
 	<t:nav></t:nav>
-
+			
+				
 	<t:footer>
 	</t:footer>
 	

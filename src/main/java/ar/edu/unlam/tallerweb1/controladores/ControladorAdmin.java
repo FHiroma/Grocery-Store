@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
@@ -82,10 +83,24 @@ public class ControladorAdmin {
 	@RequestMapping(path="/guardarProducto", method = RequestMethod.POST)
 	public ModelAndView guardarProducto( @RequestParam CommonsMultipartFile file,
 										 @ModelAttribute("producto") Productos producto,
-										 @ModelAttribute ("idCategoria") Long idCategoria) 
+										 @ModelAttribute ("idCategoria") Long idCategoria,
+										 HttpServletRequest request) 
 									{
 		servicioAdmin.insertarProducto(producto, idCategoria, file);
-		return new ModelAndView("exito");
+		ModelMap modelo= new ModelMap();
+		Long idU= (Long) request.getSession().getAttribute("id");
+		Usuario u= servicioUser.buscarUsuarioPorId(idU);
+		if(u != null) {
+			modelo.put("usuario", u);
+			String rol = (String) request.getSession().getAttribute("rol");
+			HttpSession session = request.getSession();
+			if (rol == null) {
+				session.invalidate();
+				return new ModelAndView("redirect:/login");
+			}
+		}
+		modelo.put("exito", "Producto Insertado Correctamente");
+		return new ModelAndView("exito", modelo);
 	}
 	
 	@RequestMapping(path="/mostrar-formulario")
@@ -99,10 +114,24 @@ public class ControladorAdmin {
 	
 	@RequestMapping(path="/guardarStock")
 	public ModelAndView guardarSock(@ModelAttribute("stock") Compra stock
-									, @ModelAttribute("id") Long id) {
+									, @ModelAttribute("id") Long id
+									,HttpServletRequest request) {
+		ModelMap modelo= new ModelMap();
 		servicioAdmin.insertarStock(stock, id);
 		servicioAdmin.aumentarStockProducto(stock.getStock(),id);
-		return new ModelAndView("exito");
+		Long idU= (Long) request.getSession().getAttribute("id");
+		Usuario u= servicioUser.buscarUsuarioPorId(idU);
+		if(u != null) {
+			modelo.put("usuario", u);
+			String rol = (String) request.getSession().getAttribute("rol");
+			HttpSession session = request.getSession();
+			if (rol == null) {
+				session.invalidate();
+				return new ModelAndView("redirect:/login");
+			}
+		}
+		modelo.put("exito", "Stock Insertado Correctamente");
+		return new ModelAndView("exito", modelo);
 	}
 	
 	@RequestMapping(path="/consultarNotificaciones")
@@ -165,10 +194,24 @@ public class ControladorAdmin {
 	}
 	
 	@RequestMapping(path="/enviar-carrito")
-	public ModelAndView enviarCarrito(@RequestParam ("id") Long id) {
+	public ModelAndView enviarCarrito(@RequestParam ("id") Long id
+									 , HttpServletRequest request) {
 		Boolean resultado= servicioAdmin.enviarCarrito(id);
 		if(resultado == true) {
-			return new ModelAndView("exito");
+			ModelMap modelo= new ModelMap();
+			Long idU= (Long) request.getSession().getAttribute("id");
+			Usuario u= servicioUser.buscarUsuarioPorId(idU);
+			if(u != null) {
+				modelo.put("usuario", u);
+				String rol = (String) request.getSession().getAttribute("rol");
+				HttpSession session = request.getSession();
+				if (rol == null) {
+					session.invalidate();
+					return new ModelAndView("redirect:/login");
+				}
+			}
+			modelo.put("exito", "Confirmacion Del Carrito Exitoso");
+			return new ModelAndView("exito", modelo);
 		} 
 		return null;
 	}

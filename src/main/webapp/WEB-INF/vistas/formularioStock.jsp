@@ -22,7 +22,7 @@
 				<div class="input-group-prepend"> 
 				<span class="input-group-text"> <i class="fa fa-info"></i></span>
 				</div>
-				<form:input path="stock" id="stock" type="number" placeholder="Precio" class="form-control" />
+				<form:input path="stock" id="stock" type="number" placeholder="Stock" class="form-control" />
 			</div>
 			<input name="id" id="id" type="hidden" value="${productoId}" />
 			<button class="btn btn-lg btn-primary btn-block" Type="Submit">Insertar

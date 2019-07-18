@@ -10,17 +10,17 @@
 				<div id="responsive-nav">
 					<!-- NAV -->
 					<ul class="main-nav nav navbar-nav">
-					<c:if test="${usuario.rol != 'admin'}">
+					<c:if test="${usuario.rol ne 'admin'}">
 						<li class="active"><a href="http://localhost:8080/grocery-store/">Home</a></li>
 						<li><a href="http://localhost:8080/grocery-store/ver-productos-en-oferta">Ofertas</a></li>
 						<c:forEach items="${listaCategorias}" var="categoria">
 						<li><a href="http://localhost:8080/grocery-store/categoria?id=${categoria.id}">${categoria.descripcion }</a></li>
 						</c:forEach>
-						<c:if test="${usuario.rol == 'user'}">
+						<c:if test="${usuario.rol eq 'user'}">
 						<li><a href="MiCuenta">Mi Cuenta</a></li>
 						</c:if>
 					</c:if>
-					<c:if test="${usuario.rol == 'admin'}">			
+					<c:if test="${usuario.rol eq 'admin'}">			
 								<!-- <a href="http://localhost:8080/proyecto-limpio-spring/logout"> 
 				<button>Log out</button> </a> -->	
 			<c:if test="${listaNotificaciones.size() > 0}">
